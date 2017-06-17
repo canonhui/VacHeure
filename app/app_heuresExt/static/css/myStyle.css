@@ -1,0 +1,30 @@
+.affiche_div {
+	margin-left: 2%;
+}
+
+.affiche_table {
+}
+
+.oui {
+	color: green;
+}
+
+.non {
+	color: red;
+}
+
+.en_cours {
+	color: black;
+}
+
+.deja_finis {
+	color: grey;
+}
+
+.pagination_buttons {
+	text-align: center;
+}
+
+th {
+	cursor: pointer;
+}

@@ -1,0 +1,19 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+
+<div style="margin-left: 2%;">
+<h2>Demandes d'annulation et reports de vacances enseignant en date du {{date_du_jour}}
+</h2>
+
+{% if l %}
+<ul>
+ {% for vacs in l %}
+<li> {{ models.User.query.filter_by(user_id=vacs.user_id).first().nom }} {{ models.User.query.filter_by(user_id=vacs.user_id).first().prenom }} (solde de vacances en report de {{models.User.query.filter_by(user_id=vacs.user_id).first().soldeVacs}} jours) demande à {% if vacs.type_demande == 'Report' %} prendre  {% else %} annuler {% endif %} {{ abs_str(vacs.nb_jour)}} jours (ouvrés) de vacances du {{ conv_sqlstr_date(vacs.date_debut)  }} au {{ conv_sqlstr_date(vacs.date_fin) }}{% if vacs.type_demande == 'Annulation' %}, pour le motif suivant : "<em>{{ vacs.motif}}</em>"{% endif %}. 
+</li>
+{% endfor %}
+</ul>
+{% endif %}
+</div>
+
+{% endblock %}
+

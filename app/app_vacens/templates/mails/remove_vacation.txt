@@ -1,0 +1,4 @@
+{{ responsable.nom }} {{ responsable.prenom }},
+{{ user.nom }} {{ user.prenom }} a pris ses vacances du {{ dates.debut }} au {{ dates.fin }}
+
+

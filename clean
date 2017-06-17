@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+rm app.db
+./db_create.py
+./db_init.py

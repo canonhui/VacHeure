@@ -1,0 +1,77 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/myStyle.css') }}">
+    <title>{% block title %}
+        {% if title %}
+            {{ title }} - HeuresExt
+        {% else %}
+            HeuresExt
+        {% endif %}
+    {% endblock title %}</title>
+
+
+
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/index">VacHeure!</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/index">Home</a></li>
+      {% if session['user_id'] == null %}
+        <li id='login'><a href="/login">Login</a></li>
+      {% endif %}
+      {% if session["user_id"] != null %}
+
+        <li><a href="/accueil">Accueil</a></li>
+  <li><a href="/logout">Logout</a></li>
+  {% endif %}
+      </ul>
+  {% if session["user_id"] != null %} 
+  <ul class="nav navbar-nav" style="float: right">
+      <li ><a href="#" class="navbar-nav pull-right"> {{ current_user.get_name() }} </a></li>
+  </ul>
+  {% endif %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+    {% block container %} {% endblock %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('li.active').removeClass('active');
+            $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            
+            if(location.pathname == '/') {
+                $('a[href="/index"]').closest('li').addClass('active');
+            }
+        });
+    </script>
+{% endblock %}

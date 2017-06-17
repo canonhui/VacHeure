@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+
+<div class='affiche_div'>
+<h4>{{msg}}</h4>
+{% if heuresHisto %}
+
+{% if template_flag != 'historique' %}
+    <form action="" method="post">
+{% endif %}
+<table class='affiche_table' width="100%">
+    <tr>
+        <th> Nom </th>
+
+        <th> Prénom </th>
+
+        <th>Date demande</th>
+
+        <th>Dype demande</th>
+        
+        <th> Date début </th>
+
+        <th> Lieu </th>
+
+        <th> Ecole CCI </th>
+
+        <th> Nombre d'heures  </th>
+
+        <th> Validation </th>
+    </tr>
+    {% for heureHisto in heuresHisto.items %}
+        <tr>
+            <td> {{ models.User.query.filter_by(user_id=heureHisto.user_id).first().nom }} </td>
+
+            <td> {{ models.User.query.filter_by(user_id=heureHisto.user_id).first().prenom }} </td>
+
+            <td> {{ conv_sqlstr_date(heureHisto.date_demande) }} </td>
+            
+            <td> {{ heureHisto.type_demande }} </td>    
+
+            <td> {{ conv_sqlstr_date(heureHisto.date_debut) }} </td>
+
+            <td> {{ heureHisto.lieu }} </td>
+
+            <td> {% if heureHisto.ecole_cci %}Oui {% else %}Non {% endif %} </td>
+
+            <td> {{ abs_str(heureHisto.nb_heures) }} </td>
+
+            {% if template_flag == 'historique' %}
+                {% set status = models.HeuresExt.query.filter_by(heures_ext_id = heureHisto.heures_ext_id).first().status %}
+                {% if heureHisto.date_debut < current_date %}
+                    <td class='deja_finis'> {{ valid[status] }} </td>
+                {% elif status == 2 %}    
+                    <td class='oui'> {{ valid[status] }} </td>
+                {% elif status == -1 %}
+                    <td class='non'> {{ valid[status] }} </td>
+                {% else %}
+                    <td class='en_cours'> {{ valid[status] }} </td>
+                {% endif %}
+
+            {% elif template_flag == 'validation_dept' %}
+                <td>
+                    <select name={{ heureHisto.heures_ext_id }} id="validate" >
+                        <option value=0></option>
+
+                        <option value=1>Oui</option>
+
+                        <option value=-1>Non</option>
+                    </select>
+                </td>
+
+            {% else %}
+                <td>
+                    <select name= {{ heureHisto.heures_ext_id }} id="validate" >
+                        <option value=0></option>
+
+                        <option value=2>Oui</option>
+
+                        <option value=-1>Non</option>
+                    </select>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    
+</table>
+{% if template_flag != 'historique' %}
+    <br>
+        <input class="btn btn-success btn-sm" type="submit" value="Envoyer" />
+    </form>
+{% endif %}
+
+{% if template_flag == 'historique' %}
+<br>
+<div class='pagination_buttons'>
+<a href="{{ url_for(template_flag, page=1) }}">Première</a>
+
+{% if heuresHisto.has_prev %}
+    <a href="{{ url_for(template_flag, page=heuresHisto.prev_num) }}">&lt;&lt; </a>
+{% else %}
+    &lt;&lt; 
+{% endif %}
+
+{% if heuresHisto.has_next %}
+    <a href="{{ url_for(template_flag, page=heuresHisto.next_num) }}"> &gt;&gt;</a>
+{% else %}
+     &gt;&gt;
+{% endif %}
+
+<a href="{{ url_for(template_flag, page=page_max) }}">Dernière</a>
+</div>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="{{ url_for('static',filename='css/sortElements.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var table = $('table');
+            $('th').each(function() {
+                var th = $(this), thIndex = th.index(), inverse = false;
+                th.click(function() {
+                    table.find('td').filter(function() {
+                        return $(this).index() === thIndex;
+                        }).sortElements(function(a, b) {
+                            if($.isNumeric([a])) {
+                                alert($.text([a])); 
+                            }
+                            return $.text([a]) > $.text([b]) ?
+                                inverse ? -1 : 1 : inverse ? 1 : -1;
+                        
+                        }, function() {
+                        // parentNode is the element we want to move
+                        return this.parentNode;
+                    });
+                    inverse = !inverse;
+                });
+        });
+    });
+
+    </script>
+{% endblock %}

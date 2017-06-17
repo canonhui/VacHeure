@@ -1,0 +1,26 @@
+-[x]  validation vacances par la direction
+-[x]  ajouter soldeVacs, soldeVacsEnCours à user dans la table
+-[x]  changer le csv pour ajouter une colonne soldeVacs
+-[x]  changer depot et prise pour mettre à jour soldeVacsEnCours
+-[x]  changer admission pour mettre à jour soldeVacs
+-[x]  afficher les soldes dans le résumé de l'historique
+-[x]  revoir les emails
+-[-]  flash
+-[-]  prise vacances uniquement si solde > 0
+-[ ]  déclaration doit être préalable
+-[x]  enregistrement de la date de la demande
+-[x]  enregistrement du motif si annulation de vacances
+-[x]  envois emails si annulation, prise de vacances --> resp de département
+-[x]  envois emails si validation/refus resp département --> doyen, concerné
+-[x]  envois emails si validation/refus direction --> resp dépt, doyen, concerné
+-[x]  versions html
+-[ ]  vérifier les emails
+-[x]  extraction état en fin d'année - envoi par email ou téléchargement
+-[x]  ajouter un utilisateur
+-[x]  depot --> annulation / prise --> report
+-[x]  générer un rapport
+-[x]  reports en jours positifs
+-[ ] admission --> validation
+-[x] print.css
+-[x] scripts / python
+

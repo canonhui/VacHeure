@@ -1,0 +1,1 @@
+pip3 install ldap3 sqlalchemy sqlalchemy-migrate flask-mail flask-bootstrap flask-login flask_sqlalchemy flask_wtf weasyprint

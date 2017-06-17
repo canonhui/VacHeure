@@ -1,0 +1,11 @@
+Bonjour {{ user.prenom }},
+
+<p><b>{{ validator.prenom }} {{ validator.nom }}</b> vient de {% if heures_ext.status == '1' %} <b>valider {% else %} rejeter</b> {% endif %} votre demande pour enseigner <b>{{ heures_ext.nb_heures }}</b> heures à l'école <b>{{ heures_ext.lieu }}</b> à partir de <b>{{ conv_sqlstr_date(heures_ext.date_debut) }}</b> en date du {{ conv_sqlstr_date(heures_ext.date_demande) }}. <a href="{{ url_for('historique', _external=True) }}"> Cliquez ici pour voir le detail</a>
+<br><br>
+{% if heures_ext.status == '1' %} Cette validation reste à confirmer par la direction. {% endif %}
+<br><br>
+Cordialement,
+<br><br>
+Admin de l'<code>HeuresExt</code></p>
+
+

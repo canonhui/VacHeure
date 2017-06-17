@@ -1,0 +1,74 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{ super() }}
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
+    {% if title %}
+    <title>{{ title }} - vacances</title>
+    {% else %}
+    <title>Vacances</title>
+    {% endif %}
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/vacens/index">VacEns!</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="/vacens/index">Home <span class="sr-only">(current)</span></a></li>
+      {% if session['user_id'] == null %}
+        <li><a href="/login">Login</a></li>
+      {% endif %}
+          {% if session["user_id"] != null %}
+        <li><a href="/vacens/annulation">Annulation</a></li>                        
+        <li><a href="/vacens/prise">Prise</a></li>
+        <li><a href="/vacens/historique_user">Historique</a></li>
+              {% if session["role"] != null %}
+                  {% if session["role"] > 1 %}
+            <li><a href="/vacens/validation_vacances">Validation (dept)</a></li>
+                     {% if session["role"] == 77 %}
+            <li><a href="/vacens/validation_vacances_direction">Validation direction</a></li>
+                      {% endif %}
+            <li><a href="/vacens/historique_validation_vacances">Historique Validation</a></li>
+                    {% if session["role"] == 77 %}
+            <li><a href="/vacens/admin">Admin</a></li>
+                     {% endif %}
+                  {% endif %}
+              {% endif %}
+        
+  <li><a href="/vacens/logout">Logout</a></li>
+  {% endif %}
+      </ul>
+  {% if session["user_id"] != null %} 
+  <ul class="nav navbar-nav" style="float: right">
+      <li ><a href="#" class="navbar-nav pull-right"> {{ current_user.get_name() }} </a></li>
+  </ul>
+  {% endif %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+
+    {% for message in get_flashed_messages() %}
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        {{ message }}
+    </div>
+    {% endfor %}
+
+    {% block page_content %}{% endblock %}
+    {% block container %} {% endblock %}
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% endblock %}

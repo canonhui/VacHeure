@@ -1,0 +1,9 @@
+Bonjour {{ responsable.prenom }},
+
+{{ user.prenom }} {{ user.nom }} vient de déclarer {{ form.decNbHeures.data }} heures extérieures à l'école {{ form.decLieu.data }}{% if form.decEcoleCCI.data == 1 %} (une école de la CCI){% else %} (une école hors CCI){% endif %}, à partir de {{ form.decDateDebut.data }}. Cliquez le lien pour voir le detail: {{ url_for('main_bp.validation_dept', _external=True) }}
+
+Merci de valider cette demande.
+
+Cordialement,
+
+Admin de l'HeuresExt

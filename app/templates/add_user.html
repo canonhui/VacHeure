@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+ 
+{% import "bootstrap/wtf.html" as wtf %}
+ 
+{% block container %}
+	<h2> Ajout d'un utilisateur</h2>
+     
+	<form action="" method="post" name="add-user" class="form-horizontal">
+		{{ form.hidden_tag() }}
+		<p>
+			<b>{{ form.prenom.label }}</b><br>
+			{{ form.prenom(size=40, autofocus=True, id_='prenom') }}<br>
+		</p>
+		<p>
+			<b>{{ form.nom.label }}</b><br>
+			{{ form.nom(size=40, id_='nom') }}<br>
+		</p>
+		<p>
+			<b>{{ form.email.label }}</b><br>
+			{{ form.email(size=40, id_='email') }}<br>
+		</p>
+		<p>
+			<b>{{ form.role.label }}</b><br>
+			{{ form.role }}<br>
+		</p>
+		<p>
+			<b>{{ form.dept.label }}</b><br>
+			{{ form.dept }}<br>
+		</p>
+		<p>
+			<b>{{ form.login.label }}</b><br>
+			{{ form.login(size=40, id_='login') }}<br>
+		</p>
+		<p>
+			{{ form.submit }}<br>
+		</p>
+		
+	</form>
+
+    <br>
+    <a href="{{ url_for('index') }}"> Cliquer ici pour revenir à "home"</a>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+        $(function() {
+        		$('#nom, #prenom').on('input propertychange', function() {
+        			var email_data = $('#prenom').val() + '.' + $('#nom').val() + '@esiee.fr';
+        			var login_data = $('#nom').val() + $('#prenom').val().charAt(0);
+        			$('#email').val(email_data.toLowerCase());
+        			$('#login').val(login_data.toLowerCase());
+        		})
+        })
+    </script>
+{% endblock %}

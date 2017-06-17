@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Page not found{% endblock %}
+{% block content %}
+{{ super() }}
+
+<h1 class="text-center">Page not found</h1>
+<p class="text-center">Cette page n'existe pas
+<p class="text-center"><a href="{{ url_for('index') }}">retour à l'index</a>
+{% endblock %}

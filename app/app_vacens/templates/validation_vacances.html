@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+
+<div style="margin-left: 2%;">
+<h4>{{msg}}</h4>
+{% if l %}
+<table>
+
+    <tr>
+        <th>Nom </th>
+        <th>Prénom </th>
+        <th>Solde </th> 
+        <th>Type </th>             
+        <th> Date demande </th>                    
+        <th>Nb jours  </th>       
+        <th> Date début </th>
+        <th> Date fin</th>
+        <th>Validation </th>
+
+    </tr>
+    <form action="" method="post">
+        {% for i in l %}
+            <tr>
+
+                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().nom }} </td>
+
+                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
+
+                <td width="5%"> {{ models.User.query.filter_by(user_id=i.user_id).first().soldeVacs }} </td>
+                <td width="5%"> {{ i.type_demande }} </td>                
+
+                <td width="10%"> {{ conv_sqlstr_date(i.date_demande) }}</td>
+                <td width="5%" style="text-align:center"> {{ i.nb_jour }} </td>
+
+                <td width="10%"> {{ conv_sqlstr_date(i.date_debut) }}</td>
+
+                <td width="10%"> {{ conv_sqlstr_date(i.date_fin) }}</td>
+
+                <td width="10%">
+                    <select name= {{i.vacances_id}} id="validate">
+                        <option value=0></option>
+
+                        <option value=1>Oui</option>
+
+                        <option value=-1>Non</option>
+                    </select>
+                </td>
+
+            </tr>
+        {% endfor %}
+
+
+</table>
+        <input type="submit" value="Envoyer" />
+    </form>
+
+{% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "bootstrap/base.html" %}
+
+{% block head %}
+    {{ super() }}
+    {% if title %}
+    <title>{{ title }} - vacances</title>
+    {% else %}
+    <title>Vacances</title>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}    
+
+	{% block navbar %}
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="/index">VacEns</a>
+		</div>
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		  <ul class="nav navbar-nav">
+			<li class="active"><a href="/index">Home <span class="sr-only">(current)</span></a></li>
+          {% if session['user_id'] == null %}
+		    <li><a href="/login">Login</a></li>
+          {% endif %}
+              {% if session["user_id"] != null %}
+		    <li><a href="/annulation">annulation</a></li>                        
+		    <li><a href="/prise">Prise</a></li>
+		          {% if session["role"] != null %}
+                      {% if session["role"] > 1 %}
+		        <li><a href="/validation_vacances">Autorisations de vacances</a></li>
+		        <li><a href="/historique_validation_vacances">Historique Validation</a></li>
+                      {% endif %}
+                  {% endif %}
+		    <li><a href="/historique_user">Historique</a></li>
+      <li><a href="/logout">Logout</a></li>
+      {% endif %}
+		  </ul>
+      {% if session["user_id"] != null %} 
+      {% set toto = session['username']  %}
+      <ul class="nav navbar-nav" style="float: right">
+          <li ><a href="#" class="navbar-nav pull-right"> {{ toto }} </a></li>
+      </ul>
+      {% endif %}
+		</div><!-- /.navbar-collapse -->
+	  </div><!-- /.container-fluid -->
+	</nav>
+	{% endblock %}
+
+		{% block bodycontent %}{% endblock %}
+    
+{% endblock %}

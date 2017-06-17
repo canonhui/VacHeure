@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Unauthorized{% endblock %}
+{% block content %}
+{{ super() }}
+
+<h1 class="text-center">Unauthorized</h1>
+<p class="text-center">Vous n'avez pas le droit d'accéder à cette page
+<p class="text-center"><a href="{{ url_for('index') }}">retour à l'index</a>
+{% endblock %}

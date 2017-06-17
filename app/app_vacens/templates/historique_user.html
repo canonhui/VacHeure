@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+
+<h4>{{msg}}</h4>
+{% if l %}
+<table>
+
+    <tr>
+        <th> Nom </th>
+
+        <th> Prénom </th>
+
+        <th> Nombre de jours  </th>
+
+        <th> Date début </th>
+
+        <th> Date fin </th>
+
+        <th> Validation </th>
+    </tr>
+        {% for i in l %}
+            <tr>
+
+                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().nom }} </td>
+
+                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
+
+                <td width="10%"> {{i.nb_jour }} </td>
+
+                <td width="10%"> {{ i.date_debut }}</td>
+
+                <td width="10%"> {{i.date_fin }}</td>
+
+                <td width="10%">{% if models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status == 1 %}
+                        oui
+                    {% endif % }
+                    {% if  models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status == -1 %}
+                        non
+                    {% endif %}
+                    {% if models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status == 0 %}
+                        en attente
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+
+</table>
+
+{% endif %}
+
+
+{% endblock %}
