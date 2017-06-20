@@ -7,7 +7,7 @@ import csv
 from ldap3 import Connection, ALL
 from ldap3 import Server
 
-from .models_commun import User
+
 from .forms import LoginForm
 
 
@@ -24,6 +24,7 @@ class Ldap:
                                       'telephoneNumber', 'displayName', 'roomNumber', 'givenName',
                                       'dateCreation', 'dateExpiration', 'annuairePresent', 'mailEDU', 'Name'])
         if len(first_conn.entries) > 0:
+            from .models_commun import User
             name = base64.b64decode(str(first_conn.entries[0]['Prenom'])).decode('UTF-8')
             surname = base64.b64decode(str(first_conn.entries[0]['Nom'])).decode('UTF-8')
             email = str(first_conn.entries[0]['googleMail'])

@@ -10,8 +10,9 @@ class DbMethods:
             date_debut=form.decDateDebut.data,
             lieu=form.decLieu.data,
             ecole_cci=bool(int(form.decEcoleCCI.data)),
-            nb_heures=form.decNbHeures.data,
+            nb_heures=int(form.decNbHeures.data),
             user_id=user_id,
             status=0)
         db.session.add(v)
         db.session.commit()
+        return v.heures_ext_id

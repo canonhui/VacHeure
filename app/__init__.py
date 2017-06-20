@@ -18,13 +18,15 @@ bootstrap = Bootstrap(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+login_manager.login_view = 'login'
+login_manager.login_message = 'Veuillez se connecter pour accéder à cette page.'
 
-from .app_heuresExt import app_heuresExt
 from .app_vacens import app_vacens
+from .app_heuresExt import app_heuresExt
 
 app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
 	'/heuresExt': app_heuresExt,
-	'/vacens': app_vacens
+	'/vacEns': app_vacens
 	})
 
 from . import views, models_commun, forms, ldap

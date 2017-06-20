@@ -1,5 +1,5 @@
-from app.app_vacens import db
-from app.app_vacens.models import Vacances
+from ... import db
+from ..models_vacEns import Vacances
 from datetime import datetime
 
 class DbMethods:

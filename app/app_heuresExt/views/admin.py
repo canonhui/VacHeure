@@ -7,7 +7,6 @@ from ... import db
 from ...models_commun import User, Resp, load_user
 from ..models_heuresExt import HeuresExt
 from ..forms import LoginForm, AdminForm, AddUserForm
-from ..ldap import Ldap
 from ..utils.mail import Mail
 from ..utils.dbmethods import DbMethods
 from datetime import datetime
@@ -48,20 +47,25 @@ def admin():
                                       title="Admin",
                                       form=form)
             else:
+                status = [1]
                 if 'signature_direction' in request.form:
                     extrait_cci = [0, 1]
                     file_name = 'signature_direction'
                 elif 'extraction_cci' in request.form:
                     extrait_cci = [1]
                     file_name = 'extraction_cci'
-                else:
+                elif 'extraction_hors_cci' in request.form:
                     extrait_cci = [0]
                     file_name = 'extraction_hors_cci'
+                elif 'historique_totale' in request.form:
+                    status = [-1, 0, 1, 2]
+                    extrait_cci = [0, 1]
+                    file_name = 'historique_totale'
 
                 l,n = [],[]
                 for j in list_users:
                     heures_ext_en_cours = HeuresExt.query.filter(
-                        HeuresExt.user_id == j.user_id, HeuresExt.status == 1,
+                        HeuresExt.user_id == j.user_id, HeuresExt.status.in_(status),
                         HeuresExt.date_debut >= datetime.utcnow().date(),
                         HeuresExt.ecole_cci.in_(extrait_cci)).all()
                     for n in heures_ext_en_cours:
@@ -70,6 +74,8 @@ def admin():
                     rapport = render_template('rapport_pour_direction.html',
                                            title='Fichier déjà extrait',
                                            l=l,
+                                           request_type=request.form,
+                                           valid=VALID,
                                            date_du_jour=datetime.utcnow().strftime("%d/%m/%Y"), 
                                            User=User
                                            )
@@ -77,7 +83,7 @@ def admin():
                         from weasyprint import HTML 
                         HTML(string=rapport).write_pdf(app_heuresExt.config['FILES'] + '/' + file_name + '.pdf', stylesheets=[app_heuresExt.config['APPDIR']+"/static/css/print.css"])
                         return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.pdf', as_attachment=False)
-                    except:    
+                    except:
                         with open(app_heuresExt.config['FILES'] + '/' + file_name + '.html', 'w') as htmlfile:
                             htmlfile.write(rapport)
                         return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.html', as_attachment=False)    

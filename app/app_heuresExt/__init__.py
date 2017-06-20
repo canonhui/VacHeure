@@ -18,16 +18,17 @@ bootstrap = Bootstrap(app_heuresExt)
 
 login_manager = LoginManager()
 login_manager.init_app(app_heuresExt)
-
+login_manager.login_view = 'home_bp.login'
+login_manager.login_message = 'Veuillez se connecter pour accéder à cette page.'
 
 from .views import home_bp, main_bp, admin_bp
 app_heuresExt.register_blueprint(home_bp)
 app_heuresExt.register_blueprint(main_bp)
 app_heuresExt.register_blueprint(admin_bp)
 
-from .views import home, main, admin
-from . import models_heuresExt, forms, ldap
-from .. import models_commun
+#from .views import home, main, admin
+#from . import models_heuresExt, forms, ldap
+#from .. import models_commun
 
 #functions for templates
 def conv_sqlstr_date(sql_date):

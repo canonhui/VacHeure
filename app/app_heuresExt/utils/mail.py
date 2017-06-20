@@ -4,6 +4,7 @@ from threading import Thread
 from .. import mail
 from ...models_commun import User
 from enum import Enum
+from config import MAIL_USERNAME, MAIL_DEFAULT_SENDER
 
 
 class Mail :
@@ -16,7 +17,7 @@ class Mail :
     def send_email(to, subject, template, **kwargs):
         app = current_app._get_current_object()
         cc = kwargs.get('cc',[])
-        msg = Message(subject, sender=app.config['MAIL_USERNAME'], recipients=to, cc=cc)
+        msg = Message(subject, sender=MAIL_DEFAULT_SENDER, recipients=to, cc=cc)
         msg.body = render_template(template + '.txt', **kwargs)
         try:
             msg.html = render_template(template + '.html', **kwargs)
@@ -52,7 +53,7 @@ class Mail :
             )
 
     @staticmethod
-    def report_demande(user,form):
+    def report_demande(user, form, heure_ext_id):
         responsable = User.query.get(user.resp_id)
         mail_object = "[HeuresExt] Demande d'une déclaration d'heures extérieures ("+ user.nom + " " + user.prenom +")"
         template_base_name = "mails/"
@@ -63,6 +64,7 @@ class Mail :
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
                    responsable=responsable,
+                   heure_ext_id=heure_ext_id,
                    form=form
             )
     @staticmethod

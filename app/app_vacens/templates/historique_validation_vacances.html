@@ -24,9 +24,9 @@
         {% for i in l %}
             <tr>
 
-                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().nom }} </td>
+                <td width="10%"> {{ User.query.filter_by(user_id=i.user_id).first().nom }} </td>
 
-                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
+                <td width="10%"> {{ User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
 
                 <td width="10%"> {{ conv_sqlstr_date(i.date_demande) }}</td>
                 <td width="5%"> {{ i.type_demande }} </td>    
@@ -37,7 +37,7 @@
 
                 <td width="10%"> {{ conv_sqlstr_date(i.date_fin) }}</td>
 
-                <td width="10%">{{ valid[models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status] }}
+                <td width="10%">{{ valid[Vacances.query.filter_by(vacances_id=i.vacances_id).first().status] }}
                 </td>
             </tr>
         {% endfor %}

@@ -1,8 +1,11 @@
 from flask import current_app, render_template
 from flask_mail import Message
 from threading import Thread
-from app.app_vacens import mail, models
+from .. import mail
+from ...models_commun import User
 from enum import Enum
+from config import MAIL_USERNAME, MAIL_DEFAULT_SENDER
+
 
 
 class Mail :
@@ -38,12 +41,12 @@ class Mail :
 
     @staticmethod
     def annul_demande(user,form):
-        responsable = models.User.query.get(user.resp_id)
+        responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] Demande d'annulation de vacances ("+ user.nom + " " + user.prenom +")"
         template_base_name = "mails/"
         template = template_base_name + "annul_vacs"
-        to = ['jf.bercher@esiee.fr'] #[responsable.email]
-        cc = ['abdul.alhazreb@gmail.com']  #[user.email, doyen@esiee.fr]    
+        to = [MAIL_USERNAME]
+        cc = []  #[user.email, doyen@esiee.fr]    
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
                    responsable=responsable,
@@ -52,12 +55,12 @@ class Mail :
 
     @staticmethod
     def report_demande(user,form):
-        responsable = models.User.query.get(user.resp_id)
+        responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] Demande de report de vacances ("+ user.nom + " " + user.prenom +")"
         template_base_name = "mails/"
         template = template_base_name + "report_vacs"
-        to = ['jf.bercher@esiee.fr'] #[responsable.email]
-        cc = ['abdul.alhazreb@gmail.com'] #[user.email, doyen@esiee.fr]        
+        to = [MAIL_USERNAME]
+        cc = [] #[user.email, doyen@esiee.fr]        
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
                    responsable=responsable,
@@ -65,11 +68,11 @@ class Mail :
             )
     @staticmethod
     def resp_valid_demande(user, vacs):
-        responsable = models.User.query.get(user.resp_id)
+        responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] Retour sur ta demande d'annulation ou de report de vacances"
         template_base_name = "mails/"
         template = template_base_name + "valid_vacs_resp"
-        to = ['jf.bercher@esiee.fr'] #[user.email]
+        to = [MAIL_USERNAME]
         cc = [] # doyen ?
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
@@ -79,11 +82,11 @@ class Mail :
 
     @staticmethod
     def dir_valid_demande(user, vacs):
-        responsable = models.User.query.get(user.resp_id)
+        responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] Retour sur ta demande d'annulation ou de report de vacances"
         template_base_name = "mails/"
         template = template_base_name + "valid_vacs_dir"
-        to = ['jf.bercher@esiee.fr'] #[user.email]
+        to = [MAIL_USERNAME]
         cc = [] # [doyen@esiee.fr, responsable.email]
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
@@ -127,7 +130,7 @@ class Mail :
     # @param notificationType notification_type : type of mail to send
     @staticmethod
     def vacation_notification (user, dates, notificationType) :
-        responsable = models.User.query.get(user.resp_id)
+        responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] "
         template_base_name = "mails/"
         

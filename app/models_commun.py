@@ -1,5 +1,7 @@
 from . import db, login_manager
 from .forms import LoginForm
+
+
 #from app.ldap import Ldap
 
 
@@ -9,8 +11,12 @@ class User(db.Model):
     nom = db.Column(db.String(64), index=True, unique=False)
     prenom = db.Column(db.String(64), index=True, unique=False)
     email = db.Column(db.String(120), index=True, unique=True)
+    soldeVacs = db.Column(db.Integer, default=0)
+    soldeVacsEnCours = db.Column(db.Integer, default=0) 
     resp_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     role = db.Column(db.Integer)
+    heures_ext = db.relationship('HeuresExt', backref='user', lazy='dynamic')
+    vacens = db.relationship('Vacances', backref='user', lazy='dynamic')
 
     @property
     def is_active(self):
@@ -68,3 +74,6 @@ class Resp(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+from .app_heuresExt.models_heuresExt import HeuresExt
+from .app_vacens.models_vacEns import Vacances

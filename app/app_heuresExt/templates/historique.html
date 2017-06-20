@@ -2,50 +2,64 @@
 {% block content %}
 {{ super() }}
 
+{% block head %}
+    {{ super() }}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+     
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+     
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+
+{% endblock %}
+
 <div class='affiche_div'>
 <h4>{{msg}}</h4>
-{% if heuresHisto %}
+{% if user_heures_ext %}
 
 {% if template_flag != 'historique' %}
     <form action="" method="post">
 {% endif %}
-<table class='table table-hover affiche_table' width="100%">
-    <thead><tr>
-        <th> Nom </th>
+<table class='order-desc table table-hover affiche_table' width="100%">
+    <tr>
+        <th id="nom"> Nom </th>
 
-        <th> Prénom </th>
+        <th id="prenom"> Prénom </th>
 
-        <th>Date demande</th>
+        <th id="date_demande"> Date demande </th>
         
-        <th> Premier cours </th>
+        <th id="date_debut"> Premier cours </th>
 
-        <th> Lieu </th>
+        <th id="lieu"> Lieu </th>
 
-        <th> Ecole CCI </th>
+        <th id="ecole_cci"> Ecole CCI </th>
 
-        <th> Nombre d'heures  </th>
+        <th id="nb_heures"> Nombre d'heures  </th>
 
-        <th> Validation </th>
-    </tr></thead>
-    {% for heureHisto in heuresHisto.items %}
-        <tbody><tr>
-            <td> {{ User.query.filter_by(user_id=heureHisto.user_id).first().nom }} </td>
+        <th id="status"> Validation </th>
+    </tr>
+    <div id="table-data">
+    {% for user_heure_ext in user_heures_ext.items %}
+        <tr>
+            <td> {{ user_heure_ext.user.nom }} </td>
 
-            <td> {{ User.query.filter_by(user_id=heureHisto.user_id).first().prenom }} </td>
+            <td> {{ user_heure_ext.user.prenom }} </td>
 
-            <td> {{ conv_sqlstr_date(heureHisto.date_demande) }} </td>   
+            <td> {{ conv_sqlstr_date(user_heure_ext.date_demande) }} </td>   
 
-            <td> {{ conv_sqlstr_date(heureHisto.date_debut) }} </td>
+            <td> {{ conv_sqlstr_date(user_heure_ext.date_debut) }} </td>
 
-            <td> {{ heureHisto.lieu }} </td>
+            <td> {{ user_heure_ext.lieu }} </td>
 
-            <td> {% if heureHisto.ecole_cci %}Oui {% else %}Non {% endif %} </td>
+            <td> {% if user_heure_ext.ecole_cci %}Oui {% else %}Non {% endif %} </td>
 
-            <td> {{ abs_str(heureHisto.nb_heures) }} </td>
+            <td> {{ abs_str(user_heure_ext.nb_heures) }} </td>
 
             {% if template_flag == 'historique' %}
-                {% set status = HeuresExt.query.filter_by(heures_ext_id = heureHisto.heures_ext_id).first().status %}
-                {% if heureHisto.date_debut < current_date %}
+                {% set status = user_heure_ext.status %}
+                {% if user_heure_ext.date_debut < current_date %}
                     <td class='deja_finis'> {{ valid[status] }} </td>
                 {% elif status == 2 %}    
                     <td class='oui'> {{ valid[status] }} </td>
@@ -57,7 +71,7 @@
 
             {% elif template_flag == 'validation_dept' %}
                 <td>
-                    <select name= {{ heureHisto.heures_ext_id }} class="form-control validate" style="width: 70px">
+                    <select name= {{ user_heure_ext.heures_ext_id }} class="form-control validate" style="width: 75px">
                         <option value=0></option>
 
                         <option value=1>Oui</option>
@@ -68,7 +82,7 @@
 
             {% else %}
                 <td>
-                    <select name= {{ heureHisto.heures_ext_id }} class="form-control validate" style="width: 70px">
+                    <select name= {{ user_heure_ext.heures_ext_id }} class="form-control validate" style="width: 75px">
                         <option value=0></option>
 
                         <option value=2>Oui</option>
@@ -77,34 +91,40 @@
                     </select>
                 </td>
             {% endif %}
-        </tr></tbody>
+        </tr>
     {% endfor %}
+    </div>
     
 </table>
 {% if template_flag != 'historique' %}
-    <br>
         <input class="btn btn-success btn-sm" type="submit" value="Envoyer" />
     </form>
 {% endif %}
 
 {% if template_flag == 'historique' %}
-<br>
-<div class='pagination_buttons'>
-<a href="{{ url_for('main_bp.' + template_flag, page=1) }}">Première</a>
-
-{% if heuresHisto.has_prev %}
-    <a href="{{ url_for('main_bp.' + template_flag, page=heuresHisto.prev_num) }}">&lt;&lt; </a>
+{{ page }}
+<div id='pagination_buttons'>
+{% if page == 1 %}
+    Première
+{% else %}
+    <a href="{{ url_for('main_bp.' + template_flag, page=1) }}">Première</a>
+{% endif %}
+{% if user_heures_ext.has_prev %}
+    <a href="{{ url_for('main_bp.' + template_flag, page=user_heures_ext.prev_num) }}">&lt;&lt; </a>
 {% else %}
     &lt;&lt; 
 {% endif %}
 
-{% if heuresHisto.has_next %}
-    <a href="{{ url_for('main_bp.' + template_flag, page=heuresHisto.next_num) }}"> &gt;&gt;</a>
+{% if user_heures_ext.has_next %}
+    <a href="{{ url_for('main_bp.' + template_flag, page=user_heures_ext.next_num) }}"> &gt;&gt;</a>
 {% else %}
      &gt;&gt;
 {% endif %}
-
-<a href="{{ url_for('main_bp.' + template_flag, page=page_max) }}">Dernière</a>
+{% if page == page_max %}
+    Dernière
+{% else %}
+    <a href="{{ url_for('main_bp.' + template_flag, page=page_max) }}">Dernière</a>
+{% endif %}
 </div>
 
 {% endif %}
@@ -115,41 +135,35 @@
 
 {% block scripts %}
     {{ super() }}
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="{{ url_for('static',filename='css/sortElements.js') }}"></script>
-
-
     <script type="text/javascript">
-        $(document).ready(function() {
-            var table = $('table');
-            $('th').each(function() {
-                var th = $(this), thIndex = th.index(), inverse = false;
-                th.click(function() {
-                    table.find('td').filter(function() {
-                        return $(this).index() === thIndex;
-                        }).sortElements(function(a, b) {
-                            if($.isNumeric([a])) {
-                                alert($.text([a])); 
-                            }
-                            return $.text([a]) > $.text([b]) ?
-                                inverse ? -1 : 1 : inverse ? 1 : -1;
-                        
-                        }, function() {
-                        // parentNode is the element we want to move
-                        return this.parentNode;
-                    });
-                    inverse = !inverse;
-                });
+        //whywhywhywhywhywhywhywhywhywhywhy!!!!!!!!!!!!!!!1!!!!!
+        $(document).on('click', '.affiche_table th', function() {
+            sortable_ajax = $(this).attr('id');
+            $('table').toggleClass('order-desc');
+            if($('table').hasClass('order-desc')) {
+                order_ajax = 'asc';
+            }
+            else {
+                order_ajax = 'desc';
+            }
+            $.ajax({
+                url: "{{ url_for('main_bp.' + template_flag, page=page) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET',
+                success: function(response) {
+                    //document.write(response);
+                    $('table').html( $('<table>').html(response).find('table') );
+                }
+            });
         });
-    });
-/*
-        $(document).ready(function() {
-            $('th').each(function() {
-                $.post('/historique/<int:page>', {
-                    sortable: "lieu"
-                })
-            })
-        })*/
+        $(document).on('click', '#pagination_buttons a', function() {
+            $.ajax({
+                url: "{{ url_for('main_bp.' + template_flag) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET'
+            });
+        });
+
     </script>
 
 {% endblock %}

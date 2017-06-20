@@ -5,7 +5,31 @@
 {% block container %}
   <h2> Menu d'administration</h2>
      
-   {{ wtf.quick_form(form, form_type='horizontal', horizontal_columns=('lg', 1, 10) ) }}
+   <form action="" method="post" name="admin" id="form-admin">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.add_user(class_='admin-func') }}<br>
+		</p>
+		<p>
+			{{ form.extraction_users(class_='admin-func') }}<br>
+		</p>
+		<p>
+			{{ form.signature_direction(class_='admin-func') }}<br>
+		</p>
+		<p>
+			{{ form.extraction_cci(class_='admin-func') }}<br>
+		</p>
+		<p>
+			{{ form.extraction_hors_cci(class_='admin-func') }}<br>
+		</p>
+		<p>	
+			{{ form.historique_totale(class_='admin-func') }}<br>
+		</p>
+		
+		
+		
+		
+	</form>
 
    <br>
    <a href="{{ url_for('home_bp.index') }}"> Cliquer ici pour revenir à "home" </a>

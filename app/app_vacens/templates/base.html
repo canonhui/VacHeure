@@ -19,28 +19,29 @@
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/vacens/index">Home <span class="sr-only">(current)</span></a></li>
+        <li class="active"><a href="/vacEns/index">Home <span class="sr-only">(current)</span></a></li>
       {% if session['user_id'] == null %}
         <li><a href="/login">Login</a></li>
       {% endif %}
           {% if session["user_id"] != null %}
-        <li><a href="/vacens/annulation">Annulation</a></li>                        
-        <li><a href="/vacens/prise">Prise</a></li>
-        <li><a href="/vacens/historique_user">Historique</a></li>
+        <li><a href="/vacEns/annulation">Annulation</a></li>                        
+        <li><a href="/vacEns/prise">Prise</a></li>
+        <li><a href="/vacEns/historique_user">Historique</a></li>
               {% if session["role"] != null %}
                   {% if session["role"] > 1 %}
-            <li><a href="/vacens/validation_vacances">Validation (dept)</a></li>
+            <li><a href="/vacEns/validation_vacances">Validation (dept)</a></li>
                      {% if session["role"] == 77 %}
-            <li><a href="/vacens/validation_vacances_direction">Validation direction</a></li>
+            <li><a href="/vacEns/validation_vacances_direction">Validation direction</a></li>
                       {% endif %}
-            <li><a href="/vacens/historique_validation_vacances">Historique Validation</a></li>
+            <li><a href="/vacEns/historique_validation_vacances">Historique Validation</a></li>
                     {% if session["role"] == 77 %}
-            <li><a href="/vacens/admin">Admin</a></li>
+            <li><a href="/vacEns/admin">Admin</a></li>
                      {% endif %}
                   {% endif %}
               {% endif %}
         
-  <li><a href="/vacens/logout">Logout</a></li>
+  <li><a href="/logout">Logout</a></li>
+  <li><a href="/accueil">Accueil</a></li>
   {% endif %}
       </ul>
   {% if session["user_id"] != null %} 
@@ -70,5 +71,16 @@
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
+  {{ super() }}
+  <script src="https://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('li.active').removeClass('active');
+            $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            
+            if(location.pathname == '/') {
+                $('a[href="/index"]').closest('li').addClass('active');
+            }
+        });
+  </script>
 {% endblock %}

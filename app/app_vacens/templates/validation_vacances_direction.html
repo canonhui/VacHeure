@@ -23,11 +23,11 @@
         {% for i in l %}
             <tr>
 
-                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().nom }} </td>
+                <td width="10%"> {{ User.query.filter_by(user_id=i.user_id).first().nom }} </td>
 
-                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
+                <td width="10%"> {{ User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
 
-                <td width="5%"> {{ models.User.query.filter_by(user_id=i.user_id).first().soldeVacs }} </td>
+                <td width="5%"> {{ User.query.filter_by(user_id=i.user_id).first().soldeVacs }} </td>
                 <td width="5%"> {{ i.type_demande }} </td>    
                             
                 <td width="10%"> {{ conv_sqlstr_date(i.date_demande) }}</td>

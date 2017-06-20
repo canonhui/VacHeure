@@ -66,7 +66,7 @@ class AddUserForm(FlaskForm):
     prenom = StringField('Prénom :', [InputRequired()])
     email = EmailField('Email :', [InputRequired()])
     role = SelectField('Role :', choices=[('1', 'Ensegnant'), ('2', 'Responsable du département'), ('77', 'Admin')])
-    dept = SelectField(u'Département :', choices=[('ISYS', 'ISYS'), ('IT', 'IT'), ('MTEL', 'MTEL'), ('SEN', 'SEN')])
+    dept = SelectField('Département :', choices=[('ISYS', 'ISYS'), ('IT', 'IT'), ('MTEL', 'MTEL'), ('SEN', 'SEN')])
     login = StringField('login esiee :',
                         [InputRequired()])
     submit = SubmitField('Ajouter')
@@ -78,3 +78,6 @@ class AdminForm(FlaskForm):
     signature_direction = SubmitField('Extraire toutes les demandes pour signature direction')
     extraction_cci = SubmitField('Extraire les demandes des écoles CCI')
     extraction_hors_cci = SubmitField('Extraire les demandes hors des écoles CCI')
+    historique_totale = SubmitField('Historique des demandes de tous les utilisateurs')
+    #version_pdf = SubmitField('PDF')
+    
