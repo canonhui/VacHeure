@@ -1,8 +1,11 @@
 Bonjour {{ responsable.prenom }},
 
-<p>{{ user.prenom }} {{ user.nom }} demande à prendre des vacances en report, du {{ conv_sqlstr_date(form.priseDateDebut.data)  }} au {{ conv_sqlstr_date(form.priseDateFin.data) }} ({{ form.priseNbJours.data }} jours ouvrés déclarés). 
-<p>Son solde de vacances est actuellement de {{ user.soldeVacs}} jour(s), et la validation de la demande le porterait à {{ user.soldeVacs - form.priseNbJours.data }} jour(s).
-<br>
+<p><b>{{ user.prenom }} {{ user.nom }}</b> demande de prendre des vacances en report, du <b>{{ conv_sqlstr_date(form.priseDateDebut.data) }}</b> au <b>{{ conv_sqlstr_date(form.priseDateFin.data) }}</b> (<b>{{ form.priseNbJours.data }}</b> jours ouvrés déclarés). 
+<p>Son solde de vacances est actuellement de <b>{{ user.soldeVacs}}</b> jour(s), et la validation de la demande le porterait à <b>{{ user.soldeVacs - form.priseNbJours.data }}</b> jour(s).
+<br><br>
 Merci de bien vouloir valider ou non cette demande via l'application VacEns. 
-
+<br><br>
+Cordialement,
+<br><br>
+Admin de <code>VacEns</code>
 

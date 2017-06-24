@@ -5,7 +5,7 @@ from . import login_manager
 
 
 class HeuresExt(db.Model):
-    heures_ext_id = db.Column(db.Integer, primary_key=True)
+    heure_ext_id = db.Column(db.Integer, primary_key=True)
     date_demande = db.Column(db.Date)
     date_validation_dept = db.Column(db.Date)
     date_validation_dir = db.Column(db.Date)
@@ -16,9 +16,10 @@ class HeuresExt(db.Model):
     motif = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     status = db.Column(db.Integer)
+    pseudo = db.Column(db.String(40))
 
     def __repr__(self):
-        return '<HeuresExt %r>' % self.heures_ext_id
+        return '<HeuresExt %r>' % self.heure_ext_id
 
 
 @login_manager.user_loader

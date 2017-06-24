@@ -19,12 +19,15 @@
 					  <p>
 						  <b>{{ form.login.label }} :</b><br>
 						  {{ form.login(size=40, autofocus=True) }}<br>
+						  {% for error in form.login.errors %}
+						  <span style="color: red;">[{{ error }}]</span>
+						  {% endfor %}<br>
 					  </p>
 					  
 					  <p>
 						  <b>{{ form.password.label }} :</b><br>
 						  {{ form.password(size=40) }}<br>
-						  {% for error in form.login.errors %}
+						  {% for error in form.password.errors %}
 						  <span style="color: red;">[{{ error }}]</span>
 						  {% endfor %}<br>
 					  </p>

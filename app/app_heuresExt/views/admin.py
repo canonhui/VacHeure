@@ -1,5 +1,5 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint)
+                  Blueprint, abort, current_app)
 from flask_login import logout_user, login_required, login_user, current_user
 
 from .. import app_heuresExt
@@ -17,6 +17,22 @@ from config import VALID, HISTORIQUE_PER_PAGE
 
 from . import admin_bp
 
+@login_required
+@admin_bp.url_value_preprocessor
+def get_user_id(endpoint, values):
+    user = User.query.filter_by(user_id=values.pop('user_id')).first()
+    if user is None:
+        abort(404)
+    if user.user_id != current_user.get_id():
+        abort(401)
+
+@admin_bp.url_defaults
+def add_user_id(endpoint, values):
+    if 'user_id' in values or not current_user:
+        return
+    if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
+        values['user_id'] = current_user.get_id()
+
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
 @login_required
@@ -29,89 +45,69 @@ def admin():
     if role == 77:
         form = AdminForm()
         if request.method == 'POST' and form.validate():
-            if 'add_user' in request.form:
-                return redirect(url_for('.admin_add_user'))
-            elif 'extraction_users' in request.form:
-                with open(app_heuresExt.config['FILES'] + '/users.csv', 'w') as csvfile:
-                  fieldnames = ['NOM Prenom', 'Email', 'Dept', 'Login']
-                  writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-                  writer.writeheader() 
-                  for u in list_users:
-                      writer.writerow({'NOM Prenom': u.nom + ' ' + u.prenom,
-                        'Email': u.email,
-                        'Dept': 'EP : Dept. '+ Resp.query.filter_by(resp_id=u.resp_id).first().dept,
-                        'Login': u.login})
-                send_from_directory(directory=app_heuresExt.config['FILES'], filename='users.csv', as_attachment=False)
-                flash("La base des utilisateurs est déjà sauvegardée!")
-                return render_template('admin.html', 
-                                      title="Admin",
-                                      form=form)
-            else:
-                status = [1]
-                if 'signature_direction' in request.form:
-                    extrait_cci = [0, 1]
-                    file_name = 'signature_direction'
-                elif 'extraction_cci' in request.form:
-                    extrait_cci = [1]
-                    file_name = 'extraction_cci'
-                elif 'extraction_hors_cci' in request.form:
-                    extrait_cci = [0]
-                    file_name = 'extraction_hors_cci'
-                elif 'historique_totale' in request.form:
-                    status = [-1, 0, 1, 2]
-                    extrait_cci = [0, 1]
-                    file_name = 'historique_totale'
+            status = [1]
+            date_filter = datetime.utcnow().date()
+            if 'signature_direction' in request.form:
+                extrait_cci = [0, 1]
+                file_name = 'heuresExt_signature_direction'
+            elif 'extraction_cci' in request.form:
+                extrait_cci = [1]
+                file_name = 'extraction_cci'
+            elif 'extraction_hors_cci' in request.form:
+                extrait_cci = [0]
+                file_name = 'extraction_hors_cci'
+            elif 'historique_total' in request.form:
+                status = [-1, 0, 1, 2]
+                extrait_cci = [0, 1]
+                file_name = 'historique_total'
+                date_filter = datetime.strptime("01-01-2000", "%d-%m-%Y").date()
 
-                l,n = [],[]
-                for j in list_users:
-                    heures_ext_en_cours = HeuresExt.query.filter(
-                        HeuresExt.user_id == j.user_id, HeuresExt.status.in_(status),
-                        HeuresExt.date_debut >= datetime.utcnow().date(),
-                        HeuresExt.ecole_cci.in_(extrait_cci)).all()
-                    for n in heures_ext_en_cours:
-                        l.append(n)
-                if len(l) > 0:
-                    rapport = render_template('rapport_pour_direction.html',
-                                           title='Fichier déjà extrait',
-                                           l=l,
-                                           request_type=request.form,
-                                           valid=VALID,
-                                           date_du_jour=datetime.utcnow().strftime("%d/%m/%Y"), 
-                                           User=User
-                                           )
-                    try:
-                        from weasyprint import HTML 
-                        HTML(string=rapport).write_pdf(app_heuresExt.config['FILES'] + '/' + file_name + '.pdf', stylesheets=[app_heuresExt.config['APPDIR']+"/static/css/print.css"])
-                        return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.pdf', as_attachment=False)
-                    except:
-                        with open(app_heuresExt.config['FILES'] + '/' + file_name + '.html', 'w') as htmlfile:
-                            htmlfile.write(rapport)
-                        return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.html', as_attachment=False)    
-                        flash("Le fichier est déjà extrait.")
-                        return render_template('admin.html', 
-                                              title="Admin",
-                                              form=form)
-                flash("Il n'y a pas de demandes")
-                return render_template('admin.html', 
-                                      title="Admin",
-                                      form=form)
-            #else:
+            l,n = [],[]
+            for j in list_users:
+                heures_ext_en_cours = HeuresExt.query.filter(
+                    HeuresExt.user_id == j.user_id, HeuresExt.status.in_(status),
+                    HeuresExt.date_debut >= date_filter,
+                    HeuresExt.ecole_cci.in_(extrait_cci)).all()
+                for n in heures_ext_en_cours:
+                    l.append(n)
+            if len(l) > 0:
+                rapport = render_template('rapport_pour_direction.html',
+                                       title='Fichier déjà extrait',
+                                       l=l,
+                                       request_type=request.form,
+                                       valid=VALID,
+                                       date_du_jour=datetime.utcnow().strftime("%d/%m/%Y"), 
+                                       User=User
+                                       )
+                try:
+                    from weasyprint import HTML 
+                    HTML(string=rapport).write_pdf(app_heuresExt.config['FILES'] + '/' + file_name + '.pdf', stylesheets=[app_heuresExt.config['APPDIR']+"/static/css/print.css"])
+                    return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.pdf', as_attachment=False)
+                except:
+                    with open(app_heuresExt.config['FILES'] + '/' + file_name + '.html', 'w') as htmlfile:
+                        htmlfile.write(rapport)
+                    return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.html', as_attachment=False)    
+                    flash("Le fichier est déjà extrait.")
+                    return render_template('admin.html', 
+                                          title="Admin",
+                                          form=form)
+            flash("Il n'y a pas de demandes")
+            return render_template('admin.html', 
+                                  title="Admin",
+                                  form=form)
+        #else:
             #    pass
         elif request.method == 'GET':
             return render_template('admin.html', 
                                   title='Admin',
                                   form=form)
                                    
-        return render_template('admin.html',
-                              title='Admin',
-                              form=form)
+        #return render_template('admin.html',
+        #                      title='Admin',
+        #                      form=form)
         
     else:
-        return render_template('index.html',
-                               title="Interdit",
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               display=False
-                               )
+        abort(401)
 
 
 @admin_bp.route('/admin/add_user', methods=['GET', 'POST'])
@@ -146,10 +142,6 @@ def admin_add_user():
                               title='Ajout d\'un utilisateur',
                               form=form)
     else:
-        return render_template('admin_add_user.html',
-                           title="Interdit",
-                           msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                           display=False
-                           )
+        abort(401)
 
 

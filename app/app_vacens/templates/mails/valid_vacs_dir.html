@@ -1,8 +1,10 @@
 Bonjour {{ user.prenom }},
 
-<p>Le directeur de l'école vient de {% if vacs.status == '2' %} valider {% else %} rejeter {% endif %} ta demande {% if vacs.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du {{ conv_sqlstr_date(vacs.date_debut)  }} au {{ conv_sqlstr_date(vacs.date_fin) }},  en date du {{ conv_sqlstr_date(vacs.date_demande) }}. 
-<p>{% if vacs.status == '2' %}Ton nouveau solde de vacances est de {{ user.soldeVacs }} jour(s). {% endif %}
-<br>
-Cordialement
+<p>Le directeur de l'école vient de <b>{% if vacs.status == 2 %} valider {% else %} rejeter {% endif %}</b> ta demande {% if vacs.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du <b>{{ conv_sqlstr_date(vacs.date_debut)  }}</b> au <b>{{ conv_sqlstr_date(vacs.date_fin) }}</b>,  en date du <b>{{ conv_sqlstr_date(vacs.date_demande) }}</b>. 
+<p>{% if vacs.status == 2 %}Ton nouveau solde de vacances est de <b>{{ user.soldeVacs }}</b> jour(s). {% endif %}
+<br><br>
+Cordialement,
+<br><br>
+Admin de <code>VacEns</code>
 
 

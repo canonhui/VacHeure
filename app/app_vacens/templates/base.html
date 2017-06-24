@@ -2,7 +2,12 @@
 
 {% block head %}
     {{ super() }}
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ APPDIR }}/static/css/myStyle.css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ APPDIR }}/static/css/main.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--prevent the browser to make a request for the favicon-->
+    <link rel="icon" href="data:;base64,=">
+
     {% if title %}
     <title>{{ title }} - vacances</title>
     {% else %}
@@ -11,31 +16,37 @@
 {% endblock %}
 
 {% block navbar %}
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-static-top">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="/vacens/index">VacEns!</a>
     </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/vacEns/index">Home <span class="sr-only">(current)</span></a></li>
       {% if session['user_id'] == null %}
         <li><a href="/login">Login</a></li>
       {% endif %}
           {% if session["user_id"] != null %}
-        <li><a href="/vacEns/annulation">Annulation</a></li>                        
         <li><a href="/vacEns/prise">Prise</a></li>
+        <li><a href="/vacEns/annulation">Annulation</a></li>                        
         <li><a href="/vacEns/historique_user">Historique</a></li>
-              {% if session["role"] != null %}
-                  {% if session["role"] > 1 %}
-            <li><a href="/vacEns/validation_vacances">Validation (dept)</a></li>
-                     {% if session["role"] == 77 %}
+              {% if current_user.get_role() != null %}
+                  {% if current_user.get_role() > 1 %}
+            <li><a href="/vacEns/validation_vacances_responsable">Validation (dept)</a></li>
+                     {% if current_user.get_role() == 77 %}
             <li><a href="/vacEns/validation_vacances_direction">Validation direction</a></li>
                       {% endif %}
             <li><a href="/vacEns/historique_validation_vacances">Historique Validation</a></li>
-                    {% if session["role"] == 77 %}
-            <li><a href="/vacEns/admin">Admin</a></li>
+                    {% if current_user.get_role() == 77 %}
+            <li><a href="/vacEns/admin">Extraction</a></li>
                      {% endif %}
                   {% endif %}
               {% endif %}
@@ -76,11 +87,13 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('li.active').removeClass('active');
-            $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            current_path = '/' + location.pathname.split('/')[1] + '/' + location.pathname.split('/')[2];
+            $('a[href="' + current_path + '"]').closest('li').addClass('active');
             
             if(location.pathname == '/') {
                 $('a[href="/index"]').closest('li').addClass('active');
             }
         });
   </script>
+
 {% endblock %}

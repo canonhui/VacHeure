@@ -22,9 +22,9 @@ login_manager.login_view = 'home_bp.login'
 login_manager.login_message = 'Veuillez se connecter pour accéder à cette page.'
 
 from .views import home_bp, main_bp, admin_bp
-app_heuresExt.register_blueprint(home_bp)
-app_heuresExt.register_blueprint(main_bp)
-app_heuresExt.register_blueprint(admin_bp)
+app_heuresExt.register_blueprint(home_bp, url_prefix='/<user_id>')
+app_heuresExt.register_blueprint(main_bp, url_prefix='/<user_id>')
+app_heuresExt.register_blueprint(admin_bp, url_prefix='/<user_id>')
 
 #from .views import home, main, admin
 #from . import models_heuresExt, forms, ldap

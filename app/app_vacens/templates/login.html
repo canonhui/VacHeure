@@ -3,11 +3,11 @@
 
 {% block content %}
 {{ super() }}
-<h1 class="text-center">VacEns - Connexion</h1> 
-
+<script type="text/javascript">
+	
+</script>
+<h1 class="text-center">VacHeure - Connexion</h1> 
 <br>
-
-
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<div class="panel panel-primary">
@@ -17,19 +17,22 @@
 				<form action="" method="post" name="login" >
 				{{ form.hidden_tag() }}
 					  <p>
-						  Login:<br>
-						  {{ form.login(size=40) }}<br>
-					  </p>
-					  
-					  <p>
-						  Password :<br>
-						  {{ form.password(size=40) }}<br>
+						  <b>{{ form.login.label }} :</b><br>
+						  {{ form.login(size=40, autofocus=True) }}<br>
 						  {% for error in form.login.errors %}
 						  <span style="color: red;">[{{ error }}]</span>
 						  {% endfor %}<br>
 					  </p>
 					  
-					  <p>{{ form.remember_me }} Remember Me</p>
+					  <p>
+						  <b>{{ form.password.label }} :</b><br>
+						  {{ form.password(size=40) }}<br>
+						  {% for error in form.password.errors %}
+						  <span style="color: red;">[{{ error }}]</span>
+						  {% endfor %}<br>
+					  </p>
+					  
+					  <p>{{ form.remember_me }} <b>{{ form.remember_me.label }}</b></p>
 					  
 					  <p><input class="btn btn-success" type="submit" value="Sign In"></p>
 					

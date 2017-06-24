@@ -63,7 +63,7 @@ class AddUserForm(FlaskForm):
 
 class AdminForm(FlaskForm):
 
-    add_user = SubmitField('Ajouter un utilisateur')
-    extraction = SubmitField('Sauvegarder la base en csv')
     signature_direction = SubmitField('Extraction pour signature direction')
+    historique_total = SubmitField('Historique des vacances de tous les utilisateurs')
+    
     

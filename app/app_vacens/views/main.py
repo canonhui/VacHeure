@@ -1,5 +1,5 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint)
+                  Blueprint, abort)
 from flask_login import login_required, logout_user
 
 from ... import db
@@ -18,133 +18,174 @@ from . import main_vac
 
 
 
-@main_vac.route('/historique_validation_vacances')
+@main_vac.route('/historique_validation_vacances', methods=['GET', 'POST'])
+@main_vac.route('/historique_validation_vacances/<int:page>', methods=['GET', 'POST'])
 @login_required
-def historique_validation_vacances():
-    resp_id = session.get("user_id", None)
-    valid = {2: "oui", 1: "en cours (ok dept)", -1: "non", 0: "en cours"}
-    role = User.query.filter_by(user_id=resp_id).first().role
-    if role >= 1:
+def historique_validation_vacances(page=1):
+    sortable = request.args.get('sortable', 'date_demande')
+    order = request.args.get('order', 'desc')
+    user_id = session.get("user_id", None)
+    role = User.query.filter_by(user_id=user_id).first().role
+    print(sortable, order)
+
+    if role >= 2:
         if role == 77:
             list_vacances_users = User.query.all()
         else:
-            list_vacances_users = User.query.filter_by(resp_id=resp_id).all()    
-        l = []
+            list_vacances_users = User.query.filter_by(resp_id=user_id).all()    
+        users_id = []
         for j in list_vacances_users:
-            v = Vacances.query.filter(Vacances.user_id == j.user_id, Vacances.status != 0).all()
-            for n in v:
-                l.append(n)
+            users_id.append(j.user_id)
 
-        if len(l) > 0:
+        count_histo = Vacances.query.filter(
+          Vacances.user_id.in_(users_id)).count()
+        if count_histo % HISTORIQUE_PER_PAGE == 0:
+            page_max = count_histo / HISTORIQUE_PER_PAGE
+        else:
+            page_max = int(count_histo / HISTORIQUE_PER_PAGE) + 1
+        
+        user_vacs_ens = Vacances.query.join(
+          User, Vacances.user_id==User.user_id).filter(
+          User.user_id.in_(users_id)).order_by(
+          sortable + " " + order).paginate(
+          page, HISTORIQUE_PER_PAGE, False)
+
+        if count_histo > 0:
             msg = "Historique des vacances"
         else:
             msg = "Il n'y a eu aucune vacances autorisées."
-        return render_template('historique_validation_vacances.html',
+        return render_template('affiche_table.html',
                                title='Historique',
-                               l=l,
+                               user_vacs_ens=user_vacs_ens,
                                User=User,
                                Vacances=Vacances,
+                               page=page,
+                               page_max=page_max,
+                               template_flag='historique_validation_vacances',
                                msg=msg,
-                               valid=valid,
+                               valid=VALID,
+                               current_date=datetime.utcnow().date(),
                                display=True)
     else:
-        return render_template('historique_validation_vacances.html',
-                               title='Interdit',
-                               User=User,
-                               Vacances=Vacances,
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               valid=valid,
-                               display=False)
+        abort(401)
 
 
-@main_vac.route('/historique_user')
+@main_vac.route('/historique_user', methods=['GET', 'POST'])
+@main_vac.route('/historique_user/<int:page>', methods=['GET', 'POST'])
 @login_required
-def historique_user():
+def historique_user(page=1):
+    sortable = request.args.get('sortable', 'date_debut')
+    order = request.args.get('order', 'desc')
     user_id = session.get("user_id", None)
     user = load_user(user_id)
-    l = []
-    v = Vacances.query.filter(Vacances.user_id == user_id, Vacances.status != 77).all()
-    for n in v:
-        l.append(n)
-    if len(l) > 0:
+
+    count_histo = Vacances.query.filter(
+      Vacances.user_id == user_id).count()
+    if count_histo % HISTORIQUE_PER_PAGE == 0:
+        page_max = count_histo / HISTORIQUE_PER_PAGE
+    else:
+        page_max = int(count_histo / HISTORIQUE_PER_PAGE) + 1
+    
+    user_vacs_ens = Vacances.query.join(
+      User, Vacances.user_id==User.user_id).filter(
+      User.user_id==user_id).order_by(
+      sortable + " " + order).paginate(
+      page, HISTORIQUE_PER_PAGE, False)
+
+    if count_histo > 0:
         msg = "Historique des vacances - " + "Solde : " + str(user.soldeVacs) + " jour(s) et " + str(user.soldeVacsEnCours) + " jour(s) en cours de validation"
     else:
         msg = "Historique vacances : il n'y a pas eu de demandes effectuées."
-    valid = {2: "oui", 1: "en cours (ok dept)", -1: "non", 0: "en cours"}
-    return render_template('historique_validation_vacances.html',
+    return render_template('affiche_table.html',
                            title='Historique',
-                           l=l,
+                           user_vacs_ens=user_vacs_ens,
                            User=User,
                            Vacances=Vacances,
+                           page=page,
+                           page_max=page_max,
+                           template_flag='historique_user',
                            msg=msg,
-                           valid=valid,
+                           valid=VALID,
+                           current_date=datetime.utcnow().date(),
                            display=True)
 
-@main_vac.route('/tmp', methods=['GET', 'POST'])
+@main_vac.route('/validation_vacances_responsable', methods=['GET', 'POST'])
+@main_vac.route('/validation_vacances_responsable/<int:page>', methods=['GET', 'POST'])
 @login_required  # TODO resp
-def tmp():
-    return redirect(url_for('.validation_vacances'))
-
-@main_vac.route('/validation_vacances', methods=['GET', 'POST'])
-@login_required  # TODO resp
-def validation_vacances():
-    resp_id = session.get("user_id", None)
-    role = User.query.filter_by(user_id=resp_id).first().role
-    if role >= 1:
+def validation_vacances_responsable(page=1):
+    sortable = request.args.get('sortable', 'date_demande')
+    order = request.args.get('order', 'asc')
+    user_id = session.get("user_id", None)
+    role = User.query.filter_by(user_id=user_id).first().role
+    if role >= 2:
         if request.method == 'POST':
             for i in request.form:
                 result = request.form[i]
                 if result != "0":
                     print("ID Vacances : " + i + " Resultat : " + result)
                     v = Vacances.query.filter_by(vacances_id=i).first()
-                    v.status = result
-                    v.date_validation_dept = datetime.utcnow()
                     u = load_user(v.user_id)
-                    if result == -1: #refusées
+                    if result == '-1': #refusées
                         u.soldeVacsEnCours = u.soldeVacsEnCours - v.nb_jour
-                    Mail.resp_valid_demande(u,v)
-                    db.session.commit()          
+                    v.date_validation_dept = datetime.utcnow()
+                    if role == 2:
+                        v.status = int(result)
+                        Mail.resp_valid_demande(u,v)
+                    else:
+                        v.status = 2
+                        v.date_validation_dir = datetime.utcnow()
+                        Mail.dir_valid_demande(u,v)
+                    db.session.commit()
             msg = "Modifications appliquées"
-            return redirect(url_for('.validation_vacances'))
+            return redirect(url_for('.validation_vacances_responsable'))
         else:
             msg = "Validation département - Appliquer les modifications nécessaires"
         
         if role == 77:
             list_vacances_users = User.query.all()
         else:
-            list_vacances_users = User.query.filter_by(resp_id=resp_id).all()
-        l = []
-        v = []
+            list_vacances_users = User.query.filter_by(resp_id=user_id).all()
+        users_id = []
         for j in list_vacances_users:
-            v = Vacances.query.filter_by(user_id=j.user_id, status=0).all()
-            for n in v:
-                l.append(n)
-        if len(l) > 0:
-            return render_template('validation_vacances.html',
+            users_id.append(j.user_id)
+
+        count_histo = Vacances.query.filter(
+          Vacances.user_id.in_(users_id), Vacances.status==0).count()
+        
+        user_vacs_ens = Vacances.query.join(
+          User, Vacances.user_id==User.user_id).filter(
+          User.user_id.in_(users_id), Vacances.status==0).order_by(
+          sortable + " " + order).paginate(
+          page, count_histo, False)
+
+        if count_histo > 0:
+            return render_template('affiche_table.html',
                                    title='Autorisations',
-                                   l=l,
+                                   user_vacs_ens=user_vacs_ens,
+                                   page=1,
                                    User=User,
+                                   template_flag='validation_vacances_responsable',
                                    msg=msg,
+                                   valid=VALID,
                                    display=True)
         else:
-            return render_template('validation_vacances.html',
+            return render_template('affiche_table.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande de vacances.",
                                    display=False
                                    )
     else:
-        return render_template('validation_vacances.html',
-                               title="Interdit",
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               display=False
-                               )
+        abort(401)
 
 
 @main_vac.route('/validation_vacances_direction', methods=['GET', 'POST'])
+@main_vac.route('/validation_vacances_direction/<int:page>', methods=['GET', 'POST'])
 @login_required  # TODO resp
-def validation_vacances_direction():
-    resp_id = session.get("user_id", None)
-    role = User.query.filter_by(user_id=resp_id).first().role
+def validation_vacances_direction(page=1):
+    sortable = request.args.get('sortable', 'date_demande')
+    order = request.args.get('order', 'asc')
+    user_id = session.get("user_id", None)
+    role = User.query.filter_by(user_id=user_id).first().role
     if role == 77:
         if request.method == 'POST':
             for i in request.form:
@@ -152,7 +193,7 @@ def validation_vacances_direction():
                 if result not in ["0", "1"]: #2: admis ou -1: refusé
                     print("ID Vacances : " + i + " Resultat : " + result)
                     v = Vacances.query.filter_by(vacances_id=i).first()
-                    v.status = result
+                    v.status = int(result)
                     v.date_validation_dir = datetime.utcnow()
                     u = load_user(v.user_id)
                     u.soldeVacsEnCours = u.soldeVacsEnCours - v.nb_jour
@@ -166,38 +207,43 @@ def validation_vacances_direction():
         else:
             msg = "Validation direction - Appliquer les modifications nécessaires"        
 
-        list_vacances_users = User.query.all()      
-        l = []
-        v = []
+        list_vacances_users = User.query.all()   
+        users_id = []
         for j in list_vacances_users:
-            v = Vacances.query.filter_by(user_id=j.user_id, status=1).all()
-            for n in v:
-                l.append(n)
-        if len(l) > 0:
+            users_id.append(j.user_id)
 
-            return render_template('validation_vacances_direction.html',
+        count_histo = Vacances.query.filter(
+          Vacances.user_id.in_(users_id), Vacances.status==1).count()
+        
+        user_vacs_ens = Vacances.query.join(
+          User, Vacances.user_id==User.user_id).filter(
+          User.user_id.in_(users_id), Vacances.status==1).order_by(
+          sortable + " " + order).paginate(
+          page, count_histo, False)
+
+        if count_histo > 0:
+            return render_template('affiche_table.html',
                                    title='Autorisations',
-                                   l=l,
+                                   user_vacs_ens=user_vacs_ens,
                                    User=User,
+                                   page=1,
+                                   template_flag='validation_vacances_direction',
                                    msg=msg,
+                                   valid=VALID,
                                    display=True)
         else:
-            return render_template('validation_vacances_direction.html',
+            return render_template('affiche_table.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande de vacances.",
                                    display=False
                                    )
     else:
-        return render_template('validation_vacances_direction.html',
-                               title="Interdit",
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               display=False
-                               )
+        abort(401)
 
 ####
 def rapport_pour_direction():
-    resp_id = session.get("user_id", None)
-    role = User.query.filter_by(user_id=resp_id).first().role
+    user_id = session.get("user_id", None)
+    role = User.query.filter_by(user_id=user_id).first().role
     if role == 77:
         if request.method == 'POST':
             for i in request.form:
@@ -349,18 +395,3 @@ def prise():
                            solde_vacances=user.soldeVacs, #  solde_vacances,
                            solde_vacances_validation=user.soldeVacsEnCours, # solde_vacances_validation,
                            form=form)
-
-
-@main_vac.route('/user/<user_login>', methods=['GET', 'POST'])
-@login_required
-def user(user_login):
-    actual_user = User.query.filter_by(login=user_login).first()
-    nom = actual_user.nom
-    prenom = actual_user.prenom
-    session['username'] = prenom + ' ' + nom
-    return render_template('user.html',
-                           nom=prenom + ' ' + nom)
-
-
-
-

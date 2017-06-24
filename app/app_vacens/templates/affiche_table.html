@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+
+<div class="affiche_div">
+<h4>{{ msg }}</h4>
+{% if user_vacs_ens %}
+{% if template_flag not in ['historique_user', 'historique_validation_vacances'] %}
+    <form action="" method="post">
+{% endif %}
+<table class="order-desc table table-hover affiche_table" width="100%">
+
+    <tr>
+        <th id="nom"> Nom <i class="fa fa-sort"></i></th>
+
+        <th id="prenom"> Prénom <i class="fa fa-sort"></i></th>
+
+        <th id="date_demande"> Date demande <i class="fa fa-sort"></i></th>        
+
+        <th id="type_demande"> Type <i class="fa fa-sort"></i></th>             
+
+        <th id="nb_jour"> Nb jours <i class="fa fa-sort"></i></th>
+
+        <th id="date_debut"> Date début <i class="fa fa-sort"></i></th>
+
+        <th id="date_fin"> Date fin <i class="fa fa-sort"></i></th>
+
+        <th id="status"> Validation {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}<i class="fa fa-sort"></i>{% endif %}</th>
+    </tr>
+        {% for user_vac_ens in user_vacs_ens.items %}
+            <tr>
+
+                <td> {{ user_vac_ens.user.nom }} </td>
+
+                <td> {{ user_vac_ens.user.prenom }} </td>
+
+                <td> {{ conv_sqlstr_date(user_vac_ens.date_demande) }}</td>
+
+                <td> {{ user_vac_ens.type_demande }} </td>    
+
+                <td> {{ abs_str(user_vac_ens.nb_jour) }} </td>
+
+                <td> {{ conv_sqlstr_date(user_vac_ens.date_debut) }}</td>
+
+                <td> {{ conv_sqlstr_date(user_vac_ens.date_fin) }}</td>
+
+                {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}
+                    {% set status = user_vac_ens.status %}
+                    {% if user_vac_ens.date_debut < current_date %}
+                        <td class='deja_finis'> {{ valid[status] }} </td>
+                    {% elif status == 2 %}    
+                        <td class='oui'> {{ valid[status] }} </td>
+                    {% elif status == -1 %}
+                        <td class='non'> {{ valid[status] }} </td>
+                    {% else %}
+                        <td class='en_cours'> {{ valid[status] }} </td>
+                    {% endif %}
+
+                {% elif template_flag == 'validation_vacances_responsable' %}
+                    <td>
+                        <select name= {{ user_vac_ens.vacances_id }} class="form-control validate" style="width: 75px">
+                            <option value=0></option>
+
+                            <option value=1>Oui</option>
+
+                            <option value=-1>Non</option>
+                        </select>
+                    </td>
+
+                {% else %}
+                    <td>
+                        <select name= {{ user_vac_ens.vacances_id }} class="form-control validate" style="width: 75px">
+                            <option value=0></option>
+
+                            <option value=2>Oui</option>
+
+                            <option value=-1>Non</option>
+                        </select>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+
+</table>
+
+{% if template_flag not in ['historique_user', 'historique_validation_vacances'] %}
+        <input class="btn btn-success btn-sm" type="submit" value="Envoyer" />
+    </form>
+{% endif %}
+
+{% if template_flag in ['historique_user', 'historique_validation_vacances'] %}
+
+<div id='pagination_buttons'>
+{% if page == 1 %}
+    Première
+{% else %}
+    <a href="{{ url_for('main_vac.' + template_flag, page=1) }}">Première</a>
+{% endif %}
+{% if user_vacs_ens.has_prev %}
+    <a href="{{ url_for('main_vac.' + template_flag, page=user_vacs_ens.prev_num) }}">&lt;&lt; </a>
+{% else %}
+    &lt;&lt; 
+{% endif %}
+
+<button class="btn btn-page">{{ page }}</button>
+
+{% if user_vacs_ens.has_next %}
+    <a href="{{ url_for('main_vac.' + template_flag, page=user_vacs_ens.next_num) }}"> &gt;&gt;</a>
+{% else %}
+     &gt;&gt;
+{% endif %}
+{% if page == page_max %}
+    Dernière
+{% else %}
+    <a href="{{ url_for('main_vac.' + template_flag, page=page_max) }}">Dernière</a>
+{% endif %}
+</div>
+
+{% endif %}
+
+{% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+    {% if user_vacs_ens %}
+        <script type="text/javascript">
+        //whywhywhywhywhywhywhywhywhywhywhy!!!!!!!!!!!!!!!1!!!!!
+        $(document).on('click', '.affiche_table th', function() {
+            sortable_ajax = $(this).attr('id');
+            $('table').toggleClass('order-desc');
+            if($('table').hasClass('order-desc')) {
+                order_ajax = 'desc';
+            }
+            else {
+                order_ajax = 'asc';
+            }
+            $('#test').toggleClass('fa-sort-desc fa-sort');
+            $.ajax({
+                url: "{{ url_for('main_vac.' + template_flag, page=page) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET',
+                success: function(response) {
+                    //document.write(response);
+                    $('table').html( $('<table>').html(response).find('table') );
+                }
+            });
+            if($('table').hasClass('order-desc')) {
+                $('th.fa-sort-asc').toggleClass('fa-sort fa-sort-asc');
+                $(this).find('i').removeClass('fa-sort').addClass('fa-sort-desc');
+                return;
+            }
+            else {
+                $('th.fa-sort-desc').toggleClass('fa-sort fa-sort-desc');
+                $(this).find('i').removeClass('fa-sort').addClass('fa-sort-asc');
+                return;
+            }
+
+            alert($('#nom').find('i').attr('class'));
+        });
+        $(document).on('click', '#pagination_buttons a', function() {
+            $.ajax({
+                url: "{{ url_for('main_vac.' + template_flag, page=page) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET'
+            });
+        });
+
+        </script>
+    {% endif %}
+{% endblock %}

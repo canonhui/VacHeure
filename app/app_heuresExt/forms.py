@@ -73,11 +73,9 @@ class AddUserForm(FlaskForm):
 
 class AdminForm(FlaskForm):
 
-    add_user = SubmitField('Ajouter un utilisateur')
-    extraction_users = SubmitField('Sauvegarder la base users en csv')
     signature_direction = SubmitField('Extraire toutes les demandes pour signature direction')
     extraction_cci = SubmitField('Extraire les demandes des écoles CCI')
     extraction_hors_cci = SubmitField('Extraire les demandes hors des écoles CCI')
-    historique_totale = SubmitField('Historique des demandes de tous les utilisateurs')
-    #version_pdf = SubmitField('PDF')
+    historique_total = SubmitField('Historique des déclarations de tous les utilisateurs')
+
     

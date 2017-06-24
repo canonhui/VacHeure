@@ -32,6 +32,9 @@ class User(db.Model):
     def get_name(self):
         return self.prenom+' '+self.nom
 
+    def get_role(self):
+        return self.role
+
     @staticmethod
     def create_user():
        # actual_user = Ldap.connect()

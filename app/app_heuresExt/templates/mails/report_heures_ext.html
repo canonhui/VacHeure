@@ -1,26 +1,13 @@
 Bonjour {{ responsable.prenom }},
 
-<p><b>{{ user.prenom }} {{ user.nom }}</b> vient de déclarer <b>{{ form.decNbHeures.data }}</b> heures extérieures à l'école <b>{{ form.decLieu.data }}</b>{% if form.decEcoleCCI.data == '1' %} (une école de la CCI){% else %} (une école hors CCI){% endif %}, à partir de <b>{{ form.decDateDebut.data }}</b>. 
+<p><b>{{ user.prenom }} {{ user.nom }}</b> vient de déclarer <b>{{ heure_ext.nb_heures }}</b> heures extérieures à l'école <b>{{ heure_ext.lieu }}</b>{% if heure_ext.ecole_cci %} (une école de la CCI){% else %} (une école hors CCI){% endif %}, à partir de <b>{{ conv_sqlstr_date(heure_ext.date_debut) }}</b>. 
 <br><br>
 Cliquez les liens ci-dessous pour valider ou rejeter cette demande :<br>
-<a href="{{ url_for('main_bp.validation_email', heure_ext_id=heure_ext_id, status=1, _external=True) }}" id='oui'> -Valider</a><br>
-<a href="{{ url_for('main_bp.validation_email', heure_ext_id=heure_ext_id, status=0, _external=True) }}" id='non'> -Rejeter</a><br><br> ou <br>
+<a href="{{ url_for('main_bp.validation_email', pseudo=heure_ext.pseudo, heure_ext_id=heure_ext.heure_ext_id, status=1, _external=True) }}" id='oui'> -Valider</a><br>
+<a href="{{ url_for('main_bp.validation_email', pseudo=heure_ext.pseudo, heure_ext_id=heure_ext.heure_ext_id, status=0, _external=True) }}" id='non'> -Rejeter</a><br><br> ou <br>
 <a href="{{ url_for('main_bp.validation_dept', _external=True) }}"> Cliquez ici pour voir le detail</a>
 
 <br><br>
 Cordialement,
 <br><br>
 Admin de l'<code>HeuresExt</code></p>
-
-<script src="https://code.jquery.com/jquery.js"></script>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('j').bind('click', function() {
-			alert('suceess');
-			$.post(url_for('main_bp.validation_email'), u_prenom: {{ user.prenom }}, v_prenom: {{ responsable.prenom }}, status=1)
-			.success(function() {
-				alert('suceess22');
-			});
-		})
-	})
-</script>

@@ -3,7 +3,7 @@
 {{ super() }}
 
 <h4>{{msg}}</h4>
-{% if l %}
+{% if user_vacs_ens %}
 <table>
 
     <tr>
@@ -19,12 +19,12 @@
 
         <th> Validation </th>
     </tr>
-        {% for i in l %}
+        {% for i in user_vacs_ens.items %}
             <tr>
 
-                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().nom }} </td>
+                <td width="10%"> {{ i.user.nom }} </td>
 
-                <td width="10%"> {{ models.User.query.filter_by(user_id=i.user_id).first().prenom }} </td>
+                <td width="10%"> {{ i.user.prenom }} </td>
 
                 <td width="10%"> {{i.nb_jour }} </td>
 
@@ -32,13 +32,13 @@
 
                 <td width="10%"> {{i.date_fin }}</td>
 
-                <td width="10%">{% if models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status == 1 %}
+                <td width="10%">{% if i.status == 1 %}
                         oui
                     {% endif % }
-                    {% if  models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status == -1 %}
+                    {% if  i.status == -1 %}
                         non
                     {% endif %}
-                    {% if models.Vacances.query.filter_by(vacances_id=i.vacances_id).first().status == 0 %}
+                    {% if i.status == 0 %}
                         en attente
                     {% endif %}
                 </td>

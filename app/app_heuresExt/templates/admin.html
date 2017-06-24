@@ -3,16 +3,10 @@
 {% import "bootstrap/wtf.html" as wtf %}
  
 {% block container %}
-  <h2> Menu d'administration</h2>
+  <h2> Menu d'extraction</h2>
      
    <form action="" method="post" name="admin" id="form-admin">
 		{{ form.hidden_tag() }}
-		<p>
-			{{ form.add_user(class_='admin-func') }}<br>
-		</p>
-		<p>
-			{{ form.extraction_users(class_='admin-func') }}<br>
-		</p>
 		<p>
 			{{ form.signature_direction(class_='admin-func') }}<br>
 		</p>
@@ -23,10 +17,8 @@
 			{{ form.extraction_hors_cci(class_='admin-func') }}<br>
 		</p>
 		<p>	
-			{{ form.historique_totale(class_='admin-func') }}<br>
+			{{ form.historique_total(class_='admin-func') }}<br>
 		</p>
-		
-		
 		
 		
 	</form>

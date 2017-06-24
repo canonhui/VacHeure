@@ -4,6 +4,8 @@
     {{ super() }}
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/myStyle.css') }}">
+    <!--prevent the browser to make a request for the favicon-->
+    <link rel="icon" href="data:;base64,=">
     <title>{% block title %}
         {% if title %}
             {{ title }} - HeuresExt
@@ -21,18 +23,27 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="/index">VacHeure!</a>
     </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/index">Home</a></li>
       {% if session['user_id'] == null %}
+        <li class="active"><a href="/index">Home</a></li>
         <li id='login'><a href="/login">Login</a></li>
       {% endif %}
       {% if session["user_id"] != null %}
-
-        <li><a href="/accueil">Accueil</a></li>
-  <li><a href="/logout">Logout</a></li>
+        <li class="active"><a href="/{{ session['user_id'] }}/index">Home</a></li>
+        <li><a href="/{{ session['user_id'] }}/accueil">Accueil</a></li>
+        {% if current_user.get_role() == 77 %}
+          <li><a href="/{{ session['user_id'] }}/admin">Admin</a></li>
+        {% endif %}
+  <li><a href="/{{ session['user_id'] }}/logout">Logout</a></li>
   {% endif %}
       </ul>
   {% if session["user_id"] != null %} 
@@ -67,7 +78,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('li.active').removeClass('active');
-            $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            current_path = '/' + location.pathname.split('/')[1];
+            $('a[href="' + current_path + '"]').closest('li').addClass('active');
             
             if(location.pathname == '/') {
                 $('a[href="/index"]').closest('li').addClass('active');

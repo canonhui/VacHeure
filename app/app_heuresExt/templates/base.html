@@ -2,8 +2,10 @@
 
 {% block head %}
     {{ super() }}
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/main.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/myStyle.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ APPDIR }}/static/css/myStyle.css">
+    <link rel= "stylesheet" type= "text/css" href= "{{ APPDIR }}/static/css/main.css">
+    <!--prevent the browser to make a request for the favicon-->
+    <link rel="icon" href="data:;base64,=">
     <title>{% block title %}
         {% if title %}
             {{ title }} - HeuresExt
@@ -21,9 +23,15 @@
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <a class="navbar-brand" href="/heuresExt/index">HeuresExt!</a>
     </div>
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
         <li class="active"><a href="/heuresExt/index">Home</a></li>
       {% if session['user_id'] == null %}
@@ -32,12 +40,12 @@
       {% if session["user_id"] != null %}
         <li><a href="/heuresExt/dec">Déclaration</a></li>
         <li><a href="/heuresExt/historique">Historique</a></li>
-              {% if session["role"] != null %}
-                  {% if session["role"] > 1 %}
+              {% if current_user.get_role() != null %}
+                  {% if current_user.get_role() > 1 %}
             <li><a href="/heuresExt/validation_dept">Validation (dept)</a></li>
-                     {% if session["role"] == 77 %}
+                     {% if current_user.get_role() == 77 %}
             <li><a href="/heuresExt/validation_direction">Validation direction</a></li>
-            <li><a href="/heuresExt/admin">Admin</a></li>
+            <li><a href="/heuresExt/admin">Extraction</a></li>
                      {% endif %}
                   {% endif %}
               {% endif %}
@@ -78,7 +86,8 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('li.active').removeClass('active');
-            $('a[href="' + location.pathname + '"]').closest('li').addClass('active');
+            current_path = '/' + location.pathname.split('/')[1] + '/' + location.pathname.split('/')[2];
+            $('a[href="' + current_path + '"]').closest('li').addClass('active');
             
             if(location.pathname == '/') {
                 $('a[href="/index"]').closest('li').addClass('active');

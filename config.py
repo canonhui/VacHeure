@@ -35,3 +35,5 @@ VALID = {2: "oui", 1: "en cours (ok dept)", -1: "non", 0: "en cours"}
 
 #pagination
 HISTORIQUE_PER_PAGE = 14
+
+NB_CODE = 10

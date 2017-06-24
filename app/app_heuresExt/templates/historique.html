@@ -71,7 +71,7 @@
 
             {% elif template_flag == 'validation_dept' %}
                 <td>
-                    <select name= {{ user_heure_ext.heures_ext_id }} class="form-control validate" style="width: 75px">
+                    <select name= "{{ user_heure_ext.heure_ext_id }}" class="form-control validate" style="width: 75px">
                         <option value=0></option>
 
                         <option value=1>Oui</option>
@@ -82,7 +82,7 @@
 
             {% else %}
                 <td>
-                    <select name= {{ user_heure_ext.heures_ext_id }} class="form-control validate" style="width: 75px">
+                    <select name= "{{ user_heure_ext.heures_ext_id }}" class="form-control validate" style="width: 75px">
                         <option value=0></option>
 
                         <option value=2>Oui</option>
@@ -102,7 +102,7 @@
 {% endif %}
 
 {% if template_flag == 'historique' %}
-{{ page }}
+
 <div id='pagination_buttons'>
 {% if page == 1 %}
     Première
@@ -114,6 +114,8 @@
 {% else %}
     &lt;&lt; 
 {% endif %}
+
+<button class="btn btn-page">{{ page }}</button>
 
 {% if user_heures_ext.has_next %}
     <a href="{{ url_for('main_bp.' + template_flag, page=user_heures_ext.next_num) }}"> &gt;&gt;</a>
@@ -135,6 +137,7 @@
 
 {% block scripts %}
     {{ super() }}
+    {% if user_heures_ext %}
     <script type="text/javascript">
         //whywhywhywhywhywhywhywhywhywhywhy!!!!!!!!!!!!!!!1!!!!!
         $(document).on('click', '.affiche_table th', function() {
@@ -165,5 +168,5 @@
         });
 
     </script>
-
+    {% endif %}
 {% endblock %}

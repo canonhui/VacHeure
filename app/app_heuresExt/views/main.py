@@ -1,6 +1,6 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint)
-from flask_login import login_required, logout_user
+                  Blueprint, abort, current_app)
+from flask_login import login_required, logout_user, current_user
 
 from ... import db
 from ..models_heuresExt import HeuresExt
@@ -18,16 +18,32 @@ from . import main_bp
 
 #def sub_func(role, template_flag):
 
+@login_required
+@main_bp.url_value_preprocessor
+def get_user_id(endpoint, values):
+    user = User.query.filter_by(user_id=values.pop('user_id')).first()
+    if user is None:
+        abort(404)
+    if user.user_id != current_user.get_id():
+        abort(401)
+
+@main_bp.url_defaults
+def add_user_id(endpoint, values):
+    if 'user_id' in values or not current_user:
+        return
+    if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
+        values['user_id'] = current_user.get_id()
+
+
 
 @main_bp.route('/historique', methods=['GET', 'POST'])
 @main_bp.route('/historique/<int:page>', methods=['GET', 'POST'])
 @login_required
 def historique(page = 1):
     user_id = session.get("user_id", None)
-    sortable = request.args.get('sortable', 'date_demande')
+    sortable = request.args.get('sortable', 'date_debut')
     order = request.args.get('order', 'desc')
     print('page', page)
-    
     #valid = {2: "oui", 1: "en cours (ok dept)", -1: "non", 0: "en cours"}
     role = User.query.filter_by(user_id=user_id).first().role
     user = User.query.filter_by(user_id=user_id).first()
@@ -68,31 +84,41 @@ def historique(page = 1):
                            display=True)
   
 
-@main_bp.route('/validation_email/<heure_ext_id>/<int:status>')
-def validation_email(heure_ext_id, status):
-    heure_ext = HeuresExt.query.filter_by(heures_ext_id=heure_ext_id).first()
+@main_bp.route('/validation_email/<pseudo>/<heure_ext_id>/<int:status>')
+def validation_email(pseudo, heure_ext_id, status):
+    heure_ext = HeuresExt.query.filter_by(heure_ext_id=heure_ext_id).first()
+    if heure_ext is None:
+        return render_template('validation_email.html', 
+                              title='Demande n\'existe pas',
+                              msg='Cette demande n\'existe pas')
+    if heure_ext.pseudo != pseudo:
+        abort(404)
+    from datetime import timedelta
+    if datetime.utcnow().date() > heure_ext.date_demande + timedelta(days=1):
+        msg = 'Ce lien n\'est plus valable, veuillez répondre à cette demande en allant à l\'appli HeuresExt!'
+        return render_template('validation_email.html', 
+                              title='Lien non-valable',
+                              msg=msg)
     old_status = heure_ext.status
-    if old_status == 0 or (status == 2 and old_status != -1):
+    if old_status == 0 or (status == 2 and old_status == 1):
         user_id = heure_ext.user_id
         resp_id = User.query.filter_by(user_id=user_id).first().resp_id
-        validator = User.query.filter_by(user_id=resp_id).first()
-        role = validator.role
         u = load_user(user_id)
+        role = u.get_role()
         heure_ext.status = status
         if role == 77:
             heure_ext.date_validation_dir = datetime.utcnow()
             Mail.dir_valid_demande(u, heure_ext)
         elif role == 2:
             heure_ext.date_validation_dept = datetime.utcnow()
-            Mail.resp_valid_demande(u, validator, heure_ext)
+            Mail.resp_valid_demande(u, heure_ext)
         db.session.commit()
-        flash('Modification appliquée!')
-
         return render_template('validation_email.html', 
-                              title='Validation par email')
-    flash('Vous avez déjà traiter cette demande!')
+                              title='Validation par email',
+                              msg='Modification appliquée!')
     return render_template('validation_email.html', 
-                          title='Validation par email')
+                          title='Validation par email',
+                          msg='Vous avez déjà traiter cette demande!')
 
 
 @main_bp.route('/validation_dept', methods=['GET', 'POST'])
@@ -101,22 +127,24 @@ def validation_email(heure_ext_id, status):
 def validation_dept(page = 1):
     user_id = session.get("user_id", None)
     sortable = request.args.get('sortable', 'date_demande')
-    order = request.args.get('order', 'desc')
+    order = request.args.get('order', 'asc')
     role = User.query.filter_by(user_id=user_id).first().role
-    validator = User.query.filter_by(user_id=user_id).first()
     if role >= 1:
         if request.method == 'POST':
             for i in request.form:
                 result = request.form[i]
                 if result != "0":
                     print("ID HeuresExt : " + i + " Résultat : " + result)
-                    heurs_ext = HeuresExt.query.filter_by(heures_ext_id=i).first()
-                    heurs_ext.status = int(result)
-                    heurs_ext.date_validation_dept = datetime.utcnow()
-                    u = load_user(heurs_ext.user_id)
-                    #if result == -1: #refusées
-                    #    u.soldeVacsEnCours = u.soldeVacsEnCours - heurs_ext.nb_jour
-                    Mail.resp_valid_demande(u, validator, heurs_ext)
+                    heures_ext = HeuresExt.query.filter_by(heure_ext_id=i).first()
+                    u = load_user(heures_ext.user_id)
+                    heures_ext.date_validation_dept = datetime.utcnow()
+                    if role == 2:
+                        heures_ext.status = int(result)
+                        Mail.resp_valid_demande(u, heures_ext)
+                    elif role == 77:
+                        heures_ext.status = 2
+                        heures_ext.date_validation_dir = datetime.utcnow()
+                        Mail.dir_valid_demande(u,heures_ext)
                     db.session.commit()          
             msg = "Modifications appliquées"
             return redirect(url_for('.validation_dept'))
@@ -158,11 +186,7 @@ def validation_dept(page = 1):
                                    display=False
                                    )
     else:
-        return render_template('historique.html',
-                               title="Interdit",
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               display=False
-                               )
+        abort(401)
 
 
 @main_bp.route('/validation_direction', methods=['GET', 'POST'])
@@ -171,7 +195,7 @@ def validation_dept(page = 1):
 def validation_direction(page = 1):
     user_id = session.get("user_id", None)
     sortable = request.args.get('sortable', 'date_demande')
-    order = request.args.get('order', 'desc')
+    order = request.args.get('order', 'asc')
     role = User.query.filter_by(user_id=user_id).first().role
     if role == 77:
         if request.method == 'POST':
@@ -179,7 +203,7 @@ def validation_direction(page = 1):
                 result = request.form[i]
                 if result not in ["0", "1"]: #2: admis ou -1: refusé
                     print("ID HeuresExt : " + i + " Resultat : " + result)
-                    v = HeuresExt.query.filter_by(heures_ext_id=i).first()
+                    v = HeuresExt.query.filter_by(heure_ext_id=i).first()
                     v.status = int(result)
                     v.date_validation_dir = datetime.utcnow()
                     u = load_user(v.user_id)
@@ -223,11 +247,7 @@ def validation_direction(page = 1):
                                    display=False
                                    )
     else:
-        return render_template('historique.html',
-                               title="Interdit",
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               display=False
-                               )
+        abort(401)
 
 @main_bp.route('/dec', methods=['GET', 'POST'])
 @login_required
@@ -241,8 +261,14 @@ def dec():
     user = load_user(user_id)
 
     if form.validate_on_submit():
-        heure_ext_id = DbMethods.dec_heures_ext(user_id, form)
-        Mail.report_demande(user, form, heure_ext_id)
+        import random, string
+        from config import NB_CODE
+        factors = string.ascii_letters + string.digits
+        random.seed(datetime.now())
+        pseudo = ''.join(random.sample(factors, NB_CODE))
+
+        heure_ext = DbMethods.dec_heures_ext(user_id, pseudo, form)
+        Mail.report_demande(user, heure_ext)
         #Mail.vacation_notification(user, [form.decDateDebut.data, form.decDateFin.data],
         #                           Mail.notification_type.remove_vacation)
         return redirect(url_for('.historique'))

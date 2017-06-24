@@ -26,26 +26,19 @@ def login():
             u = User.query.filter_by(login=form.login.data).first()
             if not u:
                 flash("Login non autorisé", 'danger')
-                #return redirect(url_for('.index'))
             else:
-                #if not u:
-                #    u = User.create_user()
-                #    db.session.add(u)
-                #    db.session.commit()
-                login_user(u)
+                login_user(u, remember=form.remember_me.data)
                 session["user_id"] = u.get_id()
                 session["role"] = u.role
                 session['username'] = u.prenom + ' ' + u.nom
-                return redirect(url_for('main_vac.historique_user'))
-                #return redirect('/user/' + form.login.data)
-    # print(current_user.get_id())      
+                next = request.args.get('next')
+                return redirect(next or url_for('main_vac.historique_user'))
     if current_user.get_id() is not None:
         return redirect(url_for('main_vac.historique_user'))
     else:       
         return render_template('login.html',
-                           title='Sign Up',
+                           title='Sign In',
                            form=form)
-
 
 @home_vac.route('/logout')
 @login_required

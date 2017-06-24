@@ -1,9 +1,11 @@
 Bonjour {{ user.prenom }},
 
-<p>{{ responsable.prenom }} {{ responsable.nom }} vient de {% if vacs.status == '1' %} valider {% else %} rejeter {% endif %} ta demande {% if vacs.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du {{ conv_sqlstr_date(vacs.date_debut)  }} au {{ conv_sqlstr_date(vacs.date_fin) }},  en date du {{ conv_sqlstr_date(vacs.date_demande) }}.  
+<p><b>{{ responsable.prenom }} {{ responsable.nom }}</b> vient de <b>{% if vacs.status == 1 %} valider {% else %} rejeter {% endif %}</b> ta demande {% if vacs.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du <b>{{ conv_sqlstr_date(vacs.date_debut)  }}</b> au <b>{{ conv_sqlstr_date(vacs.date_fin) }}</b>,  en date du <b>{{ conv_sqlstr_date(vacs.date_demande) }}</b>.  
 <br>
-{% if vacs.status == '1' %} Cette validation reste à confirmer par la direction. {% endif %}
-<br>
-Cordialement
+{% if vacs.status == 1 %} Cette validation reste à confirmer par la direction. {% endif %}
+<br><br>
+Cordialement,
+<br><br>
+Admin de <code>VacEns</code>
 
 

@@ -1,5 +1,5 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint, abort)
+                  Blueprint, abort, current_app)
 from flask_login import logout_user, login_required, login_user, current_user
 
 from ..forms import LoginForm
@@ -10,6 +10,22 @@ from .. import app_heuresExt
 from ..utils.nocache import nocache
 
 from . import home_bp
+
+@login_required
+@home_bp.url_value_preprocessor
+def get_user_id(endpoint, values):
+    user = User.query.filter_by(user_id=values.pop('user_id')).first()
+    if user is None:
+        abort(404)
+    if user.user_id != current_user.get_id():
+        abort(401)
+
+@home_bp.url_defaults
+def add_user_id(endpoint, values):
+    if 'user_id' in values or not current_user:
+        return
+    if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
+        values['user_id'] = current_user.get_id()
 
 
 @home_bp.route('/')
@@ -38,9 +54,6 @@ def login():
                 #session['remember_me'] = form.remember_me.data
                 next = request.args.get('next')
                 return redirect(next or url_for('main_bp.historique'))
-                #return redirect('/user/' + form.login.data)
-    # print(current_user.get_id())
-    print('remember me:', form.remember_me.data)
     if current_user.get_id() is not None:
         return redirect(url_for('main_bp.historique'))
     else:       
@@ -64,7 +77,7 @@ def logout():
     logout_user()
     return redirect(url_for('login', _external=True))
 
-'''
+
 @app_heuresExt.errorhandler(401)
 def unauthorized(e):
     return render_template('401.html', title="Unauthorized"), 401
@@ -73,4 +86,3 @@ def unauthorized(e):
 @app_heuresExt.errorhandler(404)
 def unauthorized(e):
     return render_template('404.html', title="Page not found"), 404
-'''

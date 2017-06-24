@@ -1,8 +1,0 @@
-Bonjour {{ responsable.prenom }},
-
-<p>{{ user.prenom }} {{ user.nom }} demande à annuler ses vacances du {{ conv_sqlstr_date(form.annulationDateDebut.data)  }} au {{ conv_sqlstr_date(form.annulationDateFin.data) }} ({{ form.annulationNbJours.data }} jours ouvrés déclarés), pour le motif suivant : "<em>{{ form.annulationMotif.data}}</em>". 
-<p>Son solde de vacances est actuellement de {{ user.soldeVacs}} jour(s), et la validation de la demande le porterait à {{ user.soldeVacs + form.annulationNbJours.data }} jour(s).
-<br>
-Merci de bien vouloir valider ou non cette demande via l'application VacEns. 
-
-

@@ -5,6 +5,7 @@ from .. import mail
 from ...models_commun import User
 from enum import Enum
 from config import MAIL_USERNAME, MAIL_DEFAULT_SENDER
+from datetime import datetime
 
 
 class Mail :
@@ -53,7 +54,8 @@ class Mail :
             )
 
     @staticmethod
-    def report_demande(user, form, heure_ext_id):
+    def report_demande(user, heure_ext):
+        
         responsable = User.query.get(user.resp_id)
         mail_object = "[HeuresExt] Demande d'une déclaration d'heures extérieures ("+ user.nom + " " + user.prenom +")"
         template_base_name = "mails/"
@@ -64,12 +66,11 @@ class Mail :
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
                    responsable=responsable,
-                   heure_ext_id=heure_ext_id,
-                   form=form
+                   heure_ext=heure_ext
             )
     @staticmethod
-    def resp_valid_demande(user, validator, heures_ext):
-        #responsable = User.query.get(user.resp_id)
+    def resp_valid_demande(user, heures_ext):
+        responsable = User.query.get(user.resp_id)
         mail_object = "[HeuresExt] Retour sur votre déclaration d'heures extérieures"
         template_base_name = "mails/"
         template = template_base_name + "valid_heures_ext_resp"
@@ -78,8 +79,8 @@ class Mail :
         cc = [] # doyen ?
         Mail.send_email(to, mail_object, template, cc=cc,
                    user=user,
-                   validator=validator,
-                   heures_ext = heures_ext
+                   responsable=responsable,
+                   heures_ext=heures_ext
             )
 
     @staticmethod

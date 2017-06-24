@@ -1,8 +1,8 @@
 Bonjour {{ user.prenom }},
 
-Le directeur de l'école vient de {% if heures_ext.status == '2' %} valider {% else %} rejeter {% endif %} votre demande pour enseigner {{ heures_ext.nb_heures }} heures à l'école {{ heures_ext.lieu }} à partir de {{ conv_sqlstr_date(heures_ext.date_debut) }} en date du {{ conv_sqlstr_date(heures_ext.date_demande) }}. Cliquez le lien pour voir le detail: {{ url_for('main_bp.historique', _external=True) }}
+Le directeur de l'école vient de {% if heures_ext.status == 2 %} valider {% else %} rejeter {% endif %} votre demande pour enseigner {{ heures_ext.nb_heures }} heures à l'école {{ heures_ext.lieu }} à partir de {{ conv_sqlstr_date(heures_ext.date_debut) }} en date du {{ conv_sqlstr_date(heures_ext.date_demande) }}. Cliquez le lien pour voir le detail: {{ url_for('main_bp.historique', _external=True) }}
 
-{% if heures_ext.status == '2' %}Bon enseignement!{% endif %}
+{% if heures_ext.status == 2 %}Bon enseignement!{% endif %}
 
 Cordialement,
 

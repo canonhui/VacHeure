@@ -1,32 +1,61 @@
 .affiche_div {
-	margin-left: 2%;
-}
-
-.affiche_table {
+  margin-left: 2%;
 }
 
 .oui {
-	color: green;
+  color: green;
 }
 
 .non {
-	color: red;
+  color: red;
 }
 
 .en_cours {
-	color: black;
+  color: black;
 }
 
 .deja_finis {
-	color: grey;
+  color: grey;
 }
 
-.pagination_buttons {
-	text-align: center;
+#pagination_buttons {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.btn-success {
+  margin-bottom: 30px;
 }
 
 th {
-	cursor: pointer;
+  cursor: pointer;
+}
+
+th i {
+  margin-left: 20%;
+}
+
+#form-admin {
+  margin-left: 7%;
+
+}
+
+#form-admin p {
+
+  padding-top: 7px;
+}
+
+#form-admin .admin-func {
+  font-size: 14px;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  padding: 7px;
+
+}
+
+#form-admin .admin-func:hover {
+  background-color: #eee;
 }
 
 #entry {
@@ -38,7 +67,18 @@ th {
 	color: #fff;
 }
 
+.btn-page {
+  color: #fff;
+  font-family: monospace;
+  background-color: #7c7;
+  height: 23px;
+  width: 27px;
+  padding: 0;
+  margin: 0 4px 0 4px;
+  overflow: auto;
+}
 
+/*
 select {
   margin: 50px;
   border: 1px solid #111;
@@ -53,16 +93,17 @@ select {
   appearance: none;
   background: url(http://www.stackoverflow.com/favicon.ico) 96% / 15% no-repeat #eee;
 }
-
-/* CAUTION: IE hackery ahead */
+*/
+/* CAUTION: IE hackery ahead
 select::-ms-expand { 
     display: none; /* remove default arrow on ie10 and ie11 */
 }
-
-/* target Internet Explorer 9 to undo the custom arrow */
+ */
+/* target Internet Explorer 9 to undo the custom arrow 
 @media screen and (min-width:0\0) {
     select {
         background:none\9;
         padding: 5px\9;
     } 
 }
+*/

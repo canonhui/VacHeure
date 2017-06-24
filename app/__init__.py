@@ -29,7 +29,10 @@ app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
 	'/vacEns': app_vacens
 	})
 
-from . import views, models_commun, forms, ldap
+from .views import main_app_bp
+app.register_blueprint(main_app_bp, url_prefix='/<user_id>')
+
+#from . import views, models_commun, forms, ldap
 
 os.environ["HTTP_PROXY"] = "http://cache.esiee.fr:3128"
 os.environ["HTTPS_PROXY"] = "http://cache.esiee.fr:3128"
