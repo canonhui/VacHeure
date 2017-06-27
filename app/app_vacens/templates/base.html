@@ -94,6 +94,16 @@
                 $('a[href="/index"]').closest('li').addClass('active');
             }
         });
+
+        $(document).on('input propertychange', '.dateDebut, .dateFin', function() {
+            if($(this).val().length == 2 || $(this).val().length == 5) {
+                var old_value = $(this).val();
+                $(this).val(old_value + "/");
+            }
+          });
+
+        
+
   </script>
 
 {% endblock %}

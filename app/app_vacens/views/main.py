@@ -57,8 +57,6 @@ def historique_validation_vacances(page=1):
         return render_template('affiche_table.html',
                                title='Historique',
                                user_vacs_ens=user_vacs_ens,
-                               User=User,
-                               Vacances=Vacances,
                                page=page,
                                page_max=page_max,
                                template_flag='historique_validation_vacances',
@@ -99,8 +97,6 @@ def historique_user(page=1):
     return render_template('affiche_table.html',
                            title='Historique',
                            user_vacs_ens=user_vacs_ens,
-                           User=User,
-                           Vacances=Vacances,
                            page=page,
                            page_max=page_max,
                            template_flag='historique_user',
@@ -163,7 +159,6 @@ def validation_vacances_responsable(page=1):
                                    title='Autorisations',
                                    user_vacs_ens=user_vacs_ens,
                                    page=1,
-                                   User=User,
                                    template_flag='validation_vacances_responsable',
                                    msg=msg,
                                    valid=VALID,
@@ -225,7 +220,6 @@ def validation_vacances_direction(page=1):
             return render_template('affiche_table.html',
                                    title='Autorisations',
                                    user_vacs_ens=user_vacs_ens,
-                                   User=User,
                                    page=1,
                                    template_flag='validation_vacances_direction',
                                    msg=msg,
@@ -239,61 +233,6 @@ def validation_vacances_direction(page=1):
                                    )
     else:
         abort(401)
-
-####
-def rapport_pour_direction():
-    user_id = session.get("user_id", None)
-    role = User.query.filter_by(user_id=user_id).first().role
-    if role == 77:
-        if request.method == 'POST':
-            for i in request.form:
-                result = request.form[i]
-                if result not in ["0", "1"]: #2: admis ou -1: refusé
-                    print("ID Vacances : " + i + " Resultat : " + result)
-                    v = Vacances.query.filter_by(vacances_id=i).first()
-                    v.status = result
-                    v.date_validation_dir = datetime.utcnow()
-                    u = load_user(v.user_id)
-                    u.soldeVacsEnCours = u.soldeVacsEnCours - v.nb_jour
-                    if result == "2":
-                        u.soldeVacs = u.soldeVacs + v.nb_jour
-                    Mail.dir_valid_demande(u,v)    
-                    db.session.commit()
-            msg = "Modifications appliquées"
-            return redirect(url_for('.validation_vacances_direction'))
-
-        else:
-            msg = "Validation direction - Appliquer les modifications nécessaires"        
-
-        list_vacances_users = User.query.all()      
-        l = []
-        v = []
-        for j in list_vacances_users:
-            v = Vacances.query.filter_by(user_id=j.user_id, status=1).all()
-            for n in v:
-                l.append(n)
-        if len(l) > 0:
-            return render_template('rapport_pour_direction.html',
-                                   title='Autorisations',
-                                   l=l,
-                                   User=User,
-                                   msg=msg,
-                                   display=True)
-        else:
-            return render_template('validation_vacances_direction.html',
-                                   title='Autorisations',
-                                   msg="Il n'y a pas de demande de vacances.",
-                                   display=False
-                                   )
-    else:
-        return render_template('validation_vacances_direction.html',
-                               title="Interdit",
-                               msg="Vous n'avez pas les droits nécessaires pour accéder à cette page.",
-                               display=False
-                               )
-####
-
-
 
 @main_vac.route('/annulation', methods=['GET', 'POST'])
 @login_required

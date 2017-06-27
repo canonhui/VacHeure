@@ -11,22 +11,22 @@
 <table class="order-desc table table-hover affiche_table" width="100%">
 
     <tr>
-        <th id="nom"> Nom <i class="fa fa-sort"></i></th>
+        <th id="nom"> Nom <i class="fa"></i></th>
 
-        <th id="prenom"> Prénom <i class="fa fa-sort"></i></th>
+        <th id="prenom"> Prénom <i class="fa"></i></th>
 
-        <th id="date_demande"> Date demande <i class="fa fa-sort"></i></th>        
+        <th id="date_demande"> Date demande <i class="fa"></i></th>        
 
-        <th id="type_demande"> Type <i class="fa fa-sort"></i></th>             
+        <th id="type_demande"> Type <i class="fa"></i></th>             
 
-        <th id="nb_jour"> Nb jours <i class="fa fa-sort"></i></th>
+        <th id="nb_jour"> Nb jours <i class="fa"></i></th>
 
-        <th id="date_debut"> Date début <i class="fa fa-sort"></i></th>
+        <th id="date_debut"> Date début <i class="fa"></i></th>
 
-        <th id="date_fin"> Date fin <i class="fa fa-sort"></i></th>
+        <th id="date_fin"> Date fin <i class="fa"></i></th>
 
-        <th id="status"> Validation {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}<i class="fa fa-sort"></i>{% endif %}</th>
-    </tr>
+        <th id="status"> Validation {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}<i class="fa"></i>{% endif %}</th>
+    </tr><div id="td-table">
         {% for user_vac_ens in user_vacs_ens.items %}
             <tr>
 
@@ -38,7 +38,7 @@
 
                 <td> {{ user_vac_ens.type_demande }} </td>    
 
-                <td> {{ abs_str(user_vac_ens.nb_jour) }} </td>
+                <td> {{ user_vac_ens.nb_jour }} </td>
 
                 <td> {{ conv_sqlstr_date(user_vac_ens.date_debut) }}</td>
 
@@ -79,7 +79,7 @@
                     </td>
                 {% endif %}
             </tr>
-        {% endfor %}
+        {% endfor %}</div>
 
 </table>
 
@@ -99,7 +99,7 @@
 {% if user_vacs_ens.has_prev %}
     <a href="{{ url_for('main_vac.' + template_flag, page=user_vacs_ens.prev_num) }}">&lt;&lt; </a>
 {% else %}
-    &lt;&lt; 
+    &lt;&lt;
 {% endif %}
 
 <button class="btn btn-page">{{ page }}</button>
@@ -142,25 +142,14 @@
                 url: "{{ url_for('main_vac.' + template_flag, page=page) }}",
                 data: {sortable: sortable_ajax, order: order_ajax},
                 type: 'GET',
-                success: function(response) {
-                    //document.write(response);
-                    $('table').html( $('<table>').html(response).find('table') );
-                }
+                dataType: 'html'
+            }).done(function(response) {
+                $('table').html( $('<table>').html(response).find('table') );
             });
-            if($('table').hasClass('order-desc')) {
-                $('th.fa-sort-asc').toggleClass('fa-sort fa-sort-asc');
-                $(this).find('i').removeClass('fa-sort').addClass('fa-sort-desc');
-                return;
-            }
-            else {
-                $('th.fa-sort-desc').toggleClass('fa-sort fa-sort-desc');
-                $(this).find('i').removeClass('fa-sort').addClass('fa-sort-asc');
-                return;
-            }
-
-            alert($('#nom').find('i').attr('class'));
         });
+
         $(document).on('click', '#pagination_buttons a', function() {
+            sortable_ajax = 'date_debut';
             $.ajax({
                 url: "{{ url_for('main_vac.' + template_flag, page=page) }}",
                 data: {sortable: sortable_ajax, order: order_ajax},

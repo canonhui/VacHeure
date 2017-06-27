@@ -33,17 +33,16 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
-      {% if session['user_id'] == null %}
         <li class="active"><a href="/index">Home</a></li>
+      {% if session['user_id'] == null %}
         <li id='login'><a href="/login">Login</a></li>
       {% endif %}
       {% if session["user_id"] != null %}
-        <li class="active"><a href="/{{ session['user_id'] }}/index">Home</a></li>
-        <li><a href="/{{ session['user_id'] }}/accueil">Accueil</a></li>
+        <li><a href="/accueil">Accueil</a></li>
         {% if current_user.get_role() == 77 %}
-          <li><a href="/{{ session['user_id'] }}/admin">Admin</a></li>
+          <li><a href="/admin">Admin</a></li>
         {% endif %}
-  <li><a href="/{{ session['user_id'] }}/logout">Logout</a></li>
+  <li><a href="/logout">Logout</a></li>
   {% endif %}
       </ul>
   {% if session["user_id"] != null %} 

@@ -18,16 +18,25 @@
 				<form action="" method="post" name="prise">
 				  {{ form.hidden_tag() }}
 				  <p>
-					  Date de debut :<br>
-					  {{ form.priseDateDebut(size=40) }}<br>
+					  {{ form.priseDateDebut.label }}<br>
+					  {{ form.priseDateDebut(size=40, class_='dateDebut', placeholder='jj/mm/AAAA') }}
+					  {% for error in form.priseDateDebut.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p>
-					  Date de fin :<br>
-					  {{ form.priseDateFin(size=40) }}<br>
+					  {{ form.priseDateFin.label }}<br>
+					  {{ form.priseDateFin(size=40, class_='dateFin', placeholder='jj/mm/AAAA') }}
+					  {% for error in form.priseDateFin.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p>
-					  Nombre de jours :<br>
-					  {{ form.priseNbJours(size=40) }}<br>
+					  {{ form.priseNbJours.label }}<br>
+					  {{ form.priseNbJours(class_='nbJours') }}
+					  {% for error in form.priseNbJours.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p><input class="btn btn-success" type="submit" value="Valider"></p>
 			  </form>			

@@ -1,0 +1,13 @@
+Bonjour Monsieur le directeur,
+
+<p><b>{{ cons_ens.user.prenom }} {{ cons_ens.user.nom }}</b> vient de demander <b>{{ cons_ens.nb_jours }}</b> jours pour offrir des conseils à l'entreprise <b>{{ cons_ens.nom_entreprise }}</b>, dont l'adresse : <address><b>{{ cons_ens.adresse }}</b></address><br>A partir du <b>{{ conv_sqlstr_date(cons_ens.date_debut) }}</b>, pour l'intitulé : <b>{{ cons_ens.intitule }}</b>. 
+<br><br>
+Cliquez les liens ci-dessous pour valider ou rejeter cette demande :<br>
+<a href="{{ url_for('main_cons_bp.validation_email', pseudo=cons_ens.pseudo, cons_ens_id=cons_ens.cons_ens_id, status=2, _external=True) }}" id='oui'> -Valider</a><br>
+<a href="{{ url_for('main_cons_bp.validation_email', pseudo=cons_ens.pseudo, cons_ens_id=cons_ens.cons_ens_id, status=0, _external=True) }}" id='non'> -Rejeter</a><br><br> ou <br>
+<a href="{{ url_for('main_cons_bp.validation_direction', _external=True) }}"> Cliquez ici pour voir le detail</a>
+
+<br><br>
+Cordialement,
+<br><br>
+Admin de l'<code>ConsEns</code></p>

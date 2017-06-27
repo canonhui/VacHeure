@@ -1,0 +1,10 @@
+Bonjour {{ cons_ens.user.prenom }},
+
+<p>Le directeur de l'école vient de <b>{% if cons_ens.status == 2 %} valider {% else %} rejeter {% endif %}</b> votre demande pour offrir des conseils en <b>{{ cons_ens.nb_jours }}</b> jours à l'entreprise <b>{{ cons_ens.nom_entreprise }}</b>, dont l'adresse : <b>{{ cons_ens.adresse }}</b>, à partir de <b>{{ conv_sqlstr_date(cons_ens.date_debut) }}</b> en date du {{ conv_sqlstr_date(cons_ens.date_demande) }}. <a href="{{ url_for('main_cons_bp.historique', _external=True) }}"> Cliquez ici pour voir le detail</a>
+{% if cons_ens.status == 2 %}
+	<br><br>Bon enseignement!
+{% endif %}
+<br><br>
+Cordialement,
+<br><br>
+Admin de l'<code>ConsEns</code></p>

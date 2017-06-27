@@ -2,50 +2,54 @@ from flask_wtf import Form as FlaskForm
 from wtforms import IntegerField
 from wtforms import StringField, BooleanField, PasswordField, SubmitField, SelectField
 from wtforms.fields.html5 import DateField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 from wtforms.validators import InputRequired
 
 
 class LoginForm(FlaskForm):
-    login = StringField('login', validators=[DataRequired()])
-    password = PasswordField('password', validators=[DataRequired()])
-    remember_me = BooleanField('remember_me', default=False)
+    login = StringField('Login', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember_me = BooleanField('Remember me', default=False)
 
 
 class PriseForm(FlaskForm):
     fmt = '%d/%m/%Y'
-    priseDateDebut = DateField('Premier jour', [InputRequired()],
+    priseDateDebut = DateField('Date de début :', [InputRequired()],
                                format=fmt,  # format = '%m/%d/%Y',
                                description='Premier jour')
     # priseDateFin = DateField('priseDateFin', format='%d/%m/%Y')
-    priseDateFin = DateField('priseDateFin', [InputRequired()], format=fmt)
-    priseNbJours = IntegerField('priseNbJours', [DataRequired()])
+    priseDateFin = DateField('Date de fin :', [InputRequired()], format=fmt)
+    priseNbJours = IntegerField('Nombre de jours :',
+                validators=[DataRequired(), NumberRange(min=1)])
 
 
 class PriseFormChrome(FlaskForm):
     fmt = '%Y-%m-%d'
-    priseDateDebut = DateField('Premier jour', [InputRequired()],
+    priseDateDebut = DateField('Date de début :', [InputRequired()],
                                format=fmt,  # format = '%m/%d/%Y',
                                description='Premier jour')
     # priseDateFin = DateField('priseDateFin', format='%d/%m/%Y')
-    priseDateFin = DateField('priseDateFin', [InputRequired()], format=fmt)
-    priseNbJours = IntegerField('priseNbJours', [DataRequired()])
+    priseDateFin = DateField('Date de fin :', [InputRequired()], format=fmt)
+    priseNbJours = IntegerField('Nombre de jours :',
+                validators=[DataRequired(), NumberRange(min=1)])
 
 
 class annulationForm(FlaskForm):
     fmt = '%d/%m/%Y'
-    annulationDateDebut = DateField('annulationDateDebut', format=fmt)
-    annulationDateFin = DateField('annulationDateFin', format=fmt)
-    annulationNbJours = IntegerField('annulationNbJours', validators=[InputRequired()])
-    annulationMotif = StringField('annulationMotif', validators=[InputRequired()])
+    annulationDateDebut = DateField('Date de début :', format=fmt)
+    annulationDateFin = DateField('Date de fin :', format=fmt)
+    annulationNbJours = IntegerField('Nombre de jours :',
+                    validators=[DataRequired(), NumberRange(min=1)])
+    annulationMotif = StringField('Motif', validators=[InputRequired()])
 
 
 class annulationFormChrome(FlaskForm):
     fmt = '%Y-%m-%d'
-    annulationDateDebut = DateField('annulationDateDebut', format=fmt)
-    annulationDateFin = DateField('annulationDateFin', format=fmt)
-    annulationNbJours = IntegerField('annulationNbJours', validators=[InputRequired()])
-    annulationMotif = StringField('annulationMotif', validators=[InputRequired()])
+    annulationDateDebut = DateField('Date de début :', format=fmt)
+    annulationDateFin = DateField('Date de fin :', format=fmt)
+    annulationNbJours = IntegerField('Nombre de jours :',
+                    validators=[DataRequired(), NumberRange(min=1)])
+    annulationMotif = StringField('Motif', validators=[InputRequired()])
 
 class TestForm(FlaskForm):
     boo = BooleanField('Send email', default="checked")

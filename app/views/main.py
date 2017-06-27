@@ -9,7 +9,7 @@ from ..models_commun import User, load_user, Resp
 from ..app_heuresExt import main_bp
 
 from . import main_app_bp
-
+'''
 @login_required
 @main_app_bp.url_value_preprocessor
 def get_user_id(endpoint, values):
@@ -25,11 +25,10 @@ def add_user_id(endpoint, values):
         return
     if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
         values['user_id'] = current_user.get_id()
+'''
 
 @app.route('/')
 @app.route('/index')
-@main_app_bp.route('/')
-@main_app_bp.route('/index')
 def index():
     return render_template('index.html',
                            title='Home')

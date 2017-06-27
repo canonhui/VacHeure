@@ -16,20 +16,32 @@
 				<form action="" method="post" name="annulation">
 				  {{ form.hidden_tag() }}
 				  <p>
-					  Date de debut :<br>
-					  {{ form.annulationDateDebut(size=40) }}<br>
+					  {{ form.annulationDateDebut.label }}<br>
+					  {{ form.annulationDateDebut(size=40, class_='dateDebut', placeholder='jj/mm/AAAA') }}
+					  {% for error in form.annulationDateDebut.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p>
-					  Date de fin :<br>
-					  {{ form.annulationDateFin(size=40) }}<br>
+					  {{ form.annulationDateFin.label }}<br>
+					  {{ form.annulationDateFin(size=40, class_='dateFin', placeholder='jj/mm/AAAA') }}
+					  {% for error in form.annulationDateFin.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p>
-					  Nombre de jours :<br>
-					  {{ form.annulationNbJours(size=40) }}<br>
+					  {{ form.annulationNbJours.label }}<br>
+					  {{ form.annulationNbJours(class_='nbJours', size=40) }}
+					  {% for error in form.annulationNbJours.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p>
-					  Motif :<br>
-					  {{ form.annulationMotif(size=40) }}<br>
+					  {{ form.annulationMotif.label }}<br>
+					  {{ form.annulationMotif(size=40) }}
+					  {% for error in form.annulationMotif.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
 				  </p>
 				  <p><input class="btn btn-success" type="submit" value="Valider"></p>
 			  </form>

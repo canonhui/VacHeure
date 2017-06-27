@@ -1,5 +1,5 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint, abort, current_app)
+                  Blueprint, abort)
 from flask_login import logout_user, login_required, login_user, current_user
 
 from ..forms import LoginForm
@@ -10,22 +10,6 @@ from .. import app_heuresExt
 from ..utils.nocache import nocache
 
 from . import home_bp
-
-@login_required
-@home_bp.url_value_preprocessor
-def get_user_id(endpoint, values):
-    user = User.query.filter_by(user_id=values.pop('user_id')).first()
-    if user is None:
-        abort(404)
-    if user.user_id != current_user.get_id():
-        abort(401)
-
-@home_bp.url_defaults
-def add_user_id(endpoint, values):
-    if 'user_id' in values or not current_user:
-        return
-    if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
-        values['user_id'] = current_user.get_id()
 
 
 @home_bp.route('/')

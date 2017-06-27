@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block content %}
+{{ super() }}
+
+{% block head %}
+    {{ super() }}
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+     
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+     
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+
+{% endblock %}
+
+<div class='affiche_div'>
+<h4>{{msg}}</h4>
+{% if user_cons_ens %}
+
+{% if template_flag != 'historique' %}
+    <form action="" method="post">
+{% endif %}
+<table class='order-desc table table-hover affiche_table' width="100%">
+    <tr>
+        <th id="nom"> Nom </th>
+
+        <th id="prenom"> Prénom </th>
+
+        <th id="intitule"> Intitulé </th>
+
+        <th id="nom_entreprise"> Nom d'entreprise </th>
+
+        <th id="adresse"> Adresse d'entreprise </th>
+
+        <th id="date_demande"> Date demande </th>
+        
+        <th id="date_debut"> Date Debut </th>
+
+        <th id="nb_jours"> Nb de jours </th>
+
+        <th id="status"> Validation </th>
+    </tr>
+    <div id="table-data">
+    {% for i in user_cons_ens.items %}
+        <tr>
+            <td> {{ i.user.nom }} </td>
+
+            <td> {{ i.user.prenom }} </td>
+
+            <td id="td_intitule" title="{{ i.intitule }}"> {{ i.intitule }} </td>
+
+            <td> {{ i.nom_entreprise }} </td>
+
+            <td> {{ i.adresse }} </td>
+
+            <td> {{ conv_sqlstr_date(i.date_demande) }} </td>   
+
+            <td> {{ conv_sqlstr_date(i.date_debut) }} </td>
+
+            <td> {{ abs_str(i.nb_jours) }} </td>
+
+            {% if template_flag == 'historique' %}
+                {% set status = i.status %}
+                {% if i.date_debut < current_date %}
+                    <td class='deja_finis'> {{ valid[status] }} </td>
+                {% elif status == 2 %}    
+                    <td class='oui'> {{ valid[status] }} </td>
+                {% elif status == -1 %}
+                    <td class='non'> {{ valid[status] }} </td>
+                {% else %}
+                    <td class='en_cours'> {{ valid[status] }} </td>
+                {% endif %}
+
+            {% else %}
+                <td>
+                    <select name= "{{ i.cons_ens_id }}" class="form-control validate" style="width: 75px">
+                        <option value=0></option>
+
+                        <option value=2>Oui</option>
+
+                        <option value=-1>Non</option>
+                    </select>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </div>
+    
+</table>
+{% if template_flag != 'historique' %}
+        <input class="btn btn-success btn-sm" type="submit" value="Envoyer" />
+    </form>
+{% endif %}
+
+{% if template_flag == 'historique' %}
+
+<div id='pagination_buttons'>
+{% if page == 1 %}
+    Première
+{% else %}
+    <a href="{{ url_for('main_cons_bp.' + template_flag, page=1) }}">Première</a>
+{% endif %}
+{% if user_cons_ens.has_prev %}
+    <a href="{{ url_for('main_cons_bp.' + template_flag, page=user_cons_ens.prev_num) }}">&lt;&lt; </a>
+{% else %}
+    &lt;&lt; 
+{% endif %}
+
+<button class="btn btn-page">{{ page }}</button>
+
+{% if user_cons_ens.has_next %}
+    <a href="{{ url_for('main_cons_bp.' + template_flag, page=user_cons_ens.next_num) }}"> &gt;&gt;</a>
+{% else %}
+     &gt;&gt;
+{% endif %}
+{% if page == page_max %}
+    Dernière
+{% else %}
+    <a href="{{ url_for('main_cons_bp.' + template_flag, page=page_max) }}">Dernière</a>
+{% endif %}
+</div>
+
+{% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    {% if user_cons_ens %}
+    <script type="text/javascript">
+        $(document).on('click', '.affiche_table th', function() {
+            sortable_ajax = $(this).attr('id');
+            $('table').toggleClass('order-desc');
+            if($('table').hasClass('order-desc')) {
+                order_ajax = 'asc';
+            }
+            else {
+                order_ajax = 'desc';
+            }
+            $.ajax({
+                url: "{{ url_for('main_cons_bp.' + template_flag, page=page) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET',
+                success: function(response) {
+                    //document.write(response);
+                    $('table').html( $('<table>').html(response).find('table') );
+                }
+            });
+        });
+        $(document).on('click', '#pagination_buttons a', function() {
+            $.ajax({
+                url: "{{ url_for('main_cons_bp.' + template_flag) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET'
+            });
+        });
+
+    </script>
+    {% endif %}
+{% endblock %}

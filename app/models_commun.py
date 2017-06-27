@@ -17,6 +17,7 @@ class User(db.Model):
     role = db.Column(db.Integer)
     heures_ext = db.relationship('HeuresExt', backref='user', lazy='dynamic')
     vacens = db.relationship('Vacances', backref='user', lazy='dynamic')
+    cons_ens = db.relationship('ConsEns', backref='user', lazy='dynamic')
 
     @property
     def is_active(self):
@@ -80,3 +81,4 @@ def load_user(user_id):
 
 from .app_heuresExt.models_heuresExt import HeuresExt
 from .app_vacens.models_vacEns import Vacances
+from .app_consEns.models_consEns import ConsEns

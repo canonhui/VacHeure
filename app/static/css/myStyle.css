@@ -1,50 +1,77 @@
+/* historique.html or affiche_table.html */
 .affiche_div {
-  margin-left: 2%;
+  margin: 0 2% 0 2%;
 }
-
+.affiche_table {
+  table-layout: fixed;
+}
 .oui {
   color: green;
 }
-
 .non {
   color: red;
 }
-
 .en_cours {
   color: black;
 }
-
 .deja_finis {
   color: grey;
 }
-
 #pagination_buttons {
   text-align: center;
   margin-bottom: 30px;
 }
-
 .btn-success {
   margin-bottom: 30px;
 }
-
 th {
   cursor: pointer;
+  background-color: #d7d7d7;
 }
-
 th i {
   margin-left: 20%;
 }
+#td_intitule {
+  white-space:nowrap; /*force to display in one line*/
+  overflow:hidden;
+  text-overflow:ellipsis; /*replace overflow content with ...*/
+  word-break:keep-all;
+  padding: 0 7px;
+}
+/********************************/
 
+/* consEns/dec.html */
+.hr-address {
+  color: #000;
+  margin-top: 0;
+  text-align: center;
+}
+.hr-address:after {
+  content: 'Adresse d\'entreprise';
+  display: inline-block;
+  position: relative;
+  top: -12px;
+  padding: 0 10px;
+  background-color: #fff;
+  color: #555;
+  font-size: 17px;
+  font-weight: bold;
+}
+.address-table tr {
+  height: 20px;
+}
+.address-table td {
+  vertical-align: baseline;
+}
+/*************************/
+
+/* admin.html */
 #form-admin {
   margin-left: 7%;
-
 }
-
 #form-admin p {
-
   padding-top: 7px;
 }
-
 #form-admin .admin-func {
   font-size: 14px;
   background-color: #fff;
@@ -53,20 +80,19 @@ th i {
   padding: 7px;
 
 }
-
 #form-admin .admin-func:hover {
   background-color: #eee;
 }
+/***********************/
 
+/* accueil.html */
 #entry {
 	margin: 10%;
 	text-align: center;
 }
-
 #entry a {
 	color: #fff;
 }
-
 .btn-page {
   color: #fff;
   font-family: monospace;
@@ -77,6 +103,7 @@ th i {
   margin: 0 4px 0 4px;
   overflow: auto;
 }
+/***********************/
 
 /*
 select {
@@ -96,7 +123,7 @@ select {
 */
 /* CAUTION: IE hackery ahead
 select::-ms-expand { 
-    display: none; /* remove default arrow on ie10 and ie11 */
+    display: none;  remove default arrow on ie10 and ie11 
 }
  */
 /* target Internet Explorer 9 to undo the custom arrow 

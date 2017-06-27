@@ -1,0 +1,20 @@
+{% extends "bootstrap/base.html" %}
+{% block content %}
+
+<div style="margin-left: 2%;">
+<h2 style="text-align: center;">{% if 'historique_total' in request_type %}Historique total des demandes {% else %}Demandes{% endif %} des déclarations de conseils enseignant en date du {{date_du_jour}}
+</h2>
+
+{% if l %}
+<ol>
+ {% for cons_ens in l %}
+<li> <b>{{ cons_ens.user.nom }} {{ cons_ens.user.prenom }}</b> demande le {{ conv_sqlstr_date(cons_ens.date_demande) }} d'offrir des conseils pendant <b>{{ abs_str(cons_ens.nb_jours) }}</b> jours à l'entreprise <b>{{ cons_ens.nom_entreprise }}</b>, dont l'adresse : <b>{{ cons_ens.adresse }}</b>, à partir du <b>{{ conv_sqlstr_date(cons_ens.date_debut) }}</b>{% if 'historique_total' in request_type %} (<b>{{ valid[cons_ens.status] }}</b>){% endif %}. 
+</li>
+<br>
+{% endfor %}
+</ol>
+{% endif %}
+</div>
+
+{% endblock %}
+

@@ -1,6 +1,6 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint, abort, current_app)
-from flask_login import login_required, logout_user, current_user
+                  Blueprint, abort)
+from flask_login import login_required, logout_user
 
 from ... import db
 from ..models_heuresExt import HeuresExt
@@ -18,23 +18,6 @@ from . import main_bp
 
 #def sub_func(role, template_flag):
 
-@login_required
-@main_bp.url_value_preprocessor
-def get_user_id(endpoint, values):
-    user = User.query.filter_by(user_id=values.pop('user_id')).first()
-    if user is None:
-        abort(404)
-    if user.user_id != current_user.get_id():
-        abort(401)
-
-@main_bp.url_defaults
-def add_user_id(endpoint, values):
-    if 'user_id' in values or not current_user:
-        return
-    if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
-        values['user_id'] = current_user.get_id()
-
-
 
 @main_bp.route('/historique', methods=['GET', 'POST'])
 @main_bp.route('/historique/<int:page>', methods=['GET', 'POST'])
@@ -43,7 +26,6 @@ def historique(page = 1):
     user_id = session.get("user_id", None)
     sortable = request.args.get('sortable', 'date_debut')
     order = request.args.get('order', 'desc')
-    print('page', page)
     #valid = {2: "oui", 1: "en cours (ok dept)", -1: "non", 0: "en cours"}
     role = User.query.filter_by(user_id=user_id).first().role
     user = User.query.filter_by(user_id=user_id).first()
@@ -133,6 +115,7 @@ def validation_dept(page = 1):
         if request.method == 'POST':
             for i in request.form:
                 result = request.form[i]
+                print('result', result);
                 if result != "0":
                     print("ID HeuresExt : " + i + " Résultat : " + result)
                     heures_ext = HeuresExt.query.filter_by(heure_ext_id=i).first()
@@ -142,7 +125,10 @@ def validation_dept(page = 1):
                         heures_ext.status = int(result)
                         Mail.resp_valid_demande(u, heures_ext)
                     elif role == 77:
-                        heures_ext.status = 2
+                        if result == 1:
+                            heures_ext.status = 2
+                        else:
+                            heures_ext.status = -1
                         heures_ext.date_validation_dir = datetime.utcnow()
                         Mail.dir_valid_demande(u,heures_ext)
                     db.session.commit()          
@@ -200,8 +186,9 @@ def validation_direction(page = 1):
     if role == 77:
         if request.method == 'POST':
             for i in request.form:
+                print('i', i)
                 result = request.form[i]
-                if result not in ["0", "1"]: #2: admis ou -1: refusé
+                if result in ["-1", "2"]: #2: admis ou -1: refusé
                     print("ID HeuresExt : " + i + " Resultat : " + result)
                     v = HeuresExt.query.filter_by(heure_ext_id=i).first()
                     v.status = int(result)
@@ -210,7 +197,7 @@ def validation_direction(page = 1):
                     Mail.dir_valid_demande(u,v)    
                     db.session.commit()
             msg = "Modifications appliquées"
-            return redirect(url_for('.historique'))
+            return redirect(url_for('.validation_direction'))
 
         else:
             msg = "Validation direction - Appliquer les modifications nécessaires"        
@@ -222,7 +209,6 @@ def validation_direction(page = 1):
 
         count_histo = HeuresExt.query.filter(HeuresExt.user_id.in_(users_id), 
           HeuresExt.status == 1).count()
-        page_max = count_histo / HISTORIQUE_PER_PAGE + 1
 
         user_heures_ext = HeuresExt.query.join(
           User, HeuresExt.user_id==User.user_id).filter(

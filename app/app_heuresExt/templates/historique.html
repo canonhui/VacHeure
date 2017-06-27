@@ -40,7 +40,6 @@
 
         <th id="status"> Validation </th>
     </tr>
-    <div id="table-data">
     {% for user_heure_ext in user_heures_ext.items %}
         <tr>
             <td> {{ user_heure_ext.user.nom }} </td>
@@ -82,7 +81,7 @@
 
             {% else %}
                 <td>
-                    <select name= "{{ user_heure_ext.heures_ext_id }}" class="form-control validate" style="width: 75px">
+                    <select name= "{{ user_heure_ext.heure_ext_id }}" class="form-control validate" style="width: 75px">
                         <option value=0></option>
 
                         <option value=2>Oui</option>
@@ -93,7 +92,6 @@
             {% endif %}
         </tr>
     {% endfor %}
-    </div>
     
 </table>
 {% if template_flag != 'historique' %}
@@ -157,13 +155,6 @@
                     //document.write(response);
                     $('table').html( $('<table>').html(response).find('table') );
                 }
-            });
-        });
-        $(document).on('click', '#pagination_buttons a', function() {
-            $.ajax({
-                url: "{{ url_for('main_bp.' + template_flag) }}",
-                data: {sortable: sortable_ajax, order: order_ajax},
-                type: 'GET'
             });
         });
 

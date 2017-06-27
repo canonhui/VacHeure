@@ -1,6 +1,6 @@
 from flask import (redirect, render_template, request, session, url_for, flash, 
-                  Blueprint, abort, current_app)
-from flask_login import logout_user, login_required, login_user, current_user
+                  Blueprint, abort)
+from flask_login import logout_user, login_required, login_user
 
 from .. import app_heuresExt
 from ... import db
@@ -16,22 +16,6 @@ from ..utils.nocache import nocache
 from config import VALID, HISTORIQUE_PER_PAGE
 
 from . import admin_bp
-
-@login_required
-@admin_bp.url_value_preprocessor
-def get_user_id(endpoint, values):
-    user = User.query.filter_by(user_id=values.pop('user_id')).first()
-    if user is None:
-        abort(404)
-    if user.user_id != current_user.get_id():
-        abort(401)
-
-@admin_bp.url_defaults
-def add_user_id(endpoint, values):
-    if 'user_id' in values or not current_user:
-        return
-    if current_app.url_map.is_endpoint_expecting(endpoint, 'user_id'):
-        values['user_id'] = current_user.get_id()
 
 
 @admin_bp.route('/admin', methods=['GET', 'POST'])
@@ -59,7 +43,7 @@ def admin():
             elif 'historique_total' in request.form:
                 status = [-1, 0, 1, 2]
                 extrait_cci = [0, 1]
-                file_name = 'historique_total'
+                file_name = 'historique_heuresExt'
                 date_filter = datetime.strptime("01-01-2000", "%d-%m-%Y").date()
 
             l,n = [],[]

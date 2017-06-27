@@ -23,14 +23,16 @@ login_manager.login_message = 'Veuillez se connecter pour accéder à cette page
 
 from .app_vacens import app_vacens
 from .app_heuresExt import app_heuresExt
+from .app_consEns import app_consEns
 
 app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
 	'/heuresExt': app_heuresExt,
-	'/vacEns': app_vacens
+	'/vacEns': app_vacens,
+	'/consEns':app_consEns
 	})
 
 from .views import main_app_bp
-app.register_blueprint(main_app_bp, url_prefix='/<user_id>')
+app.register_blueprint(main_app_bp)
 
 #from . import views, models_commun, forms, ldap
 
