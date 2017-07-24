@@ -1,0 +1,922 @@
+2017-07-20 16:10:22,932 INFO:microblog startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:10:41,782 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:10:57,612 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:10:59,297 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:12:13,642 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:14:27,251 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:17:01,036 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:17:45,496 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:19:39,350 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:24:27,631 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:25:12,705 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:27:14,701 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:29:56,325 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:30:01,913 ERROR:Exception on /index [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/views/main.py", line 37, in index
+    title='Home')
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: bindex.html
+2017-07-20 16:31:39,006 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:42]
+2017-07-20 16:34:14,623 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:45]
+2017-07-20 16:34:24,672 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:45]
+2017-07-20 16:34:41,631 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:45]
+2017-07-20 16:34:51,819 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:35:13,502 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:45]
+2017-07-20 16:35:29,067 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:46:34,674 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:46:36,280 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:46:37,032 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:46:42,825 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 16:53:29,218 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 16:53:32,446 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:57:23,647 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 16:57:30,648 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 16:58:29,939 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 16:58:36,840 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 17:01:04,453 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 17:01:10,177 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 17:02:45,480 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 17:02:58,024 ERROR:Exception on /historique_validation_vacances [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_vacens/views/main.py", line 209, in historique_validation_vacances
+    display=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: affiche_table4.html
+2017-07-20 17:05:27,928 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-20 17:05:49,837 ERROR:Exception on / [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/views/main.py", line 32, in redirect_index
+    return redirect(url_for('indexe'))
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 333, in url_for
+    return appctx.app.handle_url_build_error(error, endpoint, values)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1805, in handle_url_build_error
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/helpers.py", line 323, in url_for
+    force_external=external)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/routing.py", line 1768, in build
+    raise BuildError(endpoint, values, method, self)
+werkzeug.routing.BuildError: Could not build url for endpoint 'indexe'. Did you mean 'index' instead?
+2017-07-21 10:22:08,497 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:28:29,125 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:28:50,965 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:28:51,602 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:47:27,935 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:48:39,377 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:48:53,215 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:52:16,881 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 10:53:23,250 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:02:38,128 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:04:23,824 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:04:40,443 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:04:41,012 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:05:57,478 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:07:20,981 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:07:35,953 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:09:01,629 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:09:18,493 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:11:30,595 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:11:48,528 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:11:56,307 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:12:27,318 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:12:55,268 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:23:45,082 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:23:45,697 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:27:40,789 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:27:46,102 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:27:46,685 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:29:54,663 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:30:06,459 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:30:55,652 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:31:26,704 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:31:49,661 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:36:33,252 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:43:34,888 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:46:25,193 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:49:04,472 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 11:50:36,056 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 18:36:38,340 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 18:36:52,215 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 18:37:48,623 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 18:38:40,867 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:49:36,604 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:49:54,479 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:51:21,046 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:54:32,696 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:55:35,070 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:56:03,160 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:56:11,523 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:56:12,127 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:58:21,171 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:59:12,462 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 20:59:30,391 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:02:40,040 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:04:05,539 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:09:35,496 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:11:39,383 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:12:03,448 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:12:23,348 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:12:33,037 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:12:33,603 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:13:23,809 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:13:39,789 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:14:05,796 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:14:46,935 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:15:09,900 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:16:10,206 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:16:39,153 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:16:46,929 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:17:00,917 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:20:52,123 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:21:25,127 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:22:08,286 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:22:38,307 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:23:13,368 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:23:29,245 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:26:04,552 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:26:34,569 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:27:43,900 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:29:10,454 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:31:12,438 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:32:51,162 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:33:31,312 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:34:34,733 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:35:12,830 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:35:38,778 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:37:13,455 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:37:20,243 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:38:11,448 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:38:44,434 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:39:02,348 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:39:30,458 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:40:45,966 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:42:30,669 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:44:01,807 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:44:02,409 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:44:17,201 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:46:12,948 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:46:18,700 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:46:23,441 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:46:58,664 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:48:18,142 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:51:17,636 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:54:42,273 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:55:21,410 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:56:57,032 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 21:57:57,422 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:01:29,470 ERROR:Exception on /validation_dept [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_heuresExt/views/main.py", line 200, in validation_dept
+    print(getattr(heure_ext, app_name + '_id'))
+AttributeError: 'NoneType' object has no attribute 'heure_ext_id'
+2017-07-21 22:01:36,269 ERROR:Exception on /validation_dept [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_heuresExt/views/main.py", line 200, in validation_dept
+    print(getattr(heure_ext, app_name + '_id'))
+AttributeError: 'NoneType' object has no attribute 'heure_ext_id'
+2017-07-21 22:03:15,166 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:12:23,358 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:14:54,631 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:16:40,264 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:16:41,963 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:21:00,081 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:21:32,078 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:22:10,139 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:22:22,957 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:22:29,700 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:44:20,361 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:49:56,228 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 22:49:59,985 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:04:32,124 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:07:30,571 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:11:06,956 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:11:52,799 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:13:28,413 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:16:27,814 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:32:00,034 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:32:00,602 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:32:34,632 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:34:08,211 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:41:43,352 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:41:57,184 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:43:57,094 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:45:55,894 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:46:50,134 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:51:04,345 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:52:47,877 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:53:56,198 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:53:57,921 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:54:08,752 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:54:12,547 ERROR:Exception on /validation_dept [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_heuresExt/views/main.py", line 221, in validation_dept
+    list(reduce(lambda user: users_id.append(user.user_id), list_heures_ext_users))
+NameError: name 'reduce' is not defined
+2017-07-21 23:57:13,167 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:57:16,310 ERROR:Exception on /validation_dept [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/usr/local/lib/python3.5/dist-packages/flask_login/utils.py", line 228, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_heuresExt/views/main.py", line 222, in validation_dept
+    reduce(lambda user: users_id.append(user.user_id), list_heures_ext_users)
+TypeError: <lambda>() takes 1 positional argument but 2 were given
+2017-07-21 23:57:51,196 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:58:16,211 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:58:31,025 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-21 23:59:09,061 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:50:18,167 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:50:18,904 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:54:16,049 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:54:43,051 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:57:28,121 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:57:28,690 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:58:51,207 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 14:59:55,717 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:00:51,941 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:03:27,237 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:03:41,081 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:04:11,068 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:07:08,539 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:09:03,659 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:09:04,270 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:13:17,562 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:14:35,200 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:15:14,300 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:18:01,719 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:22:49,587 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:22:50,192 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:24:35,011 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:24:35,587 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:25:43,615 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:25:44,169 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:26:09,279 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:28:10,267 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 15:30:57,718 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 16:42:05,724 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 16:48:53,591 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:27:26,766 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:27:43,268 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:27:43,843 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:30:51,454 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:32:51,401 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:34:05,817 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:35:38,471 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:44:24,500 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:46:59,809 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:48:02,158 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:49:04,467 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:53:19,853 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 17:55:23,916 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:03:34,716 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:04:07,806 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:05:36,324 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:18:03,561 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:26:46,473 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:33:19,465 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:34:05,626 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:34:28,569 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:41:11,525 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 18:44:18,105 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 22:58:32,598 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 22:58:53,487 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 22:59:18,498 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:01:20,425 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:09:58,764 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:28:08,778 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:39:59,837 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:41:05,151 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:43:40,403 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-22 23:45:03,925 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 11:28:18,518 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 11:28:19,296 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 11:31:41,979 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 15:33:24,528 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 15:33:43,463 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 15:34:59,011 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 15:35:11,848 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:14:22,290 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:21:15,256 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:37:19,308 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:39:19,899 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:41:31,917 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:47:22,984 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:49:58,299 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 16:51:42,152 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:00:27,961 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:02:06,539 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:04:04,575 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:04:05,143 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:04:36,144 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:05:58,651 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:07:21,076 ERROR:Exception on /validation_email/GXoMiBWkpV/2/-1 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_consEns/views/main.py", line 144, in validation_email
+    msg=msg)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: /home/petiech/DRIO/Projet-E4/vacHeure/app/templates/validation_email.html
+2017-07-23 17:15:03,992 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:15:15,771 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:16:03,848 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:17:43,501 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:20:36,832 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:21:34,049 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:22:43,444 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:29:01,798 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:31:50,030 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:32:28,012 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:39:22,523 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:39:41,403 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:39:48,159 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:43:33,077 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:44:07,097 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:44:19,069 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:44:19,669 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 17:45:43,190 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 18:08:49,767 ERROR:Exception on /validation_email/GXoMiBWkpV/2/-1 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_consEns/views/main.py", line 144, in validation_email
+    msg=msg)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: /home/petiech/DRIO/Projet-E4/vacHeure/app/templates/validation_email.html
+2017-07-23 18:21:55,615 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 18:22:04,381 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 18:22:36,379 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 18:23:30,581 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-23 18:23:38,141 ERROR:Exception on /validation_email/GXoMiBWkpV/2/-1 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_consEns/views/main.py", line 145, in validation_email
+    msg=msg)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: /home/petiech/DRIO/Projet-E4/vacHeure/app/templates/validation_email.html
+2017-07-23 23:13:27,297 ERROR:Exception on /validation_email/GXoMiBWkpV/2/-1 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_consEns/views/main.py", line 145, in validation_email
+    msg=msg)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: /home/petiech/DRIO/Projet-E4/vacHeure/app/templates/validation_email.html
+2017-07-23 23:14:03,031 ERROR:Exception on /validation_email/GXoMiBWkpV/2/-1 [GET] [in /usr/local/lib/python3.5/dist-packages/flask/app.py:1560]
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1982, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1614, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1517, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 33, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1612, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1598, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/petiech/DRIO/Projet-E4/vacHeure/app/app_consEns/views/main.py", line 145, in validation_email
+    msg=msg)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 133, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 869, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 830, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/environment.py", line 804, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/home/petiech/.local/lib/python3.5/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 57, in get_source
+    return self._get_source_fast(environment, template)
+  File "/usr/local/lib/python3.5/dist-packages/flask/templating.py", line 85, in _get_source_fast
+    raise TemplateNotFound(template)
+jinja2.exceptions.TemplateNotFound: /home/petiech/DRIO/Projet-E4/vacHeure/app/templates/validation_email.html
+2017-07-24 09:37:23,401 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 09:37:24,181 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:03:42,322 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:04:05,205 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:10:14,258 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:10:14,871 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:17:23,791 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:26:14,588 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:45:13,873 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:48:52,730 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:58:25,113 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:58:46,067 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 10:59:20,075 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:01:22,042 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:01:34,862 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:04:35,312 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:05:18,417 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:07:29,339 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:12:27,140 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:12:35,927 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:15:15,132 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:15:38,090 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:15:44,864 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:16:58,302 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:30:27,662 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:30:28,254 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]
+2017-07-24 11:42:10,626 INFO:vaConsHeures startup [in /home/petiech/DRIO/Projet-E4/vacHeure/app/__init__.py:48]

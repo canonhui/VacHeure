@@ -8,7 +8,7 @@
 {% if l %}
 <ol>
  {% for heure_ext in l %}
-<li> <b>{{ heure_ext.user.nom }} {{ heure_ext.user.prenom }}</b> demande le {{ conv_sqlstr_date(heure_ext.date_demande) }} d'enseigner <b>{{ abs_str(heure_ext.nb_heures) }}</b> heures de cours à l'école <b>{{ heure_ext.lieu }}</b>{% if heure_ext.ecole_cci == 1 %} (une école de la CCI){% else %} (une école hors CCI){% endif %}, à partir du <b>{{ conv_sqlstr_date(heure_ext.date_debut) }}</b>{% if 'historique_total' in request_type %} (<b>{{ valid[heure_ext.status] }}</b>) {% endif %}. 
+<li> <b>{{ heure_ext.user.nom }} {{ heure_ext.user.prenom }}</b> demande le {{ conv_sqlstr_date(heure_ext.date_demande) }} d'enseigner <b>{{ abs_str(heure_ext.nb_heures) }}</b> heures de cours à l'école <b>{{ heure_ext.lieu }}</b>{% if heure_ext.ecole_cci == 1 %} (une école de la CCI){% else %} (une école hors CCI){% endif %}, avec le sujet <b>{{ heure_ext.sujet }}</b>, à partir du <b>{{ conv_sqlstr_date(heure_ext.date_debut) }}</b>{% if 'historique_total' in request_type %} (<b>{{ valid[heure_ext.status] }}</b>{% if heure_ext.status == -1 %}, motif rejet: <b>{{ heure_ext.motif_rejet }}</b>{% endif %}) {% endif %}. 
 </li>
 <br>
 {% endfor %}

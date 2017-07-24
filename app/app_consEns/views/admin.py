@@ -6,7 +6,7 @@ from .. import app_consEns
 from ... import db
 from ...models_commun import User, Resp, load_user
 from ..models_consEns import ConsEns
-from ..forms import LoginForm, AdminForm, AddUserForm
+from ..forms import LoginForm, AdminForm
 from ..utils.mail import Mail
 from ..utils.dbmethods import DbMethods
 from datetime import datetime
@@ -71,40 +71,3 @@ def admin():
         
     else:
         abort(401)
-
-
-@admin_cons_bp.route('/admin/add_user', methods=['GET', 'POST'])
-@login_required
-def admin_add_user():
-    user_id = session.get('user_id', None)
-    user = load_user(user_id)
-    role = User.query.filter_by(user_id=user_id).first().role
-    if role == 77:
-        form = AddUserForm()
-
-        if form.validate_on_submit():
-            u = User.query.filter_by(login=form.login.data).first() # does user already exist ?
-
-            if u is None:
-                # TESTER QUE LE LOGIN EXISTE
-                u = User(login=form.login.data, 
-                         nom=form.nom.data,
-                         prenom=form.prenom.data,
-                         email=form.email.data,
-                         role=int(form.role.data),
-                         resp_id=Resp.query.filter_by(dept=form.dept.data).first().resp_id)
-                db.session.add(u)
-                db.session.commit()
-                flash("L'ajout de l'utilisateur \"" + form.login.data + "\" déjà effectué avec succès!")
-                return redirect(url_for('.admin'))
-            
-            flash("Utilisateur déjà dans la base", 'danger')        
-            return redirect(url_for('.admin_add_user'))
-
-        return render_template('add_user.html', 
-                              title='Ajout d\'un utilisateur',
-                              form=form)
-    else:
-        abort(401)
-
-

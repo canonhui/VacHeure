@@ -40,7 +40,7 @@ class Mail :
         return thr
 
     @staticmethod
-    def annul_demande(user,form):
+    def annul_demande(vac_ens):
         responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] Demande d'annulation de vacances ("+ user.nom + " " + user.prenom +")"
         template_base_name = "mails/"
@@ -54,44 +54,56 @@ class Mail :
             )
 
     @staticmethod
-    def report_demande(user,form):
-        responsable = User.query.get(user.resp_id)
-        mail_object = "[VacEns] Demande de report de vacances ("+ user.nom + " " + user.prenom +")"
+    def vacs_demande(vac_ens):
+        if vac_ens.status == 0:
+            validator = User.query.get(vac_ens.user.resp_id)
+        elif vac_ens.status == 1:
+            validator = User.query.filter_by(role=77).first()
+        if vac_ens.type_demande == 'Report':
+            type_demande = 'de report'
+        else:
+            type_demande = 'd\'annulation'
+        mail_object = "[VacEns] Demande " + type_demande + " de vacances ("+ vac_ens.user.nom + " " + vac_ens.user.prenom +")"
         template_base_name = "mails/"
-        template = template_base_name + "report_vacs"
+        template = template_base_name + "demande_vacs"
         to = [MAIL_USERNAME]
         cc = [] #[user.email, doyen@esiee.fr]        
         Mail.send_email(to, mail_object, template, cc=cc,
-                   user=user,
-                   responsable=responsable,
-                   form=form
+                   validator=validator,
+                   vac_ens=vac_ens
             )
     @staticmethod
-    def resp_valid_demande(user, vacs):
-        responsable = User.query.get(user.resp_id)
-        mail_object = "[VacEns] Retour sur ta demande d'annulation ou de report de vacances"
+    def resp_valid_demande(vac_ens):
+        responsable = User.query.get(vac_ens.user.resp_id)
+        if vac_ens.type_demande == 'Report':
+            type_demande = 'de report'
+        else:
+            type_demande = 'd\'annulation'
+        mail_object = "[VacEns] Retour sur votre demande " + type_demande + " de vacances"
         template_base_name = "mails/"
         template = template_base_name + "valid_vacs_resp"
-        to = [MAIL_USERNAME]
+        to = [MAIL_USERNAME]#[vac_ens.user.email]
         cc = [] # doyen ?
         Mail.send_email(to, mail_object, template, cc=cc,
-                   user=user,
                    responsable=responsable,
-                   vacs = vacs
+                   vac_ens = vac_ens
             )
 
     @staticmethod
-    def dir_valid_demande(user, vacs):
-        responsable = User.query.get(user.resp_id)
-        mail_object = "[VacEns] Retour sur ta demande d'annulation ou de report de vacances"
+    def dir_valid_demande(vac_ens):
+        responsable = User.query.get(vac_ens.user.resp_id)
+        if vac_ens.type_demande == 'Report':
+            type_demande = 'de report'
+        else:
+            type_demande = 'd\'annulation'
+        mail_object = "[VacEns] Retour sur votre demande " + type_demande + " de vacances"
         template_base_name = "mails/"
         template = template_base_name + "valid_vacs_dir"
-        to = [MAIL_USERNAME]
+        to = [MAIL_USERNAME]#[vac_ens.user.email]
         cc = [] # [doyen@esiee.fr, responsable.email]
         Mail.send_email(to, mail_object, template, cc=cc,
-                   user=user,
                    responsable=responsable,
-                   vacs = vacs
+                   vac_ens = vac_ens
             )               
 
 #-------------------------------------

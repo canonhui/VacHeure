@@ -1,11 +1,22 @@
-Bonjour {{ responsable.prenom }},
+Bonjour {{ validator.prenom }},
 
-<p><b>{{ user.prenom }} {{ user.nom }}</b> vient de déclarer <b>{{ heure_ext.nb_heures }}</b> heures extérieures à l'école <b>{{ heure_ext.lieu }}</b>{% if heure_ext.ecole_cci %} (une école de la CCI){% else %} (une école hors CCI){% endif %}, à partir de <b>{{ conv_sqlstr_date(heure_ext.date_debut) }}</b>. 
+<p>{% if validator.role == 77 %}
+La responsable de <b>{{ heure_ext.user.prenom }} {{ heure_ext.user.nom }}</b> vient de valider sa déclaration de 
+{% else %}
+<b>{{ heure_ext.user.prenom }} {{ heure_ext.user.nom }}</b> vient de déclarer 
+{% endif %}
+<b>{{ heure_ext.nb_heures }}</b> heures extérieures à l'école <b>{{ heure_ext.lieu }}</b>{% if heure_ext.ecole_cci %} (une école de la CCIR){% else %} (une école hors CCIR){% endif %}, avec le sujet <b>{{ heure_ext.sujet }}</b>, à partir de <b>{{ conv_sqlstr_date(heure_ext.date_debut) }}</b>. {% if validator.role == 77 %}Cette déclaration reste à votre validation. {% endif %}
+
 <br><br>
+{% if validator.role == 77 %}
+	{% set status, role_validator = 2, 'direction' %}
+{% else %}
+	{% set status, role_validator = 1, 'dept' %}
+{% endif %}
 Cliquez les liens ci-dessous pour valider ou rejeter cette demande :<br>
-<a href="{{ url_for('main_bp.validation_email', pseudo=heure_ext.pseudo, heure_ext_id=heure_ext.heure_ext_id, status=1, _external=True) }}" id='oui'> -Valider</a><br>
-<a href="{{ url_for('main_bp.validation_email', pseudo=heure_ext.pseudo, heure_ext_id=heure_ext.heure_ext_id, status=0, _external=True) }}" id='non'> -Rejeter</a><br><br> ou <br>
-<a href="{{ url_for('main_bp.validation_dept', _external=True) }}"> Cliquez ici pour voir le detail</a>
+<a href="{{ url_for('main_bp.validation_email', pseudo=heure_ext.pseudo, heure_ext_id=heure_ext.heure_ext_id, status=status, validator=role_validator, _external=True) }}" id='oui'> -Valider</a><br>
+<a href="{{ url_for('main_bp.validation_email', pseudo=heure_ext.pseudo, heure_ext_id=heure_ext.heure_ext_id, status=-1, validator=role_validator, _external=True) }}" id='non'> -Rejeter</a><br><br> ou <br>
+<a href="{{ url_for('main_bp.validation_' + role_validator, _external=True) }}"> Cliquez ici pour voir le detail</a>
 
 <br><br>
 Cordialement,

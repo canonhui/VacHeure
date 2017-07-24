@@ -3,6 +3,7 @@ from flask import (redirect, render_template, request, session, url_for, flash,
 from flask_login import logout_user, login_required, login_user, current_user
 
 from ..forms import LoginForm
+from ... import db
 from ...ldap import Ldap
 from ...models_commun import User
 from .. import app_vacens
@@ -12,12 +13,15 @@ from ..utils.nocache import nocache
 from . import home_vac
 
 
+@home_vac.route('/')
+def redirect_index():
+    return redirect(url_for('.index'))
+    
 @home_vac.route('/index')
 def index():
     return render_template('index.html',
                            title='Home')
 
-@home_vac.route('/')
 @home_vac.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
@@ -49,9 +53,19 @@ def logout():
 
 @app_vacens.errorhandler(401)
 def unauthorized(e):
-    return render_template('401.html'), 401
+    db.session.rollback()
+    msg = 'Vous n\'avez pas le droit d\'accéder à cette page.'
+    return render_template('errors.html', title="Unauthorized", msg=msg), 401
 
 
 @app_vacens.errorhandler(404)
 def unauthorized(e):
-    return render_template('404.html'), 404
+    db.session.rollback()
+    msg = 'Cette page n\'existe pas.'
+    return render_template('errors.html', title="Page not found", msg=msg), 404
+
+@app_vacens.errorhandler(500)
+def unauthorized(e):
+    db.session.rollback()
+    msg = 'L\'administrateur est déjà notifié, désolé pour l\'inconvénient causé.'
+    return render_template('errors.html', title="Unexpected error", msg=msg), 500

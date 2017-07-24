@@ -14,8 +14,10 @@ class Vacances(db.Model):
     date_fin = db.Column(db.Date)
     nb_jour = db.Column(db.Integer)
     motif = db.Column(db.String(200))
+    motif_rejet = db.Column(db.String(200))
     user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     status = db.Column(db.Integer)
+    pseudo = db.Column(db.String(40))
 
     def __repr__(self):
         return '<Vacances %r>' % self.vacances_id

@@ -5,11 +5,16 @@
 {% block container %}
 	<h2> Ajout d'un utilisateur</h2>
      
-	<form action="" method="post" name="add-user" class="form-horizontal">
+	<form action="" method="post" name="add-user" class="form-horizontal form-edit-user">
 		{{ form.hidden_tag() }}
 		<p>
+			<b>{{ form.login.label }}</b><br>
+			{{ form.login(autofocus=True, size=40, id_='login') }}
+			<span class="info-msg"></span><br>
+		</p>
+		<p>
 			<b>{{ form.prenom.label }}</b><br>
-			{{ form.prenom(size=40, autofocus=True, id_='prenom') }}<br>
+			{{ form.prenom(size=40, id_='prenom') }}<br>
 		</p>
 		<p>
 			<b>{{ form.nom.label }}</b><br>
@@ -21,38 +26,23 @@
 		</p>
 		<p>
 			<b>{{ form.role.label }}</b><br>
-			{{ form.role }}<br>
+			{{ form.role(id_='role') }}<br>
 		</p>
 		<p>
 			<b>{{ form.dept.label }}</b><br>
-			{{ form.dept }}<br>
+			{{ form.dept(id_='dept') }}<br>
 		</p>
+		<br>
 		<p>
-			<b>{{ form.login.label }}</b><br>
-			{{ form.login(size=40, id_='login') }}<br>
-		</p>
-		<p>
-			{{ form.submit }}<br>
+			{{ form.supprimer(class_="btn btn-default btn-sm btn-delete-user", onclick="return deleteUserForm($(this));") }}
+			{{ form.updater(class_="btn btn-success btn-sm btn-update-user") }}
+			<br>
 		</p>
 		
 	</form>
 
     <br>
     <a href="{{ url_for('index') }}"> Cliquer ici pour revenir à "home"</a>
+    <br><br>
 
-{% endblock %}
-
-{% block scripts %}
-    {{ super() }}
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script type="text/javascript">
-        $(function() {
-        		$('#nom, #prenom').on('input propertychange', function() {
-        			var email_data = $('#prenom').val() + '.' + $('#nom').val() + '@esiee.fr';
-        			var login_data = $('#nom').val() + $('#prenom').val().charAt(0);
-        			$('#email').val(email_data.toLowerCase());
-        			$('#login').val(login_data.toLowerCase());
-        		})
-        })
-    </script>
 {% endblock %}

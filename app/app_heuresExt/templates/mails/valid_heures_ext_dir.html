@@ -1,7 +1,8 @@
-Bonjour {{ user.prenom }},
+Bonjour {{ heure_ext.user.prenom }},
 
-<p>Le directeur de l'école vient de <b>{% if heures_ext.status == 2 %} valider {% else %} rejeter {% endif %}</b> votre demande pour enseigner <b>{{ heures_ext.nb_heures }}</b> heures à l'école <b>{{ heures_ext.lieu }}</b> à partir de <b>{{ conv_sqlstr_date(heures_ext.date_debut) }}</b> en date du {{ conv_sqlstr_date(heures_ext.date_demande) }}. <a href="{{ url_for('main_bp.historique', _external=True) }}"> Cliquez ici pour voir le detail</a>
-{% if heures_ext.status == 2 %}
+<p>Le directeur de l'école vient de <b>{% if heure_ext.status == 2 %} valider {% else %} rejeter {% endif %}</b> votre demande pour enseigner <b>{{ heure_ext.nb_heures }}</b> heures à l'école <b>{{ heure_ext.lieu }}</b>{% if heure_ext.ecole_cci %} (une école de la CCIR){% else %} (une école hors CCIR){% endif %}, avec le sujet: <b>{{ heure_ext.sujet }}</b>, à partir de <b>{{ conv_sqlstr_date(heure_ext.date_debut) }}</b> en date du {{ conv_sqlstr_date(heure_ext.date_demande) }}.{% if heure_ext.status == -1 %} Le motif de rejet est le suivant: <b><em>{{ heure_ext.motif_rejet }}</em></b>. {% endif %}
+<br><br><a href="{{ url_for('main_bp.historique', _external=True) }}"> Cliquez ici pour voir le détail</a>
+{% if heure_ext.status == 2 %}
 	<br><br>Bon enseignement!
 {% endif %}
 <br><br>

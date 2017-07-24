@@ -2,13 +2,13 @@
 {% block content %}
 {{ super() }}
 
-<div class="affiche_div">
+<div class="affiche-div">
 <h4>{{ msg }}</h4>
 {% if user_vacs_ens %}
 {% if template_flag not in ['historique_user', 'historique_validation_vacances'] %}
     <form action="" method="post">
 {% endif %}
-<table class="order-desc table table-hover affiche_table" width="100%">
+<table class="order-desc table table-hover affiche-table" width="100%">
 
     <tr>
         <th id="nom"> Nom <i class="fa"></i></th>
@@ -35,8 +35,11 @@
                 <td> {{ user_vac_ens.user.prenom }} </td>
 
                 <td> {{ conv_sqlstr_date(user_vac_ens.date_demande) }}</td>
-
-                <td> {{ user_vac_ens.type_demande }} </td>    
+                {% if user_vac_ens.type_demande == 'Annulation' %}
+                    <td title="{{ user_vac_ens.motif }}">
+                {% else %}
+                    <td>
+                {% endif %} {{ user_vac_ens.type_demande }} </td>    
 
                 <td> {{ user_vac_ens.nb_jour }} </td>
 
@@ -47,35 +50,44 @@
                 {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}
                     {% set status = user_vac_ens.status %}
                     {% if user_vac_ens.date_debut < current_date %}
-                        <td class='deja_finis'> {{ valid[status] }} </td>
+                        {% if status == -1 %}
+                            <td class='deja_finis' title="Motif rejet: {{ user_vac_ens.motif_rejet }}">
+                        {% else %}
+                            <td class='deja_finis'>
+                        {% endif %} {{ valid[status] }} </td>
                     {% elif status == 2 %}    
                         <td class='oui'> {{ valid[status] }} </td>
                     {% elif status == -1 %}
-                        <td class='non'> {{ valid[status] }} </td>
+                        <td class='non' title="Motif rejet: {{ user_vac_ens.motif_rejet }}"> {{ valid[status] }} </td>
                     {% else %}
                         <td class='en_cours'> {{ valid[status] }} </td>
                     {% endif %}
 
-                {% elif template_flag == 'validation_vacances_responsable' %}
-                    <td>
-                        <select name= {{ user_vac_ens.vacances_id }} class="form-control validate" style="width: 75px">
-                            <option value=0></option>
-
-                            <option value=1>Oui</option>
-
-                            <option value=-1>Non</option>
-                        </select>
-                    </td>
-
                 {% else %}
                     <td>
-                        <select name= {{ user_vac_ens.vacances_id }} class="form-control validate" style="width: 75px">
-                            <option value=0></option>
+                        <div class="valid-div">
+                            <select name= "{{ user_vac_ens.vacances_id }}" class="form-control validate valid-checkbox" id="{{ user_vac_ens.vacances_id }}" style="width: 75px">
+                                <option value=0></option>
 
-                            <option value=2>Oui</option>
-
-                            <option value=-1>Non</option>
-                        </select>
+                                {% if template_flag == 'validation_vacances_responsable' %}
+                                    <option value=1>Oui</option>
+                                {% else %}
+                                    <option value=2>Oui</option>
+                                {% endif %}
+                                <option value=-1>Non</option>
+                            </select>
+                            <a class="motif-lien">Motif</a>
+                        </div>
+                        <section class="motif-rejet" id="motif-rejet-{{ user_vac_ens.vacances_id }}">
+                            <div class="fond">
+                                <div class="UI">
+                                    <b>Motif</b><br>
+                                    <span class="warning-msg"></span>
+                                    <textarea name="motif-{{ user_vac_ens.vacances_id }}" rows="3" cols="20" placeholder="Veuillez saisir un motif pour lequel vous rejetez cette demande"></textarea><br><br>
+                                    <button type="button" id="btn-motif-rejet-{{ user_vac_ens.vacances_id }}" class="btn btn-success btn-sm btn-motif-rejet">Valider</button>
+                                </div>
+                            </div>
+                        </section>
                     </td>
                 {% endif %}
             </tr>
@@ -128,7 +140,7 @@
     {% if user_vacs_ens %}
         <script type="text/javascript">
         //whywhywhywhywhywhywhywhywhywhywhy!!!!!!!!!!!!!!!1!!!!!
-        $(document).on('click', '.affiche_table th', function() {
+        $(document).on('click', '.affiche-table th', function() {
             sortable_ajax = $(this).attr('id');
             $('table').toggleClass('order-desc');
             if($('table').hasClass('order-desc')) {

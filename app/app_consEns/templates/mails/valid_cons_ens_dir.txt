@@ -1,6 +1,8 @@
 Bonjour {{ cons_ens.user.prenom }},
 
-Le directeur de l'école vient de {% if cons_ens.status == 2 %} valider {% else %} rejeter {% endif %} votre demande pour offrir des conseils en {{ cons_ens.nb_jours }} jours à l'entreprise {{ cons_ens.nom_entreprise }}, dont l'adresse : {{ cons_ens.adresse }}, à partir de {{ conv_sqlstr_date(cons_ens.date_debut) }} en date du {{ conv_sqlstr_date(cons_ens.date_demande) }}. Cliquez le lien pour voir le detail: {{ url_for('main_cons_bp.historique', _external=True) }}
+Le directeur de l'école vient de {% if cons_ens.status == 2 %} valider {% else %} rejeter {% endif %} votre demande pour offrir des conseils en {{ cons_ens.nb_jours }} jours avec sujet {{ cons_ens.sujet }}, à l'entreprise {{ cons_ens.nom_entreprise }}, dont l'adresse : {{ cons_ens.adresse }}, à partir de {{ conv_sqlstr_date(cons_ens.date_debut) }} en date du {{ conv_sqlstr_date(cons_ens.date_demande) }}.{% if cons_ens.status == -1 %} Le motif de rejet est le suivant: {{ cons_ens.motif_rejet }}. {% endif %} 
+
+Cliquez le lien pour voir le detail: {{ url_for('main_cons_bp.historique', _external=True) }}
 
 {% if cons_ens.status == 2 %}Bon enseignement!{% endif %}
 

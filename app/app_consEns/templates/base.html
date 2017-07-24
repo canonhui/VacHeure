@@ -33,9 +33,9 @@
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="/consEns/index">Home</a></li>
+        <li><a href="/consEns/index">Home</a></li>
       {% if session['user_id'] == null %}
-        <li><a href="/login">Login</a></li>
+        <li><a href="/consEns/login">Login</a></li>
       {% endif %}
       {% if session["user_id"] != null %}
         <li><a href="/consEns/dec">Déclaration</a></li>
@@ -77,16 +77,7 @@
 
 {% block scripts %}
     {{ super() }}
+    <script src="{{ APPDIR }}/static/js/myJS.js"></script>
     <script src="https://code.jquery.com/jquery.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('li.active').removeClass('active');
-            current_path = '/' + location.pathname.split('/')[1] + '/' + location.pathname.split('/')[2];
-            $('a[href="' + current_path + '"]').closest('li').addClass('active');
-            
-            if(location.pathname == '/') {
-                $('a[href="/index"]').closest('li').addClass('active');
-            }
-        });
-    </script>
+
 {% endblock %}

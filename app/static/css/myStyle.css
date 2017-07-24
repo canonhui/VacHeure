@@ -1,8 +1,8 @@
 /* historique.html or affiche_table.html */
-.affiche_div {
+.affiche-div {
   margin: 0 2% 0 2%;
 }
-.affiche_table {
+.affiche-table {
   table-layout: fixed;
 }
 .oui {
@@ -21,9 +21,7 @@
   text-align: center;
   margin-bottom: 30px;
 }
-.btn-success {
-  margin-bottom: 30px;
-}
+
 th {
   cursor: pointer;
   background-color: #d7d7d7;
@@ -37,6 +35,9 @@ th i {
   text-overflow:ellipsis; /*replace overflow content with ...*/
   word-break:keep-all;
   padding: 0 7px;
+}
+.valid-checkbox, .motif-lien {
+  display: inline-block;
 }
 /********************************/
 
@@ -66,13 +67,13 @@ th i {
 /*************************/
 
 /* admin.html */
-#form-admin {
+.form-admin {
   margin-left: 7%;
 }
-#form-admin p {
+.form-admin p {
   padding-top: 7px;
 }
-#form-admin .admin-func {
+.form-admin .admin-func {
   font-size: 14px;
   background-color: #fff;
   border: 1px solid #aaa;
@@ -80,8 +81,18 @@ th i {
   padding: 7px;
 
 }
-#form-admin .admin-func:hover {
+.form-admin .admin-func:hover {
   background-color: #eee;
+}
+.form-edit-user {
+  margin-left: 7%;
+}
+.btn-update-user {
+  margin-left: 10%;
+}
+.info-msg {
+  color: #376;
+  font-weight: 900;
 }
 /***********************/
 
@@ -102,6 +113,61 @@ th i {
   padding: 0;
   margin: 0 4px 0 4px;
   overflow: auto;
+}
+/***********************/
+
+/* Validation email */
+.validation-email .main-info {
+  margin: auto;
+  margin-top: 7%;
+  display: none;
+}
+.validation-email .main-info p {
+  font-size: 25px;
+  font-family: Arial; 
+  text-align: center;
+  color: #a47;
+}
+.validation-email .fermer-lien a {
+  text-align: center;
+  text-decoration: none;
+  color: #aaa;
+}
+.validation-email .fermer-lien a:hover {
+  text-decoration: underline;
+  color: #a77;
+}
+.validation-email .seconds {
+  font-size: 28px;
+}
+/*********************/
+
+/* Fond des pops-up */
+.motif-rejet, .motif-lien {
+  display: none;
+}
+.motif-lien {
+  cursor: pointer;
+}
+.warning-msg {
+  color: red;
+}
+
+.fond{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10,10,10,0.65);
+    text-align: center;
+}
+.UI{
+    display: inline-block;
+    background: white;
+    padding: 30px;
+    border-radius: 5px;
+    margin-top: 30vh;
 }
 /***********************/
 

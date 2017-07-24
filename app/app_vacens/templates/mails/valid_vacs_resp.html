@@ -1,11 +1,12 @@
-Bonjour {{ user.prenom }},
+Bonjour {{ vac_ens.user.prenom }},
 
-<p><b>{{ responsable.prenom }} {{ responsable.nom }}</b> vient de <b>{% if vacs.status == 1 %} valider {% else %} rejeter {% endif %}</b> ta demande {% if vacs.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du <b>{{ conv_sqlstr_date(vacs.date_debut)  }}</b> au <b>{{ conv_sqlstr_date(vacs.date_fin) }}</b>,  en date du <b>{{ conv_sqlstr_date(vacs.date_demande) }}</b>.  
-<br>
-{% if vacs.status == 1 %} Cette validation reste à confirmer par la direction. {% endif %}
+<p><b>{{ responsable.prenom }} {{ responsable.nom }}</b> vient de <b>{% if vac_ens.status == 1 %} valider {% else %} rejeter {% endif %}</b> votre demande {% if vac_ens.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du <b>{{ conv_sqlstr_date(vac_ens.date_debut)  }}</b> au <b>{{ conv_sqlstr_date(vac_ens.date_fin) }}</b>,  en date du <b>{{ conv_sqlstr_date(vac_ens.date_demande) }}</b>.{% if vac_ens.status == -1 %} Le motif de rejet est le suivant: <b><em>{{ vac_ens.motif_rejet }}</em></b>. {% endif %}
+<br><br><a href="{{ url_for('main_vac.historique_user', _external=True) }}"> Cliquez ici pour voir le détail</a>
+
+{% if vac_ens.status == 1 %}<br><br>Cette validation reste à confirmer par la direction. {% endif %}
 <br><br>
 Cordialement,
 <br><br>
-Admin de <code>VacEns</code>
+Admin de <code>VacEns</code></p>
 
 

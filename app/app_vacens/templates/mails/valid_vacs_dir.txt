@@ -1,7 +1,12 @@
-Bonjour {{ user.prenom }},
+Bonjour {{ vac_ens.user.prenom }},
 
-Le directeur de l'école vient de {% if vacs.status == 2 %} valider {% else %} rejeter {% endif %} ta demande {% if vacs.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du {{ conv_sqlstr_date(vacs.date_debut)  }} au {{ conv_sqlstr_date(vacs.date_fin) }},  en date du {{ conv_sqlstr_date(vacs.date_demande) }}. 
-{% if vacs.status == 2 %}Ton nouveau solde de vacances est de {{ user.soldeVacs }} jour(s). {% endif %}
+Le directeur de l'école vient de {% if vac_ens.status == 2 %} valider {% else %} rejeter {% endif %} votre demande {% if vac_ens.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du {{ conv_sqlstr_date(vac_ens.date_debut)  }} au {{ conv_sqlstr_date(vac_ens.date_fin) }},  en date du {{ conv_sqlstr_date(vac_ens.date_demande) }}.{% if vac_ens.status == -1 %} Le motif de rejet est le suivant: {{ vac_ens.motif_rejet }}. {% endif %}
+
+Cliquez le lien pour voir le détail: { url_for('main_vac.historique_user', _external=True) }}
+{% if vac_ens.status == 2 %}
+
+Votre nouveau solde de vacances est de {{ vac_ens.user.soldeVacs }} jour(s). 
+{% endif %}
 
 Cordialement,
 

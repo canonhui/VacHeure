@@ -4,8 +4,27 @@
  
 {% block container %}
   <h2> Menu d'administration</h2>
-     
-   {{ wtf.quick_form(form, form_type='horizontal', horizontal_columns=('lg', 1, 10) ) }}
+
+   <form action="" method="post" name="admin" class="form-admin">
+		{{ form.hidden_tag() }}
+		<p>
+			{{ form.add_user(class_='admin-func') }}<br>
+		</p>
+		<p>
+			{{ form.extraction_users(class_='admin-func') }}<br>
+		</p>
+		<p>
+
+			{{ form.heure_ext_zero(class_='admin-func remise-zero HeuresExt', onclick="return remiseAZeroForm($(this));") }}<br>
+		</p>
+		<p>	
+			{{ form.vac_ens_zero(class_='admin-func remise-zero Vacances', onclick="return remiseAZeroForm($(this));") }}<br>
+		</p>
+		<p>	
+			{{ form.cons_ens_zero(class_='admin-func remise-zero ConsEns', onclick="return remiseAZeroForm($(this));") }}<br>
+		</p>
+		
+	</form>
 
    <br>
    <a href="{{ url_for('index') }}"> Cliquer ici pour revenir à "home" </a>

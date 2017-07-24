@@ -68,6 +68,13 @@ class User(db.Model):
         return '<User %r>' % self.user_id
 
 
+    def reset_to_zero():
+        def set_column_to_zero(user):
+            user.soldeVacs = 0
+            user.soldeVacsEnCours = 0
+        list(map(set_column_to_zero, User.query.all()))
+
+
 # Une table ridicule
 class Resp(db.Model):
     key_id = db.Column(db.Integer, primary_key=True, autoincrement=True)

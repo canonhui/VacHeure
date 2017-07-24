@@ -3,6 +3,7 @@ from flask import (redirect, render_template, request, session, url_for, flash,
 from flask_login import logout_user, login_required, login_user, current_user
 
 from ..forms import LoginForm
+from ... import db
 from ...ldap import Ldap
 from ...models_commun import User
 from .. import app_heuresExt
@@ -13,6 +14,9 @@ from . import home_bp
 
 
 @home_bp.route('/')
+def redirect_index():
+    return redirect(url_for('.index'))
+
 @home_bp.route('/index')
 def index():
     return render_template('index.html',
@@ -64,9 +68,19 @@ def logout():
 
 @app_heuresExt.errorhandler(401)
 def unauthorized(e):
-    return render_template('401.html', title="Unauthorized"), 401
+    db.session.rollback()
+    msg = 'Vous n\'avez pas le droit d\'accéder à cette page.'
+    return render_template('errors.html', title="Unauthorized", msg=msg), 401
 
 
 @app_heuresExt.errorhandler(404)
 def unauthorized(e):
-    return render_template('404.html', title="Page not found"), 404
+    db.session.rollback()
+    msg = 'Cette page n\'existe pas.'
+    return render_template('errors.html', title="Page not found", msg=msg), 404
+
+@app_heuresExt.errorhandler(500)
+def unauthorized(e):
+    db.session.rollback()
+    msg = 'L\'administrateur est déjà notifié, désolé pour l\'inconvénient causé.'
+    return render_template('errors.html', title="Unexpected error", msg=msg), 500

@@ -1,12 +1,14 @@
 from flask import (redirect, render_template, session, url_for, flash, request, 
-                  abort, current_app)
+                  abort, current_app, jsonify)
 from flask_login import logout_user, login_required, login_user, current_user
 
 from .. import app, db
 from ..forms import LoginForm, AddUserForm, AdminForm
 from ..ldap import Ldap
 from ..models_commun import User, load_user, Resp
-from ..app_heuresExt import main_bp
+from ..app_heuresExt.models_heuresExt import HeuresExt
+from ..app_consEns.models_consEns import ConsEns
+from ..app_vacens.models_vacEns import Vacances
 
 from . import main_app_bp
 '''
@@ -28,6 +30,9 @@ def add_user_id(endpoint, values):
 '''
 
 @app.route('/')
+def redirect_index():
+    return redirect(url_for('index'))
+
 @app.route('/index')
 def index():
     return render_template('index.html',
@@ -61,19 +66,20 @@ def login():
                            title='Sign In',
                            form=form)
 
-@main_app_bp.route('/accueil')
+@main_app_bp.route('/accueil/')
 @login_required
 def accueil():
   return render_template('accueil.html',
                             title='Accueil')
 
-@main_app_bp.route('/admin', methods=['GET', 'POST'])
+@main_app_bp.route('/admin/', methods=['GET', 'POST'])
 @login_required
 def admin():
     import csv
     from flask import send_from_directory
     user_id = session.get("user_id", None)
     role = User.query.filter_by(user_id=user_id).first().role
+
     if role == 77:
         form = AdminForm()
         if request.method == 'POST' and form.validate():
@@ -96,6 +102,23 @@ def admin():
                 send_from_directory(directory=app.config['FILES'], filename='utilisateurs.csv', as_attachment=False)
                 flash("La base des utilisateurs est déjà sauvegardée!")
                 return redirect(url_for('.admin'))
+            else:
+                bases = {'heure_ext_zero': HeuresExt, 'vac_ens_zero': Vacances, 'cons_ens_zero': ConsEns}
+                for key in request.form.keys():
+                    if key in bases.keys():
+                        base = bases[key]
+                    if key == 'vac_ens_zero':
+                        User.reset_to_zero()
+                base.query.delete()
+                try:
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    flash('Erreur se produit lors de l\'opération de la base de données.')
+                else:
+                    flash('La base de données est remise à zéro.')
+                finally:
+                    return redirect(url_for('.admin'))
 
         elif request.method == 'GET':
             return render_template('admin.html', title='Admin', form=form)
@@ -115,34 +138,74 @@ def add_user():
     role = User.query.filter_by(user_id=user_id).first().role
     if role == 77:
         form = AddUserForm()
-
-        if form.validate_on_submit():
-            u = User.query.filter_by(login=form.login.data).first() # does user already exist ?
-
-            if u is None:
-                # TESTER QUE LE LOGIN EXISTE
-                u = User(login=form.login.data, 
-                         nom=form.nom.data,
-                         prenom=form.prenom.data,
-                         email=form.email.data,
-                         role=int(form.role.data),
-                         resp_id=Resp.query.filter_by(dept=form.dept.data).first().resp_id)
-                db.session.add(u)
-                db.session.commit()
-                flash("L'ajout de l'utilisateur \"" + form.login.data + "\" déjà effectué avec succès!")
-                return redirect(url_for('.admin'))
-            
-            flash("Utilisateur déjà dans la base", 'danger')        
-            return redirect(url_for('.add_user'))
-
-        return render_template('add_user.html', 
+        if request.method == 'GET':
+            return render_template('add_user.html', 
                               title='Ajout d\'un utilisateur',
                               form=form)
+
+        if form.validate_on_submit():
+            print(request.form)
+            u = User.query.filter_by(login=form.login.data).first() # does user already exist ?
+            flash_msg = None
+            if 'updater' in request.form:
+                if u is None:
+                    u = User(login=form.login.data,
+                             nom=form.nom.data,
+                             prenom=form.prenom.data,
+                             email=form.email.data,
+                             role=int(form.role.data),
+                             resp_id=request.form['dept'])
+                    db.session.add(u)
+                    flash_msg = "L'ajout de l'utilisateur \"" + form.login.data + "\" est déjà effectué avec succès!"
+                else:
+                    u.nom=form.nom.data
+                    u.prenom=form.prenom.data
+                    u.email=form.email.data
+                    u.role=int(form.role.data)
+                    u.resp_id=request.form['dept']
+                    flash_msg = "La mise à jour de l'utilisateur \"" + form.login.data + "\" est déjà effectué avec succès!"
+
+            if 'supprimer' in request.form:
+                if u is None:
+                    flash('Utilisateur n\'existe pas!')
+                    return redirect(url_for('.add_user'))
+                else:
+                    db.session.delete(u)
+                    flash_msg = "La suppression de l'utilisateur \"" + form.login.data + "\" est déjà effectué avec succès!"
+
+            if flash_msg:
+                try:
+                    db.session.commit()
+                except Exception as e:
+                    db.session.rollback()
+                    flash_msg = 'Erreur se produit lors de l\'opération de la base de données.'
+                else:
+                    flash(flash_msg)
+                finally:
+                    return redirect(url_for('.admin'))
+            return redirect(url_for('.add_user'))
+
+        else:
+            flash('Formulaire non validé.')
+            return redirect(url_for('.add_user'))
+        
     else:
         abort(401)
 
 
-@main_app_bp.route('/logout')
+@main_app_bp.route('/admin/edit_user')
+@login_required
+def edit_projet():
+    login = request.args.get('login', '', str)
+
+    print('projet id', login)
+    user = User.query.filter_by(login=login).first()
+    if user:
+        return jsonify({'prenom': user.prenom, 'nom': user.nom, 'email': user.email, 'role': user.role, 'dept': user.resp_id})
+    return jsonify({'msg': 'Ajoutez ce nouvel enseignant.'})
+
+
+@main_app_bp.route('/logout/')
 @login_required
 def logout():
     logout_user()
@@ -151,9 +214,19 @@ def logout():
 
 @app.errorhandler(401)
 def unauthorized(e):
-    return render_template('401.html', title="Unauthorized"), 401
+    db.session.rollback()
+    msg = 'Vous n\'avez pas le droit d\'accéder à cette page.'
+    return render_template('errors.html', title="Unauthorized", msg=msg), 401
 
 
 @app.errorhandler(404)
 def unauthorized(e):
-    return render_template('404.html', title="Page not found"), 404
+    db.session.rollback()
+    msg = 'Cette page n\'existe pas.'
+    return render_template('errors.html', title="Page not found", msg=msg), 404
+
+@app.errorhandler(500)
+def unauthorized(e):
+    db.session.rollback()
+    msg = 'L\'administrateur est déjà notifié, désolé pour l\'inconvénient causé.'
+    return render_template('errors.html', title="Unexpected error", msg=msg), 500

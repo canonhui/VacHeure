@@ -1,44 +1,25 @@
-from app import db
-from app.models import HeuresExt
+from ... import db
+from ..models_consEns import ConsEns
 from datetime import datetime
 
 class DbMethods:
-    # annulation_vacances
-    # 
-    # @param user User : user reference
-    # @param date_debut TYPE? : bla
-    # @param date_fin TYPE? : bla
-    # @param nb_jour integer : bla
     @staticmethod
-    def annulation_vacances(user_id, form):
-        v = Vacances(
+    def demande_cons_ens(user_id, pseudo, form):
+        adresse = ', '.join([form.deAdrRue.data, form.deAdrCode.data, 
+                form.deAdrVille.data])
+        if form.deAdrInfoExtra.data:
+            adresse = ', '.join([form.deAdrInfoExtra.data, adresse])
+        cons_ens = ConsEns(
+            sujet=form.deSujet.data,
+            nom_entreprise=form.deNomEntreprise.data,
+            adresse=adresse,
             date_demande=datetime.utcnow(),
-            type_demande = 'Annulation',            
-            motif=form.annulationMotif.data,
-            date_debut=form.annulationDateDebut.data,
-            date_fin=form.annulationDateFin.data,
-            nb_jour=form.annulationNbJours.data,
+            date_debut=form.deDateDebut.data,
+            nb_jours=int(form.deNbJours.data),
             user_id=user_id,
-            status=0)
-        db.session.add(v)
+            status=0,
+            pseudo=pseudo)
+        db.session.add(cons_ens)
         db.session.commit()
+        return cons_ens
 
-    # prise_vacances
-    # 
-    # @param user User : user reference
-    # @param date_debut TYPE? : bla
-    # @param date_fin TYPE? : bla
-    # @param nb_jour integer : bla
-    @staticmethod
-    def prise_heures_ext(user_id, form):
-        v = HeuresExt(
-            date_demande=datetime.utcnow(),
-            type_demande = 'prise',
-            date_debut=form.priseDateDebut.data,
-            lieu=form.priseLieu.data,
-            ecole_cci=bool(int(form.priseEcoleCCI.data)),
-            nb_heures=form.priseNbHeures.data,
-            user_id=user_id,
-            status=0)
-        db.session.add(v)
-        db.session.commit()

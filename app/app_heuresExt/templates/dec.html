@@ -15,15 +15,22 @@
 				<form action="" method="post" name="dec">
 				  {{ form.hidden_tag() }}
 				  <p>
+					  <b>{{ form.decSujet.label }}</b><br>
+					  {{ form.decSujet(autofocus=True, size=40, id_="decSujet") }}
+					  {% for error in form.decSujet.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
 					  <b>{{ form.decDateDebut.label }}</b><br>
-					  {{ form.decDateDebut(autofocus=True, size=40, placeholder="jj/mm/AAAA", id_="decDateDebut") }}
+					  {{ form.decDateDebut(size=40, placeholder="jj/mm/AAAA", id_="decDateDebut") }}
 					  {% for error in form.decDateDebut.errors %}
 					  	<span style="color: red">{{ error }}</span>
 					  {% endfor %}<br>
 				  </p>
 				  <p>
 					  <b>{{ form.decLieu.label }}</b><br>
-					  {{ form.decLieu(size=40) }}
+					  {{ form.decLieu(size=40, placeholder='Nom de l\'école') }}
 					  {% for error in form.decLieu.errors %}
 					  	<span style="color: red">{{ error }}</span>
 					  {% endfor %}<br>
@@ -40,9 +47,10 @@
 				  	  {% for error in form.decEcoleCCI.errors %}
 					  	<span style="color: red">{{ error }}</span>
 					  {% endfor %}
-				  	  <br><br>
+				  	  <br>
 				  </p>
 				  <p><input class="btn btn-success" type="submit" value="Valider"></p>
+				  <br>
 			  </form>			
 			</div>
 		</div>	

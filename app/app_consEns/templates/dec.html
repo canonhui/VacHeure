@@ -14,15 +14,15 @@
 			  <form action="" method="post" name="dec">
 				{{ form.hidden_tag() }}
 				<P>
-					<b>{{ form.deIntitule.label }}</b><br>
-					{{ form.deIntitule(autofocus=True, size=40, id_="deIntitule") }}
-					{% for error in form.deIntitule.errors %}
+					<b>{{ form.deSujet.label }}</b><br>
+					{{ form.deSujet(autofocus=True, size=40, id_="deSujet") }}
+					{% for error in form.deSujet.errors %}
 					  	<span style="color: red">{{ error }}</span>
 					{% endfor %}<br>
 				</P>
 				<P>
 					<b>{{ form.deNomEntreprise.label }}</b><br>
-					{{ form.deIntitule(size=40, id_="deNomEntreprise") }}
+					{{ form.deNomEntreprise(size=40, id_="deNomEntreprise") }}
 					{% for error in form.deNomEntreprise.errors %}
 					  	<span style="color: red">{{ error }}</span>
 					{% endfor %}<br>

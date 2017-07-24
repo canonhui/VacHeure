@@ -8,7 +8,7 @@
 {% if l %}
 <ol>
  {% for vacs in l %}
-<li> <b>{{ vacs.user.nom }} {{ vacs.user.prenom }}</b> (solde de vacances en report de <b>{{ vacs.user.soldeVacs }}</b> jours) demande le {{ conv_sqlstr_date(vacs.date_demande) }} {% if vacs.type_demande == 'Report' %}de prendre  {% else %}d'annuler {% endif %} <b>{{ abs_str(vacs.nb_jour) }}</b> jours (ouvrés) de vacances du <b>{{ conv_sqlstr_date(vacs.date_debut) }}</b> au <b>{{ conv_sqlstr_date(vacs.date_fin) }}</b>{% if vacs.type_demande == 'Annulation' %}, pour le motif suivant : "<em>{{ vacs.motif}}</em>"{% endif %} </b>{% if 'historique_total' in request_type %} (<b>{{ valid[vacs.status] }}</b>) {% endif %}. 
+<li> <b>{{ vacs.user.nom }} {{ vacs.user.prenom }}</b> (solde de vacances en report de <b>{{ vacs.user.soldeVacs }}</b> jours) demande le {{ conv_sqlstr_date(vacs.date_demande) }} {% if vacs.type_demande == 'Report' %}de prendre  {% else %}d'annuler {% endif %} <b>{{ abs_str(vacs.nb_jour) }}</b> jours (ouvrés) de vacances du <b>{{ conv_sqlstr_date(vacs.date_debut) }}</b> au <b>{{ conv_sqlstr_date(vacs.date_fin) }}</b>{% if vacs.type_demande == 'Annulation' %}, pour le motif suivant : "<em>{{ vacs.motif}}</em>"{% endif %} </b>{% if 'historique_total' in request_type %} (<b>{{ valid[vacs.status] }}</b>{% if vacs.status == -1 %}, motif rejet: <b>{{ vacs.motif_rejet }}</b>{% endif %}) {% endif %}. 
 </li>
 <br>
 {% endfor %}

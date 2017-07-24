@@ -41,12 +41,13 @@ class Mail :
     @staticmethod
     def report_demande(cons_ens):
         #responsable = User.query.get(user.resp_id)
-        mail_object = "[ConsEns] Demande d'une déclaration de conseils à l'entreprise ("+ cons_ens.user.nom + " " + cons_ens.user.prenom +")"
+        mail_object = "[ConsEns] Demande d'une déclaration de conseils à  l'entreprise ("+ cons_ens.user.nom + " " + cons_ens.user.prenom +")"
         template_base_name = "mails/"
         template = template_base_name + "report_cons_ens"
-        #to = ['jf.bercher@esiee.fr'] #[responsable.email]
+        directeur = User.query.filter_by(role=77, login='wuw').first().email
+        #to = [directeur]
         to = [MAIL_USERNAME]
-        cc = []#['abdul.alhazreb@gmail.com'] #[user.email, doyen@esiee.fr]        
+        cc = []
         Mail.send_email(to, mail_object, template, cc=cc,
                    cons_ens=cons_ens
             )
@@ -56,7 +57,7 @@ class Mail :
         mail_object = "[ConsEns] Retour sur votre déclaration de conseils à l'entreprise"
         template_base_name = "mails/"
         template = template_base_name + "valid_cons_ens_dir"
-        #to = ['jf.bercher@esiee.fr'] #[user.email]
+        #to = [cons_ens.user.email]
         to = [MAIL_USERNAME]
         cc = [] # [doyen@esiee.fr, responsable.email]
         Mail.send_email(to, mail_object, template, cc=cc,

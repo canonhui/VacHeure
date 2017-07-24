@@ -66,12 +66,16 @@ class AddUserForm(FlaskForm):
     prenom = StringField('Prénom :', [InputRequired()])
     email = EmailField('Email :', [InputRequired()])
     role = SelectField('Role :', choices=[('1', 'Ensegnant'), ('2', 'Responsable du département'), ('77', 'Admin')])
-    dept = SelectField(u'Département :', choices=[('ISYS', 'ISYS'), ('IT', 'IT'), ('MTEL', 'MTEL'), ('SEN', 'SEN')])
+    dept = SelectField(u'Département :', choices=[('2', 'ISYS'), ('1', 'IT'), ('4', 'MTEL'), ('3', 'SEN')])
     login = StringField('login esiee :',
                         [InputRequired()])
-    submit = SubmitField('Ajouter')
+    supprimer = SubmitField('Supprimer')
+    updater = SubmitField('Updater')
 
 class AdminForm(FlaskForm):
 
-    add_user = SubmitField('Ajouter un utilisateur')
+    add_user = SubmitField('Ajouter, updater ou supprimer un utilisateur')
     extraction_users = SubmitField('Sauvegarder la base users en csv')
+    heure_ext_zero = SubmitField('Remise à zéro de la base d\'HeuresExt')
+    vac_ens_zero = SubmitField('Remise à zéro de la base de Vacances')
+    cons_ens_zero = SubmitField('Remise à zéro de la base de ConsEns')

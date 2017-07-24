@@ -14,6 +14,7 @@ class LoginForm(FlaskForm):
 
 class DecForm(FlaskForm):
     fmt = '%d/%m/%Y'
+    decSujet = StringField('Sujet :', [InputRequired()])
     decDateDebut = DateField('Date de début :', [InputRequired()],
                                format=fmt,  # format = '%m/%d/%Y',
                                description='Premier jour')
@@ -22,12 +23,13 @@ class DecForm(FlaskForm):
     decNbHeures = IntegerField('Nombre d\'heures :', 
                     validators=[DataRequired(), NumberRange(min=0)])
     #decEcoleCCI = BooleanField('Ecole de la CCI?', default=False)
-    decEcoleCCI = RadioField('Ecole de la CCI?', choices=[('1', 'Oui'), ('0', 'Non')],
+    decEcoleCCI = RadioField('Ecole de la CCIR?', choices=[('1', 'Oui'), ('0', 'Non')],
                     validators=[DataRequired()])
 
 
 class DecFormChrome(FlaskForm):
     fmt = '%Y-%m-%d'
+    decSujet = StringField('Sujet :', [InputRequired()])
     decDateDebut = DateField('Date de début :', [InputRequired()],
                                format=fmt,  # format = '%m/%d/%Y',
                                description='Premier jour')
@@ -36,7 +38,7 @@ class DecFormChrome(FlaskForm):
     decNbHeures = IntegerField('Nombre d\'heures :', 
                     validators=[DataRequired(), NumberRange(min=0)])
     #decEcoleCCI = BooleanField('Ecole de la CCI?', default=False)
-    decEcoleCCI = RadioField('Ecole de la CCI?', choices=[('1', 'Oui'), ('0', 'Non')],
+    decEcoleCCI = RadioField('Ecole de la CCIR?', choices=[('1', 'Oui'), ('0', 'Non')],
                     validators=[DataRequired()])
 
 

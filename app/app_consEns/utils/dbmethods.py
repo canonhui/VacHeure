@@ -4,13 +4,20 @@ from datetime import datetime
 
 class DbMethods:
     @staticmethod
-    def demande_cons_ens(user_id, pseudo, form):
+    def demande_cons_ens(user_id, form):
+        
+        import random, string
+        from config import NB_CODE
+        factors = string.ascii_letters + string.digits
+        random.seed(datetime.now())
+        pseudo = ''.join(random.sample(factors, NB_CODE))
+
         adresse = ', '.join([form.deAdrRue.data, form.deAdrCode.data, 
                 form.deAdrVille.data])
         if form.deAdrInfoExtra.data:
             adresse = ', '.join([form.deAdrInfoExtra.data, adresse])
         cons_ens = ConsEns(
-            intitule=form.deIntitule.data,
+            sujet=form.deSujet.data,
             nom_entreprise=form.deNomEntreprise.data,
             adresse=adresse,
             date_demande=datetime.utcnow(),

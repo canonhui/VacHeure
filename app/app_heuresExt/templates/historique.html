@@ -2,31 +2,20 @@
 {% block content %}
 {{ super() }}
 
-{% block head %}
-    {{ super() }}
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
-     
-    <!-- jQuery -->
-    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-     
-    <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
-
-{% endblock %}
-
-<div class='affiche_div'>
+<div class='affiche-div main_bp {{ template_flag }} {{ page }}'>
 <h4>{{msg}}</h4>
 {% if user_heures_ext %}
 
 {% if template_flag != 'historique' %}
     <form action="" method="post">
 {% endif %}
-<table class='order-desc table table-hover affiche_table' width="100%">
+<table class='order-desc table table-hover affiche-table' width="100%">
     <tr>
         <th id="nom"> Nom </th>
 
         <th id="prenom"> Prénom </th>
+
+        <th id="sujet"> Sujet </th>
 
         <th id="date_demande"> Date demande </th>
         
@@ -34,7 +23,7 @@
 
         <th id="lieu"> Lieu </th>
 
-        <th id="ecole_cci"> Ecole CCI </th>
+        <th id="ecole_cci"> Ecole CCIR </th>
 
         <th id="nb_heures"> Nombre d'heures  </th>
 
@@ -45,6 +34,8 @@
             <td> {{ user_heure_ext.user.nom }} </td>
 
             <td> {{ user_heure_ext.user.prenom }} </td>
+
+            <td> {{ user_heure_ext.sujet }} </td>
 
             <td> {{ conv_sqlstr_date(user_heure_ext.date_demande) }} </td>   
 
@@ -59,35 +50,44 @@
             {% if template_flag == 'historique' %}
                 {% set status = user_heure_ext.status %}
                 {% if user_heure_ext.date_debut < current_date %}
-                    <td class='deja_finis'> {{ valid[status] }} </td>
+                    {% if status == -1 %}
+                        <td class='deja_finis' title="Motif rejet: {{ user_heure_ext.motif_rejet }}">
+                    {% else %}
+                        <td class='deja_finis'>
+                    {% endif %} {{ valid[status] }} </td>
                 {% elif status == 2 %}    
                     <td class='oui'> {{ valid[status] }} </td>
                 {% elif status == -1 %}
-                    <td class='non'> {{ valid[status] }} </td>
+                    <td class='non' title="Motif rejet: {{ user_heure_ext.motif_rejet }}"> {{ valid[status] }} </td>
                 {% else %}
                     <td class='en_cours'> {{ valid[status] }} </td>
                 {% endif %}
 
-            {% elif template_flag == 'validation_dept' %}
-                <td>
-                    <select name= "{{ user_heure_ext.heure_ext_id }}" class="form-control validate" style="width: 75px">
-                        <option value=0></option>
-
-                        <option value=1>Oui</option>
-
-                        <option value=-1>Non</option>
-                    </select>
-                </td>
-
             {% else %}
                 <td>
-                    <select name= "{{ user_heure_ext.heure_ext_id }}" class="form-control validate" style="width: 75px">
-                        <option value=0></option>
+                    <div class="valid-div">
+                        <select name= "{{ user_heure_ext.heure_ext_id }}" class="form-control validate valid-checkbox" id="{{ user_heure_ext.heure_ext_id }}" style="width: 75px">
+                            <option value=0></option>
 
-                        <option value=2>Oui</option>
-
-                        <option value=-1>Non</option>
-                    </select>
+                            {% if template_flag == 'validation_dept' %}
+                                <option value=1>Oui</option>
+                            {% else %}
+                                <option value=2>Oui</option>
+                            {% endif %}
+                            <option value=-1>Non</option>
+                        </select>
+                        <a class="motif-lien">Motif</a>
+                    </div>
+                    <section class="motif-rejet" id="motif-rejet-{{ user_heure_ext.heure_ext_id }}">
+                        <div class="fond">
+                            <div class="UI">
+                                <b>Motif</b><br>
+                                <span class="warning-msg"></span>
+                                <textarea name="motif-{{ user_heure_ext.heure_ext_id }}" rows="3" cols="20" placeholder="Veuillez saisir un motif pour lequel vous rejetez cette demande"></textarea><br><br>
+                                <button type="button" id="btn-motif-rejet-{{ user_heure_ext.heure_ext_id }}" class="btn btn-success btn-sm btn-motif-rejet">Valider</button>
+                            </div>
+                        </div>
+                    </section>
                 </td>
             {% endif %}
         </tr>
@@ -138,7 +138,7 @@
     {% if user_heures_ext %}
     <script type="text/javascript">
         //whywhywhywhywhywhywhywhywhywhywhy!!!!!!!!!!!!!!!1!!!!!
-        $(document).on('click', '.affiche_table th', function() {
+        $(document).on('click', '.affiche-table th', function() {
             sortable_ajax = $(this).attr('id');
             $('table').toggleClass('order-desc');
             if($('table').hasClass('order-desc')) {
