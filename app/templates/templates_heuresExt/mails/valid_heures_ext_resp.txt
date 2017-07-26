@@ -1,0 +1,13 @@
+Bonjour {{ heure_ext.user.prenom }},
+
+{{ responsable.prenom }} {{ responsable.nom }} vient de {% if heure_ext.status == 1 %} valider {% else %} rejeter {% endif %} votre demande pour enseigner {{ heure_ext.nb_heures }} heures à l'école {{ heure_ext.lieu }}{% if heure_ext.ecole_cci %} (une école de la CCIR){% else %} (une école hors CCIR){% endif %}, avec le sujet: {{ heure_ext.sujet }}, à partir de {{ conv_sqlstr_date(heure_ext.date_debut) }} en date du {{ conv_sqlstr_date(heure_ext.date_demande) }}.{% if heure_ext.status == -1 %} Le motif de rejet est le suivant: {{ heure_ext.motif_rejet }}. {% endif %}
+
+Cliquez le lien pour voir le détail: {{ url_for('heures_ext_bp.historique', _external=True) }}
+
+{% if heure_ext.status == 1 %} Cette validation reste à confirmer par la direction. {% endif %}
+
+Cordialement,
+
+Admin de l'HeuresExt
+
+

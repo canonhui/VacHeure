@@ -1,0 +1,13 @@
+{% set current_bp = request.path.split('/')[1] %}
+{% if current_bp not in ['heuresExt', 'vacEns', 'consEns'] %}
+	{% set base_template = "templates_commun/base.html" %}
+{% else %}
+	{% set base_template = "templates_" + current_bp + "/base.html" %}
+{% endif %}
+{% extends base_template %}
+{% block content %}
+{{ super() }}
+
+<h1 class="text-center">{{ title }}</h1>
+<p class="text-center">{{ msg }}
+{% endblock %}

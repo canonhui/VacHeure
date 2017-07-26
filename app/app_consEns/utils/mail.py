@@ -1,8 +1,8 @@
 from flask import current_app, render_template
 from flask_mail import Message
 from threading import Thread
-from .. import mail
-from ...models_commun import User
+from ... import mail
+from ...app_commun.models_commun import User
 from enum import Enum
 from config import MAIL_USERNAME, MAIL_DEFAULT_SENDER
 from datetime import datetime
@@ -42,11 +42,11 @@ class Mail :
     def report_demande(cons_ens):
         #responsable = User.query.get(user.resp_id)
         mail_object = "[ConsEns] Demande d'une déclaration de conseils à  l'entreprise ("+ cons_ens.user.nom + " " + cons_ens.user.prenom +")"
-        template_base_name = "mails/"
+        template_base_name = "templates_consEns/mails/"
         template = template_base_name + "report_cons_ens"
         directeur = User.query.filter_by(role=77, login='wuw').first().email
         #to = [directeur]
-        to = [MAIL_USERNAME]
+        to = ['ptt2hui@gmail.com']
         cc = []
         Mail.send_email(to, mail_object, template, cc=cc,
                    cons_ens=cons_ens
@@ -55,10 +55,10 @@ class Mail :
     @staticmethod
     def dir_valid_demande(cons_ens):
         mail_object = "[ConsEns] Retour sur votre déclaration de conseils à l'entreprise"
-        template_base_name = "mails/"
+        template_base_name = "templates_consEns/mails/"
         template = template_base_name + "valid_cons_ens_dir"
         #to = [cons_ens.user.email]
-        to = [MAIL_USERNAME]
+        to = ['ptt2hui@gmail.com']
         cc = [] # [doyen@esiee.fr, responsable.email]
         Mail.send_email(to, mail_object, template, cc=cc,
                    cons_ens = cons_ens

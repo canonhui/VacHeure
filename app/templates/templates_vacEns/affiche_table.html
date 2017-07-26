@@ -1,0 +1,174 @@
+{% extends "templates_vacEns/base.html" %}
+{% block content %}
+{{ super() }}
+
+<div class="affiche-div">
+<h4>{{ msg }}</h4>
+{% if user_vacs_ens %}
+{% if template_flag not in ['historique_user', 'historique_validation_vacances'] %}
+    <form action="" method="post">
+{% endif %}
+<table class="order-desc table table-hover affiche-table" width="100%">
+
+    <tr>
+        <th id="nom"> Nom <i class="fa"></i></th>
+
+        <th id="prenom"> Prénom <i class="fa"></i></th>
+
+        <th id="date_demande"> Date demande <i class="fa"></i></th>        
+
+        <th id="type_demande"> Type <i class="fa"></i></th>             
+
+        <th id="nb_jour"> Nb jours <i class="fa"></i></th>
+
+        <th id="date_debut"> Date début <i class="fa"></i></th>
+
+        <th id="date_fin"> Date fin <i class="fa"></i></th>
+
+        <th id="status"> Validation {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}<i class="fa"></i>{% endif %}</th>
+    </tr><div id="td-table">
+        {% for user_vac_ens in user_vacs_ens.items %}
+            <tr>
+
+                <td> {{ user_vac_ens.user.nom }} </td>
+
+                <td> {{ user_vac_ens.user.prenom }} </td>
+
+                <td> {{ conv_sqlstr_date(user_vac_ens.date_demande) }}</td>
+                {% if user_vac_ens.type_demande == 'Annulation' %}
+                    <td title="{{ user_vac_ens.motif }}">
+                {% else %}
+                    <td>
+                {% endif %} {{ user_vac_ens.type_demande }} </td>    
+
+                <td> {{ user_vac_ens.nb_jour }} </td>
+
+                <td> {{ conv_sqlstr_date(user_vac_ens.date_debut) }}</td>
+
+                <td> {{ conv_sqlstr_date(user_vac_ens.date_fin) }}</td>
+
+                {% if template_flag in ['historique_user', 'historique_validation_vacances'] %}
+                    {% set status = user_vac_ens.status %}
+                    {% if user_vac_ens.date_debut < current_date %}
+                        {% if status == -1 %}
+                            <td class='deja_finis' title="Motif rejet: {{ user_vac_ens.motif_rejet }}">
+                        {% else %}
+                            <td class='deja_finis'>
+                        {% endif %} {{ valid[status] }} </td>
+                    {% elif status == 2 %}    
+                        <td class='oui'> {{ valid[status] }} </td>
+                    {% elif status == -1 %}
+                        <td class='non' title="Motif rejet: {{ user_vac_ens.motif_rejet }}"> {{ valid[status] }} </td>
+                    {% else %}
+                        <td class='en_cours'> {{ valid[status] }} </td>
+                    {% endif %}
+
+                {% else %}
+                    <td>
+                        <div class="valid-div">
+                            <select name= "{{ user_vac_ens.vacances_id }}" class="form-control validate valid-checkbox" id="{{ user_vac_ens.vacances_id }}" style="width: 75px">
+                                <option value=0></option>
+
+                                {% if template_flag == 'validation_vacances_responsable' %}
+                                    <option value=1>Oui</option>
+                                {% else %}
+                                    <option value=2>Oui</option>
+                                {% endif %}
+                                <option value=-1>Non</option>
+                            </select>
+                            <a class="motif-lien">Motif</a>
+                        </div>
+                        <section class="motif-rejet" id="motif-rejet-{{ user_vac_ens.vacances_id }}">
+                            <div class="fond">
+                                <div class="UI">
+                                    <b>Motif</b><br>
+                                    <span class="warning-msg"></span>
+                                    <textarea name="motif-{{ user_vac_ens.vacances_id }}" rows="3" cols="20" placeholder="Veuillez saisir un motif pour lequel vous rejetez cette demande"></textarea><br><br>
+                                    <button type="button" id="btn-motif-rejet-{{ user_vac_ens.vacances_id }}" class="btn btn-success btn-sm btn-motif-rejet">Valider</button>
+                                </div>
+                            </div>
+                        </section>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}</div>
+
+</table>
+
+{% if template_flag not in ['historique_user', 'historique_validation_vacances'] %}
+        <input class="btn btn-success btn-sm" type="submit" value="Envoyer" />
+    </form>
+{% endif %}
+
+{% if template_flag in ['historique_user', 'historique_validation_vacances'] %}
+
+<div id='pagination_buttons'>
+{% if page == 1 %}
+    Première
+{% else %}
+    <a href="{{ url_for('vac_ens_bp.' + template_flag, page=1) }}">Première</a>
+{% endif %}
+{% if user_vacs_ens.has_prev %}
+    <a href="{{ url_for('vac_ens_bp.' + template_flag, page=user_vacs_ens.prev_num) }}">&lt;&lt; </a>
+{% else %}
+    &lt;&lt;
+{% endif %}
+
+<button class="btn btn-page">{{ page }}</button>
+
+{% if user_vacs_ens.has_next %}
+    <a href="{{ url_for('vac_ens_bp.' + template_flag, page=user_vacs_ens.next_num) }}"> &gt;&gt;</a>
+{% else %}
+     &gt;&gt;
+{% endif %}
+{% if page == page_max %}
+    Dernière
+{% else %}
+    <a href="{{ url_for('vac_ens_bp.' + template_flag, page=page_max) }}">Dernière</a>
+{% endif %}
+</div>
+
+{% endif %}
+
+{% endif %}
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+    {% if user_vacs_ens %}
+        <script type="text/javascript">
+        //whywhywhywhywhywhywhywhywhywhywhy!!!!!!!!!!!!!!!1!!!!!
+        $(document).on('click', '.affiche-table th', function() {
+            sortable_ajax = $(this).attr('id');
+            $('table').toggleClass('order-desc');
+            if($('table').hasClass('order-desc')) {
+                order_ajax = 'desc';
+            }
+            else {
+                order_ajax = 'asc';
+            }
+            $('#test').toggleClass('fa-sort-desc fa-sort');
+            $.ajax({
+                url: "{{ url_for('vac_ens_bp.' + template_flag, page=page) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET',
+                dataType: 'html'
+            }).done(function(response) {
+                $('table').html( $('<table>').html(response).find('table') );
+            });
+        });
+
+        $(document).on('click', '#pagination_buttons a', function() {
+            sortable_ajax = 'date_debut';
+            $.ajax({
+                url: "{{ url_for('vac_ens_bp.' + template_flag, page=page) }}",
+                data: {sortable: sortable_ajax, order: order_ajax},
+                type: 'GET'
+            });
+        });
+
+        </script>
+    {% endif %}
+{% endblock %}

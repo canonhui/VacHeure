@@ -1,0 +1,74 @@
+<!-- extend base layout -->
+{% extends "templates_heuresExt/base.html" %}
+
+{% block content %}
+{{ super() }}
+  
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-warning">
+			<div ><img src="/static/unnamed.jpg" class="img-responsive center-block" style = "width:100%; height:100%;"></div>
+			<div class="panel-heading"><p>Autorisation de vacances hors calendrier officiel des vacances enseignant.  Ces vacances devraient intervenir en <em>report</em> de vacances annulées : vous ne devriez déposer des vacances que si votre <em> solde </em> est positif.</div>
+			<div class="panel-body">
+
+				<form action="" method="post" name="dec">
+				  {{ form.hidden_tag() }}
+				  <p>
+					  <b>{{ form.decSujet.label }}</b><br>
+					  {{ form.decSujet(autofocus=True, size=40, id_="decSujet") }}
+					  {% for error in form.decSujet.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  <b>{{ form.decDateDebut.label }}</b><br>
+					  {{ form.decDateDebut(size=40, placeholder="jj/mm/AAAA", id_="decDateDebut") }}
+					  {% for error in form.decDateDebut.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  <b>{{ form.decLieu.label }}</b><br>
+					  {{ form.decLieu(size=40, placeholder='Nom de l\'école') }}
+					  {% for error in form.decLieu.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  <b>{{ form.decNbHeures.label }}</b><br>
+					  {{ form.decNbHeures(size=40) }}
+					  {% for error in form.decNbHeures.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+				  	  <b>{{ form.decEcoleCCI.label }}</b><span>{{ form.decEcoleCCI }} </span>
+				  	  {% for error in form.decEcoleCCI.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}
+				  	  <br>
+				  </p>
+				  <p><input class="btn btn-success" type="submit" value="Valider"></p>
+				  <br>
+			  </form>			
+			</div>
+		</div>	
+	</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#decDateDebut').on('input propertychange', function() {
+            	if($(this).val().length == 2 || $(this).val().length == 5) {
+            		var old_value = $(this).val();
+            		$(this).val(old_value + "/");
+            	}
+            })
+        });
+    </script>
+{% endblock %}

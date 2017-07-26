@@ -1,8 +1,8 @@
 from flask import current_app, render_template
 from flask_mail import Message
 from threading import Thread
-from .. import mail
-from ...models_commun import User
+from ... import mail
+from ...app_commun.models_commun import User
 from enum import Enum
 from config import MAIL_USERNAME, MAIL_DEFAULT_SENDER
 from datetime import datetime
@@ -45,7 +45,7 @@ class Mail :
         elif heure_ext.status == 1:
             validator = User.query.filter_by(role=77).first()
         mail_object = "[HeuresExt] Demande d'une déclaration d'heures extérieures ("+ heure_ext.user.nom + " " + heure_ext.user.prenom +")"
-        template_base_name = "mails/"
+        template_base_name = "templates_heuresExt/mails/"
         template = template_base_name + "report_heures_ext"
         to = [MAIL_USERNAME]
         cc = []#['abdul.alhazreb@gmail.com'] #[user.email, doyen@esiee.fr]
@@ -58,7 +58,7 @@ class Mail :
     def resp_valid_demande(heure_ext):
         responsable = User.query.get(heure_ext.user.resp_id)
         mail_object = "[HeuresExt] Retour sur votre déclaration d'heures extérieures"
-        template_base_name = "mails/"
+        template_base_name = "templates_heuresExt/mails/"
         template = template_base_name + "valid_heures_ext_resp"
         to = [MAIL_USERNAME]
         cc = [] # doyen ?
@@ -70,7 +70,7 @@ class Mail :
     @staticmethod
     def dir_valid_demande(heure_ext):
         mail_object = "[HeuresExt] Retour sur votre déclaration d'heures extérieures"
-        template_base_name = "mails/"
+        template_base_name = "templates_heuresExt/mails/"
         template = template_base_name + "valid_heures_ext_dir"
         to = [MAIL_USERNAME]
         cc = [] # [doyen@esiee.fr, responsable.email]

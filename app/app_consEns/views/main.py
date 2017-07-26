@@ -5,7 +5,7 @@ from flask_login import login_required, logout_user
 from ... import db
 from ..models_consEns import ConsEns
 from ..forms import DemandeForm, DemandeFormChrome
-from ...models_commun import User, Resp, load_user
+from ...app_commun.models_commun import User, Resp, load_user
 from ..utils.mail import Mail
 from ..utils.dbmethods import DbMethods
 from datetime import datetime
@@ -14,8 +14,7 @@ from ..utils.nocache import nocache
 
 from config import VALID, HISTORIQUE_PER_PAGE, APPDIR
 
-from . import main_cons_bp
-from .. import app_consEns
+from .. import main_cons_bp
 
 #def sub_func(role, template_flag):
 
@@ -65,6 +64,16 @@ def trait_dir(request_form, flash_msg):
         return redirect(url_for('.validation_direction'))
     
 
+@main_cons_bp.route('/')
+def redirect_index():
+    return redirect(url_for('.index'))
+
+@main_cons_bp.route('/index')
+def index():
+    return render_template('templates_consEns/index.html',
+                           title='Home')
+
+
 @main_cons_bp.route('/historique', methods=['GET', 'POST'])
 @main_cons_bp.route('/historique/<int:page>', methods=['GET', 'POST'])
 @login_required
@@ -93,7 +102,7 @@ def historique(page = 1):
 
     if count_histo:
         msg = "Historique des conseils aux entreprises."
-        return render_template('historique.html',
+        return render_template('templates_consEns/historique.html',
                            title='Historique',
                            user_cons_ens=user_cons_ens,
                            page=page,
@@ -104,19 +113,19 @@ def historique(page = 1):
                            current_date=datetime.utcnow().date(),
                            display=True)
     else:
-        return render_template('historique.html',
+        return render_template('templates_consEns/historique.html',
                            title='Historique',
                            msg= "Il n'y a eu aucune conseils aux entreprises.",
                            display=True)
   
 
-@app_consEns.route('/validation_email/<pseudo>/<cons_ens_id>/<status>', methods=['GET', 'POST'])
+@main_cons_bp.route('/validation_email/<pseudo>/<cons_ens_id>/<status>', methods=['GET', 'POST'])
 def validation_email(pseudo, cons_ens_id, status):
     cons_ens = ConsEns.query.filter_by(cons_ens_id=cons_ens_id).first()
     template_dir = APPDIR + '/templates/validation_email.html'
     if cons_ens is None:
         msg = 'Cette demande n\'existe pas'
-        return render_template('validation_email.html',
+        return render_template('templates_consEns/validation_email.html',
                               title='Demande n\'existe pas',
                               model_instance=cons_ens,
                               etat=0,
@@ -127,7 +136,7 @@ def validation_email(pseudo, cons_ens_id, status):
     from datetime import timedelta
     if datetime.utcnow().date() > cons_ens.date_demande + timedelta(days=1):
         msg = 'Ce lien n\'est plus valable, veuillez répondre à cette demande en allant à l\'appli ConsEns!'
-        return render_template('validation_email.html',
+        return render_template('templates_consEns/validation_email.html',
                               title='Lien non-valable',
                               model_instance=cons_ens,
                               etat=0,
@@ -138,7 +147,7 @@ def validation_email(pseudo, cons_ens_id, status):
         msg = 'Modification appliquée!'
         if status == '-1':
             if request.method == 'GET':
-                return render_template('validation_email.html',
+                return render_template('templates_consEns/validation_email.html',
                                       title='Validation par email',
                                       model_instance=cons_ens,
                                       etat=-1,
@@ -155,12 +164,12 @@ def validation_email(pseudo, cons_ens_id, status):
         else:
             Mail.dir_valid_demande(cons_ens)
         finally:
-            return render_template('validation_email.html',
+            return render_template('templates_consEns/validation_email.html',
                                   title='Validation par email',
                                   model_instance=cons_ens,
                                   etat=0,
                                   msg=msg)
-    return render_template('validation_email.html',
+    return render_template('templates_consEns/validation_email.html',
                           title='Validation par email',
                           model_instance=cons_ens,
                           etat=0,
@@ -197,7 +206,7 @@ def validation_direction(page = 1):
 
         msg = "Validation direction - Appliquer les modifications nécessaires"
         if count_histo:
-            return render_template('historique.html',
+            return render_template('templates_consEns/historique.html',
                                    title='Autorisations',
                                    user_cons_ens=user_cons_ens,
                                    page=1,
@@ -205,7 +214,7 @@ def validation_direction(page = 1):
                                    msg=msg,
                                    display=True)
         else:
-            return render_template('historique.html',
+            return render_template('templates_consEns/historique.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande pour offrir des conseils aux entreprises.",
                                    display=False
@@ -228,7 +237,7 @@ def dec():
         from datetime import timedelta
         if form.deDateDebut.data < (datetime.utcnow()+timedelta(hours=2)).date():
             form.deDateDebut.errors.append('Une date déjà passée.')
-            return render_template('dec.html',
+            return render_template('templates_consEns/dec.html',
                         title='Demande de conseils à l\'entreprise',
                         form=form)
 
@@ -243,7 +252,7 @@ def dec():
         return redirect(url_for('.historique'))
         
 
-    return render_template('dec.html',
+    return render_template('templates_consEns/dec.html',
                            title='Demande de conseils à l\'entreprise',
                            form=form)
 
@@ -297,7 +306,7 @@ def validation_dept(page = 1):
           page, count_histo, False)
 
         if count_histo:
-            return render_template('historique.html',
+            return render_template('templates_consEns/historique.html',
                                    title='Autorisations',
                                    user_heures_ext=user_heures_ext,
                                    page=1,
@@ -307,7 +316,7 @@ def validation_dept(page = 1):
                                    msg=msg,
                                    display=True)
         else:
-            return render_template('historique.html',
+            return render_template('templates_consEns/historique.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande d'heures extérieures.",
                                    display=False

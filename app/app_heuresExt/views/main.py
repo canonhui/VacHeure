@@ -5,7 +5,7 @@ from flask_login import login_required, logout_user
 from ... import db
 from ..models_heuresExt import HeuresExt
 from ..forms import DecForm, DecFormChrome
-from ...models_commun import User, Resp, load_user
+from ...app_commun.models_commun import User, Resp, load_user
 from ..utils.mail import Mail
 from ..utils.dbmethods import DbMethods
 from datetime import datetime
@@ -14,7 +14,7 @@ from ..utils.nocache import nocache
 
 from config import VALID, HISTORIQUE_PER_PAGE
 
-from . import main_bp
+from .. import main_bp
 
 
 def validation(request_form, role, flash_msg, redirect_route):
@@ -83,6 +83,16 @@ def validation(request_form, role, flash_msg, redirect_route):
         return redirect(url_for('.' + redirect_route))
 
 
+@main_bp.route('/')
+def redirect_index():
+    return redirect(url_for('.index'))
+
+@main_bp.route('/index')
+def index():
+    return render_template('templates_heuresExt/index.html',
+                           title='Home')
+
+
 @main_bp.route('/historique', methods=['GET', 'POST'])
 @main_bp.route('/historique/<int:page>', methods=['GET', 'POST'])
 @login_required
@@ -112,7 +122,7 @@ def historique(page = 1):
 
     if count_histo:
         msg = "Historique des heures extérieures"
-        return render_template('historique.html',
+        return render_template('templates_heuresExt/historique.html',
                            title='Historique',
                            user_heures_ext=user_heures_ext,
                            page=page,
@@ -124,7 +134,7 @@ def historique(page = 1):
                            current_date=datetime.utcnow().date(),
                            display=True)
     else:
-        return render_template('historique.html',
+        return render_template('templates_heuresExt/historique.html',
                            title='Historique',
                            msg= "Il n'y a eu aucune heures extérieures.",
                            display=True)
@@ -135,7 +145,7 @@ def validation_email(pseudo, heure_ext_id, status, validator):
     heure_ext = HeuresExt.query.filter_by(heure_ext_id=heure_ext_id).first()
     if heure_ext is None:
         msg = 'Cette demande n\'existe pas.'
-        return render_template('validation_email.html', 
+        return render_template('templates_heuresExt/validation_email.html', 
                               title='Demande n\'existe pas',
                               heure_ext=heure_ext,
                               etat=0,
@@ -145,7 +155,7 @@ def validation_email(pseudo, heure_ext_id, status, validator):
     from datetime import timedelta
     if datetime.utcnow().date() > heure_ext.date_demande + timedelta(days=1):
         msg = 'Ce lien n\'est plus valable, veuillez répondre à cette demande en allant à l\'appli HeuresExt!'
-        return render_template('validation_email.html', 
+        return render_template('templates_heuresExt/validation_email.html', 
                               title='Lien non-valable',
                               heure_ext=heure_ext,
                               etat=0,
@@ -157,7 +167,7 @@ def validation_email(pseudo, heure_ext_id, status, validator):
         status = int(status)
         if status == -1:
             if request.method == 'GET':
-                return render_template('validation_email.html', 
+                return render_template('templates_heuresExt/validation_email.html', 
                                       title='Validation par email',
                                       heure_ext=heure_ext,
                                       etat=-1,
@@ -184,14 +194,14 @@ def validation_email(pseudo, heure_ext_id, status, validator):
                 Mail.report_demande(heure_ext)
         finally:
             db.session.rollback()
-            return render_template('validation_email.html', 
+            return render_template('templates_heuresExt/validation_email.html', 
                                   title='Validation par email',
                                   heure_ext=heure_ext,
                                   etat=0,
                                   msg=msg)
 
     msg = 'Vous avez déjà traiter cette demande!'
-    return render_template('validation_email.html', 
+    return render_template('templates_heuresExt/validation_email.html', 
                           title='Validation par email',
                           heure_ext=heure_ext,
                           etat=0,
@@ -231,7 +241,7 @@ def validation_dept(page = 1):
           page, count_histo, False)
 
         if count_histo:
-            return render_template('historique.html',
+            return render_template('templates_heuresExt/historique.html',
                                    title='Autorisations',
                                    user_heures_ext=user_heures_ext,
                                    page=1,
@@ -241,7 +251,7 @@ def validation_dept(page = 1):
                                    msg=msg,
                                    display=True)
         else:
-            return render_template('historique.html',
+            return render_template('templates_heuresExt/historique.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande d'heures extérieures.",
                                    display=False
@@ -280,7 +290,7 @@ def validation_direction(page = 1):
           page, count_histo, False)
 
         if count_histo:
-            return render_template('historique.html',
+            return render_template('templates_heuresExt/historique.html',
                                    title='Autorisations',
                                    user_heures_ext=user_heures_ext,
                                    page=1,
@@ -290,7 +300,7 @@ def validation_direction(page = 1):
                                    msg=msg,
                                    display=True)
         else:
-            return render_template('historique.html',
+            return render_template('templates_heuresExt/historique.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de déclaration d'heures extérieures.",
                                    display=False
@@ -311,7 +321,7 @@ def dec():
         from datetime import timedelta
         if form.decDateDebut.data < (datetime.utcnow()+timedelta(hours=2)).date():
             form.decDateDebut.errors.append('Une date déjà passée.')
-            return render_template('dec.html',
+            return render_template('templates_heuresExt/dec.html',
                               title='Déclaration d\'heures extérieures',
                               form=form)
         
@@ -326,6 +336,6 @@ def dec():
             Mail.report_demande(heure_ext)
             return redirect(url_for('.historique'))
     
-    return render_template('dec.html',
+    return render_template('templates_heuresExt/dec.html',
                            title='Déclaration d\'heures extérieures',
                            form=form)

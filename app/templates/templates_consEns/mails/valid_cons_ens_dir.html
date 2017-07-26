@@ -1,0 +1,11 @@
+Bonjour {{ cons_ens.user.prenom }},
+
+<p>Le directeur de l'école vient de <b>{% if cons_ens.status == 2 %} valider {% else %} rejeter {% endif %}</b> votre demande pour offrir des conseils en <b>{{ cons_ens.nb_jours }}</b> jours avec sujet <b>{{ cons_ens.sujet }}</b>, à l'entreprise <b>{{ cons_ens.nom_entreprise }}</b>, dont l'adresse : <b>{{ cons_ens.adresse }}</b>, à partir de <b>{{ conv_sqlstr_date(cons_ens.date_debut) }}</b> en date du {{ conv_sqlstr_date(cons_ens.date_demande) }}.{% if cons_ens.status == -1 %} Le motif de rejet est le suivant: <b><em>{{ cons_ens.motif_rejet }}</em></b>. {% endif %}
+<br><br><a href="{{ url_for('cons_ens_bp.historique', _external=True) }}"> Cliquez ici pour voir le detail</a>
+{% if cons_ens.status == 2 %}
+	<br><br>Bon enseignement!
+{% endif %}
+<br><br>
+Cordialement,
+<br><br>
+Admin de l'<code>ConsEns</code></p>

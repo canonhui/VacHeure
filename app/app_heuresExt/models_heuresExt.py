@@ -1,7 +1,6 @@
 from .. import db
 #from .ldap import Ldap
 
-from . import login_manager
 
 
 class HeuresExt(db.Model):
@@ -19,11 +18,8 @@ class HeuresExt(db.Model):
     motif_rejet = db.Column(db.String(200))
     pseudo = db.Column(db.String(40))
 
+    def get_id(self):
+        return self.heure_ext_id
+
     def __repr__(self):
         return '<HeuresExt %r>' % self.heure_ext_id
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    from ..models_commun import User
-    return User.query.get(int(user_id))

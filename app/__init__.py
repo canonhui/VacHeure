@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail
 
 from flask_bootstrap import Bootstrap
 
@@ -13,23 +14,13 @@ app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
 
-#mail = Mail(app_heuresExt)
+mail = Mail(app)
 bootstrap = Bootstrap(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 login_manager.login_message = 'Veuillez se connecter pour accéder à cette page.'
-
-from .app_vacens import app_vacens
-from .app_heuresExt import app_heuresExt
-from .app_consEns import app_consEns
-
-app.wsgi_app = DispatcherMiddleware(app.wsgi_app, {
-	'/heuresExt': app_heuresExt,
-	'/vacEns': app_vacens,
-	'/consEns':app_consEns
-	})
 
 if not app.debug:
     import logging
@@ -42,9 +33,6 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     file_handler.setLevel(logging.INFO)
     app.logger.addHandler(file_handler)
-    app_heuresExt.logger.addHandler(file_handler)
-    app_vacens.logger.addHandler(file_handler)
-    app_consEns.logger.addHandler(file_handler)
     app.logger.info('vaConsHeures startup')
 
     '''
@@ -60,16 +48,30 @@ if not app.debug:
         ADMINS, 'microblog failure', credentials)
     mail_handler.setLevel(logging.ERROR)
     app.logger.addHandler(mail_handler)
-    app_heuresExt.logger.addHandler(mail_handler)
-    app_vacens.logger.addHandler(mail_handler)
-    app_consEns.logger.addHandler(mail_handler)
     '''
 
-from .views import main_app_bp, valid_email_bp
-app.register_blueprint(main_app_bp)
-app.register_blueprint(valid_email_bp)
+from .app_commun import commun_bp
+from .app_vacens import vac_ens_bp
+from .app_heuresExt import heures_ext_bp
+from .app_consEns import cons_ens_bp
+
+app.register_blueprint(commun_bp)
+app.register_blueprint(vac_ens_bp, url_prefix='/vacEns')
+app.register_blueprint(heures_ext_bp, url_prefix='/heuresExt')
+app.register_blueprint(cons_ens_bp, url_prefix='/consEns')
 
 #from . import views, models_commun, forms, ldap
+
+#functions for templates
+def conv_sqlstr_date(sql_date):
+    #return datetime.strptime(sql_date, "%Y-%m-%d")
+    return sql_date.strftime("%d/%m/%Y")
+app.jinja_env.globals.update(conv_sqlstr_date=conv_sqlstr_date)  
+
+def abs_str(x):
+    #return datetime.strptime(sql_date, "%Y-%m-%d")
+    return str(abs(int(x)))
+app.jinja_env.globals.update(abs_str=abs_str)
 
 os.environ["HTTP_PROXY"] = "http://cache.esiee.fr:3128"
 os.environ["HTTPS_PROXY"] = "http://cache.esiee.fr:3128"

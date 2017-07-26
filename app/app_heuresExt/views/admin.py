@@ -55,7 +55,7 @@ def admin():
                 for n in heures_ext_en_cours:
                     l.append(n)
             if len(l) > 0:
-                rapport = render_template('rapport_pour_direction.html',
+                rapport = render_template('templates_heuresExt/rapport_pour_direction.html',
                                        title='Fichier déjà extrait',
                                        l=l,
                                        request_type=request.form,
@@ -72,21 +72,21 @@ def admin():
                         htmlfile.write(rapport)
                     return send_from_directory(directory=app_heuresExt.config['FILES'], filename=file_name + '.html', as_attachment=False)    
                     flash("Le fichier est déjà extrait.")
-                    return render_template('admin.html', 
+                    return render_template('templates_heuresExt/admin.html', 
                                           title="Admin",
                                           form=form)
             flash("Il n'y a pas de demandes")
-            return render_template('admin.html', 
+            return render_template('templates_heuresExt/admin.html', 
                                   title="Admin",
                                   form=form)
         #else:
             #    pass
         elif request.method == 'GET':
-            return render_template('admin.html', 
+            return render_template('templates_heuresExt/admin.html', 
                                   title='Admin',
                                   form=form)
                                    
-        #return render_template('admin.html',
+        #return render_template('templates_heuresExt/admin.html',
         #                      title='Admin',
         #                      form=form)
         
@@ -122,7 +122,7 @@ def admin_add_user():
             flash("Utilisateur déjà dans la base", 'danger')        
             return redirect(url_for('.admin_add_user'))
 
-        return render_template('add_user.html', 
+        return render_template('templates_heuresExt/add_user.html', 
                               title='Ajout d\'un utilisateur',
                               form=form)
     else:

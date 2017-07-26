@@ -1,8 +1,6 @@
 from .. import db
 #from .ldap import Ldap
 
-from . import login_manager
-
 
 class Vacances(db.Model):
     vacances_id = db.Column(db.Integer, primary_key=True)
@@ -19,11 +17,9 @@ class Vacances(db.Model):
     status = db.Column(db.Integer)
     pseudo = db.Column(db.String(40))
 
+    def get_id(self):
+        return self.vacances_id
+
     def __repr__(self):
         return '<Vacances %r>' % self.vacances_id
 
-
-@login_manager.user_loader
-def load_user(user_id):
-    from ..models_commun import User
-    return User.query.get(int(user_id))

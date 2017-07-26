@@ -1,0 +1,53 @@
+<!-- extend base layout -->
+{% extends "templates_vacEns/base.html" %}
+
+{% block content %}
+{{ super() }}
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-success">
+			<div ><img src="/static/unnamed.jpg" class="img-responsive center-block" style = "width:100%; height:100%;"></div>
+			<div class="panel-heading">Annulation de vacances - dates et motif</div>
+			<div class="panel-body">
+				<p>Solde vacances : {{ solde_vacances }}</p>
+
+				<p>Soldes vacances en cours de validation : {{ solde_vacances_validation }} </p>
+				<form action="" method="post" name="annulation">
+				  {{ form.hidden_tag() }}
+				  <p>
+					  {{ form.annulationDateDebut.label }}<br>
+					  {{ form.annulationDateDebut(size=40, class_='dateDebut', placeholder='jj/mm/AAAA') }}
+					  {% for error in form.annulationDateDebut.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  {{ form.annulationDateFin.label }}<br>
+					  {{ form.annulationDateFin(size=40, class_='dateFin', placeholder='jj/mm/AAAA') }}
+					  {% for error in form.annulationDateFin.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  {{ form.annulationNbJours.label }}<br>
+					  {{ form.annulationNbJours(class_='nbJours', size=40) }}
+					  {% for error in form.annulationNbJours.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  {{ form.annulationMotif.label }}<br>
+					  {{ form.annulationMotif(size=40) }}
+					  {% for error in form.annulationMotif.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p><input class="btn btn-success" type="submit" value="Valider"></p>
+			  </form>
+			</div>
+		</div>	
+	</div>
+</div>
+
+{% endblock %}

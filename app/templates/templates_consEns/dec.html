@@ -1,0 +1,112 @@
+<!-- extend base layout -->
+{% extends "templates_consEns/base.html" %}
+
+{% block content %}
+{{ super() }}
+  
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<div class="panel panel-warning">
+			<div ><img src="/static/unnamed.jpg" class="img-responsive center-block" style = "width:100%; height:100%;"></div>
+			<div class="panel-heading"><p>Autorisation de vacances hors calendrier officiel des vacances enseignant.  Ces vacances devraient intervenir en <em>report</em> de vacances annulées : vous ne devriez déposer des vacances que si votre <em> solde </em> est positif.</div>
+			<div class="panel-body">
+			  <form action="" method="post" name="dec">
+				{{ form.hidden_tag() }}
+				<P>
+					<b>{{ form.deSujet.label }}</b><br>
+					{{ form.deSujet(autofocus=True, size=40, id_="deSujet") }}
+					{% for error in form.deSujet.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					{% endfor %}<br>
+				</P>
+				<P>
+					<b>{{ form.deNomEntreprise.label }}</b><br>
+					{{ form.deNomEntreprise(size=40, id_="deNomEntreprise") }}
+					{% for error in form.deNomEntreprise.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					{% endfor %}<br>
+				</P><br>
+				<hr class="hr-address">
+				<table width="100%" class="address-table">
+				  <tr>
+				  	<td><b>{{ form.deAdrInfoExtra.label }}</b></td>
+				  	<td><b>{{ form.deAdrRue.label }}</b></td>
+				  </tr>
+				  <tr>
+				  	<td>{{ form.deAdrInfoExtra(size=33, id_="deAdrInfoExtra") }}</td>
+				  	<td>{{ form.deAdrRue(size=33, id_="deAdrRue") }}</td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  	  {% for error in form.deAdrInfoExtra.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}
+				  	</td>
+				  	<td>
+				  	  {% for error in form.deAdrRue.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}
+				  	</td>
+				  </tr>
+
+				  <tr>
+				  	<td><b>{{ form.deAdrCode.label }}</b></td>
+				  	<td><b>{{ form.deAdrVille.label }}</b></td>
+				  </tr>
+				  <tr>
+				  	<td>{{ form.deAdrCode(size=33, id_="deAdrCode") }}</td>
+				  	<td>{{ form.deAdrVille(size=33, id_="deAdrVille") }}</td>
+				  </tr>
+				  <tr>
+				  	<td>
+				  	  {% for error in form.deAdrCode.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}
+				  	</td>
+				  	<td>
+				  	  {% for error in form.deAdrVille.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}
+				  	</td>
+				  </tr>
+				  </table>
+
+				  <br>
+				  <p>
+					  <b>{{ form.deDateDebut.label }}</b><br>
+					  {{ form.deDateDebut(placeholder="jj/mm/AAAA", id_="deDateDebut") }}
+					  {% for error in form.deDateDebut.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br>
+				  </p>
+				  <p>
+					  <b>{{ form.deNbJours.label }}</b><br>
+					  {{ form.deNbJours(size=40) }}
+					  {% for error in form.deNbJours.errors %}
+					  	<span style="color: red">{{ error }}</span>
+					  {% endfor %}<br><br>
+				  </p>
+				  <p><input class="btn btn-success" type="submit" value="Valider"></p>
+			  </form>			
+			</div>
+		</div>	
+	</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#deDateDebut').on('input propertychange', function() {
+            	if($(this).val().length == 2 || $(this).val().length == 5) {
+            		var old_value = $(this).val();
+            		$(this).val(old_value + "/");
+            	}
+            })
+        });
+    </script>
+{% endblock %}

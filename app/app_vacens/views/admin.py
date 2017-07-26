@@ -44,7 +44,7 @@ def admin():
                 for n in v:
                     l.append(n)
             if len(l) > 0:
-                rapport = render_template('rapport_pour_direction.html',
+                rapport = render_template('templates_vacEns/rapport_pour_direction.html',
                                        title='Autorisations',
                                        l=l,
                                        request_type=request.form,
@@ -61,13 +61,13 @@ def admin():
                     return send_from_directory(directory=app_vacens.config['FILES'], filename=file_name + '.html', as_attachment=False)    
             else:
                 flash("Il n'y a pas de demandes")
-                return render_template('admin.html',
+                return render_template('templates_vacEns/admin.html',
                                   title="Admin",
                                   form=form)
         elif request.method == 'GET':
-            return render_template('admin.html', form=form)
+            return render_template('templates_vacEns/admin.html', form=form)
                                    
-        #return render_template('admin.html', form=form)
+        #return render_template('templates_vacEns/admin.html', form=form)
         
     else:
         abort(401)
@@ -103,6 +103,6 @@ def admin_add_user():
                 
             return redirect(url_for('.admin_add_user'))
 
-        return render_template('add_user.html', form=form)
+        return render_template('templates_vacEns/add_user.html', form=form)
     else:
         abort(401)

@@ -1,0 +1,16 @@
+Bonjour {{ vac_ens.user.prenom }},
+
+{{ responsable.prenom }} {{ responsable.nom }} vient de {% if vac_ens.status == 1 %} valider {% else %} rejeter {% endif %} votre demande {% if vac_ens.type_demande == 'Report' %} de report  {% else %} d'annulation {% endif %} de vacances du {{ conv_sqlstr_date(vac_ens.date_debut)  }} au {{ conv_sqlstr_date(vac_ens.date_fin) }},  en date du {{ conv_sqlstr_date(vac_ens.date_demande) }}.{% if vac_ens.status == -1 %} Le motif de rejet est le suivant: {{ vac_ens.motif_rejet }}. {% endif %}
+
+Cliquez le lien pour voir le détail: { url_for('vac_ens_bp.historique_user', _external=True) }}
+
+{% if vac_ens.status == 1 %}
+
+Cette validation reste à confirmer par la direction. 
+{% endif %}
+
+Cordialement,
+
+Admin de VacEns
+
+

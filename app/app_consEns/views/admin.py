@@ -2,9 +2,8 @@ from flask import (redirect, render_template, request, session, url_for, flash,
                   Blueprint, abort)
 from flask_login import logout_user, login_required, login_user
 
-from .. import app_consEns
 from ... import db
-from ...models_commun import User, Resp, load_user
+from ...app_commun.models_commun import User, Resp, load_user
 from ..models_consEns import ConsEns
 from ..forms import LoginForm, AdminForm
 from ..utils.mail import Mail
@@ -13,12 +12,12 @@ from datetime import datetime
 
 from ..utils.nocache import nocache
 
-from config import VALID, HISTORIQUE_PER_PAGE
+from config import VALID, HISTORIQUE_PER_PAGE, FILES, APPDIR
 
-from . import admin_cons_bp
+from .. import main_cons_bp
 
 
-@admin_cons_bp.route('/admin', methods=['GET', 'POST'])
+@main_cons_bp.route('/admin', methods=['GET', 'POST'])
 @login_required
 def admin():
     import csv
@@ -44,7 +43,7 @@ def admin():
                 for n in v:
                     l.append(n)
             if len(l) > 0:
-                rapport = render_template('rapport_pour_direction.html',
+                rapport = render_template('templates_consEns/rapport_pour_direction.html',
                                        title='Autorisations',
                                        l=l,
                                        request_type=request.form,
@@ -53,19 +52,19 @@ def admin():
                                        )
                 try:
                     from weasyprint import HTML 
-                    HTML(string=rapport).write_pdf(app_consEns.config['FILES'] + '/' + file_name + '.pdf', stylesheets=[app_consEns.config['APPDIR']+"/static/css/print.css"])
-                    return send_from_directory(directory=app_consEns.config['FILES'], filename=file_name + '.pdf', as_attachment=False)
+                    HTML(string=rapport).write_pdf(FILES + '/' + file_name + '.pdf', stylesheets=[APPDIR + "/static/css/print.css"])
+                    return send_from_directory(directory=FILES, filename=file_name + '.pdf', as_attachment=False)
                 except:    
-                    with open(app_consEns.config['FILES'] + '/' + file_name + '.html', 'w') as htmlfile:
+                    with open(FILES + '/' + file_name + '.html', 'w') as htmlfile:
                         htmlfile.write(rapport)
-                    return send_from_directory(directory=app_consEns.config['FILES'], filename=file_name + '.html', as_attachment=False)    
+                    return send_from_directory(directory=FILES, filename=file_name + '.html', as_attachment=False)    
             else:
                 flash("Il n'y a pas de demandes")
-                return render_template('admin.html',
+                return render_template('templates_consEns/admin.html',
                                   title="Extraction",
                                   form=form)
         elif request.method == 'GET':
-            return render_template('admin.html', form=form)
+            return render_template('templates_consEns/admin.html', form=form)
                                    
         #return render_template('admin.html', form=form)
         

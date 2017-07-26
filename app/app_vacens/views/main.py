@@ -5,7 +5,7 @@ from flask_login import login_required, logout_user
 from ... import db
 from ..models_vacEns import Vacances
 from ..forms import PriseForm, PriseFormChrome, annulationForm, annulationFormChrome
-from ...models_commun import User, Resp, load_user
+from ...app_commun.models_commun import User, Resp, load_user
 from ..utils.mail import Mail
 from ..utils.dbmethods import DbMethods
 from datetime import datetime
@@ -14,7 +14,7 @@ from ..utils.nocache import nocache
 
 from config import VALID, HISTORIQUE_PER_PAGE
 
-from . import main_vac
+from .. import main_vac
 
 
 def validation(request_form, role, redirect_route):
@@ -94,12 +94,22 @@ def validation(request_form, role, redirect_route):
         return redirect(url_for('.' + redirect_route))
 
 
+@main_vac.route('/')
+def redirect_index():
+    return redirect(url_for('.index'))
+    
+@main_vac.route('/index')
+def index():
+    return render_template('templates_vacEns/index.html',
+                           title='Home')
+
+
 @main_vac.route('/validation_email/<pseudo>/<vacances_id>/<status>/<validator>', methods=['GET', 'POST'])
 def validation_email(pseudo, vacances_id, status, validator):
     vac_ens = Vacances.query.filter_by(vacances_id=vacances_id).first()
     if vac_ens is None:
         msg = 'Cette demande n\'existe pas.'
-        return render_template('validation_email.html', 
+        return render_template('templates_vacEns/validation_email.html', 
                               title='Demande n\'existe pas',
                               vac_ens=vac_ens,
                               etat=0,
@@ -109,7 +119,7 @@ def validation_email(pseudo, vacances_id, status, validator):
     from datetime import timedelta
     if datetime.utcnow().date() > vac_ens.date_demande + timedelta(days=1):
         msg = 'Ce lien n\'est plus valable, veuillez répondre à cette demande en allant à l\'appli VacEns!'
-        return render_template('validation_email.html', 
+        return render_template('templates_vacEns/validation_email.html', 
                               title='Lien non-valable',
                               vac_ens=vac_ens,
                               etat=0,
@@ -122,7 +132,7 @@ def validation_email(pseudo, vacances_id, status, validator):
         status = int(status)
         if status == -1:
             if request.method == 'GET':
-                return render_template('validation_email.html', 
+                return render_template('templates_vacEns/validation_email.html', 
                                       title='Validation par email',
                                       vac_ens=vac_ens,
                                       etat=-1,
@@ -156,14 +166,14 @@ def validation_email(pseudo, vacances_id, status, validator):
                 Mail.vacs_demande(vac_ens)
         finally:
             db.session.rollback()
-            return render_template('validation_email.html', 
+            return render_template('templates_vacEns/validation_email.html', 
                                   title='Validation par email',
                                   vac_ens=vac_ens,
                                   etat=0,
                                   msg=msg)
 
     msg = 'Vous avez déjà traiter cette demande!'
-    return render_template('validation_email.html', 
+    return render_template('templates_vacEns/validation_email.html', 
                           title='Validation par email',
                           vac_ens=vac_ens,
                           etat=0,
@@ -206,7 +216,7 @@ def historique_validation_vacances(page=1):
             msg = "Historique des vacances"
         else:
             msg = "Il n'y a eu aucune vacances autorisées."
-        return render_template('affiche_table.html',
+        return render_template('templates_vacEns/affiche_table.html',
                                title='Historique',
                                user_vacs_ens=user_vacs_ens,
                                page=page,
@@ -246,7 +256,7 @@ def historique_user(page=1):
         msg = "Historique des vacances - " + "Solde : " + str(user.soldeVacs) + " jour(s) et " + str(user.soldeVacsEnCours) + " jour(s) en cours de validation"
     else:
         msg = "Historique vacances : il n'y a pas eu de demandes effectuées."
-    return render_template('affiche_table.html',
+    return render_template('templates_vacEns/affiche_table.html',
                            title='Historique',
                            user_vacs_ens=user_vacs_ens,
                            page=page,
@@ -290,7 +300,7 @@ def validation_vacances_responsable(page=1):
           page, count_histo, False)
 
         if count_histo > 0:
-            return render_template('affiche_table.html',
+            return render_template('templates_vacEns/affiche_table.html',
                                    title='Autorisations',
                                    user_vacs_ens=user_vacs_ens,
                                    page=1,
@@ -299,7 +309,7 @@ def validation_vacances_responsable(page=1):
                                    valid=VALID,
                                    display=True)
         else:
-            return render_template('affiche_table.html',
+            return render_template('templates_vacEns/affiche_table.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande de vacances.",
                                    display=False
@@ -338,7 +348,7 @@ def validation_vacances_direction(page=1):
           page, count_histo, False)
 
         if count_histo > 0:
-            return render_template('affiche_table.html',
+            return render_template('templates_vacEns/affiche_table.html',
                                    title='Autorisations',
                                    user_vacs_ens=user_vacs_ens,
                                    page=1,
@@ -347,7 +357,7 @@ def validation_vacances_direction(page=1):
                                    valid=VALID,
                                    display=True)
         else:
-            return render_template('affiche_table.html',
+            return render_template('templates_vacEns/affiche_table.html',
                                    title='Autorisations',
                                    msg="Il n'y a pas de demande de vacances.",
                                    display=False
@@ -380,7 +390,7 @@ def annulation():
             else:
                 form.annulationNbJours.errors.append('Nombre de jours trop grand.')
             #flash('Problème de cohérence dans les données (nb de jours)')
-            return render_template('annulation.html',
+            return render_template('templates_vacEns/annulation.html',
                                title='Annulation de vacances',
                                solde_vacances=user.soldeVacs,
                                solde_vacances_validation=user.soldeVacsEnCours,
@@ -397,7 +407,7 @@ def annulation():
             Mail.vacs_demande(vac_ens)
             return redirect(url_for('.historique_user'))
 
-    return render_template('annulation.html',
+    return render_template('templates_vacEns/annulation.html',
                            title='Annulation de vacances',
                            solde_vacances=user.soldeVacs,
                            solde_vacances_validation=user.soldeVacsEnCours,
@@ -427,7 +437,7 @@ def prise():
                 form.priseDateFin.errors.append('Date de fin précède date de début.')
             else:
                 form.priseNbJours.errors.append('Nombre de jours trop grand.')
-            return render_template('prise.html',
+            return render_template('templates_vacEns/prise.html',
                                title='Autorisation de vacances.',
                                solde_vacances=user.soldeVacs,
                                solde_vacances_validation=user.soldeVacsEnCours,
@@ -445,7 +455,7 @@ def prise():
             return redirect(url_for('.historique_user'))
         
 
-    return render_template('prise.html',
+    return render_template('templates_vacEns/prise.html',
                            title='Autorisation de vacances.',
                            solde_vacances=user.soldeVacs,
                            solde_vacances_validation=user.soldeVacsEnCours,

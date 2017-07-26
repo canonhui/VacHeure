@@ -1,8 +1,8 @@
 from flask import current_app, render_template
 from flask_mail import Message
 from threading import Thread
-from .. import mail
-from ...models_commun import User
+from ... import mail
+from ...app_commun.models_commun import User
 from enum import Enum
 from config import MAIL_USERNAME, MAIL_DEFAULT_SENDER
 
@@ -43,7 +43,7 @@ class Mail :
     def annul_demande(vac_ens):
         responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] Demande d'annulation de vacances ("+ user.nom + " " + user.prenom +")"
-        template_base_name = "mails/"
+        template_base_name = "templates_vacEns/mails/"
         template = template_base_name + "annul_vacs"
         to = [MAIL_USERNAME]
         cc = []  #[user.email, doyen@esiee.fr]    
@@ -64,7 +64,7 @@ class Mail :
         else:
             type_demande = 'd\'annulation'
         mail_object = "[VacEns] Demande " + type_demande + " de vacances ("+ vac_ens.user.nom + " " + vac_ens.user.prenom +")"
-        template_base_name = "mails/"
+        template_base_name = "templates_vacEns/mails/"
         template = template_base_name + "demande_vacs"
         to = [MAIL_USERNAME]
         cc = [] #[user.email, doyen@esiee.fr]        
@@ -80,7 +80,7 @@ class Mail :
         else:
             type_demande = 'd\'annulation'
         mail_object = "[VacEns] Retour sur votre demande " + type_demande + " de vacances"
-        template_base_name = "mails/"
+        template_base_name = "templates_vacEns/mails/"
         template = template_base_name + "valid_vacs_resp"
         to = [MAIL_USERNAME]#[vac_ens.user.email]
         cc = [] # doyen ?
@@ -97,7 +97,7 @@ class Mail :
         else:
             type_demande = 'd\'annulation'
         mail_object = "[VacEns] Retour sur votre demande " + type_demande + " de vacances"
-        template_base_name = "mails/"
+        template_base_name = "templates_vacEns/mails/"
         template = template_base_name + "valid_vacs_dir"
         to = [MAIL_USERNAME]#[vac_ens.user.email]
         cc = [] # [doyen@esiee.fr, responsable.email]
@@ -144,7 +144,7 @@ class Mail :
     def vacation_notification (user, dates, notificationType) :
         responsable = User.query.get(user.resp_id)
         mail_object = "[VacEns] "
-        template_base_name = "mails/"
+        template_base_name = "templates_vacEns/mails/"
         
         if notificationType == Mail.notification_type.add_vacation :
             mail_object = mail_object + "Prise de congés de " + user.nom + " " + user.prenom

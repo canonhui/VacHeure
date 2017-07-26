@@ -1,0 +1,13 @@
+{% extends "templates_vacEns/base.html" %}
+ 
+{% import "bootstrap/wtf.html" as wtf %}
+ 
+{% block container %}
+  <h2> Menu d'extraction</h2>
+     
+   {{ wtf.quick_form(form, form_type='horizontal', horizontal_columns=('lg', 1, 10) ) }}
+
+   <br>
+   <a href="/vacEns/index"> Cliquer ici pour revenir à "home" </a>
+
+{% endblock %}

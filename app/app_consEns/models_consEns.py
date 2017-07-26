@@ -1,8 +1,6 @@
 from .. import db
 #from .ldap import Ldap
 
-from . import login_manager
-
 
 class ConsEns(db.Model):
     cons_ens_id = db.Column(db.Integer, primary_key=True)
@@ -23,9 +21,3 @@ class ConsEns(db.Model):
 
     def __repr__(self):
         return '<ConsEns %r>' % self.cons_ens_id
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    from ..models_commun import User
-    return User.query.get(int(user_id))

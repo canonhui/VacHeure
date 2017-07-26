@@ -1,0 +1,45 @@
+{% extends "templates_vacEns/base.html" %}
+{% block content %}
+{{ super() }}
+
+	<br>
+    <h1 class="text-center" >Application VacEns!</h1>
+<br>
+<div class="text-justify" style="width:70%; margin:auto">
+<p><strong>Règlement particulier - ARTICLE 4 - Vacances</strong>
+<p><em>Les vacances sont de quinze semaines par an (y compris les jours fériés inclus dans les périodes de
+vacances). Le calendrier de ces vacances comporte au moins 6 semaines pendant la période des vacances
+d’été du calendrier officiel des vacances scolaires et une semaine au moins pendant chacune des périodes
+de vacances de Toussaint, de fin d'année, d’hiver et de printemps. Le complément est pris pendant la
+période d'été de ce même calendrier officiel.</em></p>
+<p><em>Toutefois, par accord mutuel entre la Direction et un enseignant, les vacances de celui-ci peuvent différer du
+calendrier ci-dessus, sous réserve que cette disposition soit compatible avec le plan de charge de l'intéressé
+et l'intérêt du service. Dans ce cas, un calendrier spécial est déposé au Service du Décanat.</em></p>
+
+
+<strong>Pour un enseignant,</strong> cette application permet 
+<ul>
+<li> <strong>d'annuler</strong> des vacances prévues dans le calendrier officiel, <em>avec l'accord du responsable de département et de la direction</em>
+<li> <strong>de reporter</strong> ces vacances annulées à une autre date, <em>sous réserve de l'accord du responsable de département et de la direction</em>
+<li> <strong>de consulter</strong> l'état de validation et l'historique des demandes,
+<li> d'obtenir un <strong>retour</strong> automatique par email à chacune des étapes de la procédure.
+</ul>
+<br>
+
+<strong>Pour un responsable de département,</strong> l'application permet 
+<ul>
+<li> <strong>de valider</strong> ou non les demandes d'annulation et report de vacances
+<li> <strong>de consulter</strong> l'historique des demandes et validations pour le département
+</ul>
+
+<br>
+<strong>Pour la direction et le décanat,</strong> l'application permet 
+<ul>
+<li> <strong>de valider</strong> ou non les demandes d'annulation et report de vacances (préalablement autorisées par le responsable de département)
+<li> <strong>de consulter</strong> l'historique total des demandes et validations
+<li> d'effectuer une extraction pdf, de sauvegarder l'état des demandes et de mettre à jour la base enseignants.
+</ul>
+
+</div>
+
+{% endblock %}
